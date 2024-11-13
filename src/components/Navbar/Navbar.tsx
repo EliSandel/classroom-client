@@ -7,9 +7,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
 import { useStyles } from "./Navbar.style";
+import SideDrawer from "../SideDrawer/SideDrawer";
+import { useState } from "react";
 
 const Navbar = () => {
   const classes = useStyles();
+
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => {
+    setOpenDrawer(newOpen);
+  };
 
   return (
     <Box className={classes.navbarBox}>
@@ -20,6 +28,7 @@ const Navbar = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => toggleDrawer(true)}
           >
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
@@ -29,6 +38,7 @@ const Navbar = () => {
           <LoyaltyIcon className={classes.loyaltyIcon}/>
         </Toolbar>
       </AppBar>
+      <SideDrawer open={openDrawer} toggleDrawer={toggleDrawer}/>
     </Box>
   );
 };

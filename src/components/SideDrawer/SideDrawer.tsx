@@ -1,21 +1,22 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
+import Drawer from "@mui/material/Drawer";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 
-const SideDrawer = () => {
-  const [open, setOpen] = React.useState(false);
+interface ISideDrawerProps {
+  open: boolean;
+  toggleDrawer: (newOpen: boolean) => void;
+}
 
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
+const SideDrawer = ({ open, toggleDrawer }: ISideDrawerProps) => {
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={() => toggleDrawer(false)}
+    >
       <List>
         {["Classes", "Students", "Create"].map((text) => (
           <ListItem key={text} disablePadding>
@@ -29,13 +30,10 @@ const SideDrawer = () => {
   );
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
-      </Drawer>
-    </div>
+    <Drawer open={open} onClose={() => toggleDrawer(false)}>
+      {DrawerList}
+    </Drawer>
   );
-}
+};
 
 export default SideDrawer;
