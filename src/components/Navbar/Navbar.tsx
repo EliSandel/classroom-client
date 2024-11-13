@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import LoyaltyIcon from '@mui/icons-material/Loyalty';
 
 import { useStyles } from "./Navbar.style";
 
@@ -12,19 +13,20 @@ const Navbar = () => {
 
   return (
     <Box className={classes.navbarBox}>
-      <AppBar position="static" sx={{ height: "100%" }}>
-        <Toolbar variant="dense" sx={{ height: "100%" }}>
+      <AppBar position="static" className={classes.appBarDiv}> 
+        <Toolbar variant="dense" className={classes.toolBarDiv}>
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <MenuIcon className={classes.menuIcon} />
           </IconButton>
-          <Typography variant="h6" color="inherit" component="div">
+          <Typography variant="h5" color="inherit" component="div">
             Shob Classes
           </Typography>
+          <LoyaltyIcon className={classes.loyaltyIcon}/>
         </Toolbar>
       </AppBar>
     </Box>
