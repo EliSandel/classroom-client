@@ -4,13 +4,21 @@ import Drawer from "@mui/material/Drawer";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import { Link } from "react-router-dom";
 
 interface ISideDrawerProps {
-  open: boolean;
+  openDrawer: boolean;
   toggleDrawer: (newOpen: boolean) => void;
 }
 
-const SideDrawer = ({ open, toggleDrawer }: ISideDrawerProps) => {
+const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {
+  
+  const arrayOfButtonTextAndCorrespondingRoutes = [
+    { text: "Classes", route: "/" },
+    { text: "Students", route: "/students" },
+    { text: "Create", route: "/create" },
+  ];
+
   const DrawerList = (
     <Box
       sx={{ width: 250 }}
@@ -18,10 +26,10 @@ const SideDrawer = ({ open, toggleDrawer }: ISideDrawerProps) => {
       onClick={() => toggleDrawer(false)}
     >
       <List>
-        {["Classes", "Students", "Create"].map((text) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemText primary={text} />
+        {arrayOfButtonTextAndCorrespondingRoutes.map((item) => (
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton component={Link} to={item.route}>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -30,7 +38,7 @@ const SideDrawer = ({ open, toggleDrawer }: ISideDrawerProps) => {
   );
 
   return (
-    <Drawer open={open} onClose={() => toggleDrawer(false)}>
+    <Drawer open={openDrawer} onClose={() => toggleDrawer(false)}>
       {DrawerList}
     </Drawer>
   );

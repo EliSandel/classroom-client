@@ -15,10 +15,6 @@ const Navbar = () => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const toggleDrawer = (newOpen: boolean) => {
-    setOpenDrawer(newOpen);
-  };
-
   return (
     <Box className={classes.navbarBox}>
       <AppBar position="static" className={classes.appBarDiv}> 
@@ -28,7 +24,7 @@ const Navbar = () => {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={() => toggleDrawer(true)}
+            onClick={() => setOpenDrawer(true)}
           >
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
@@ -38,7 +34,7 @@ const Navbar = () => {
           <LoyaltyIcon className={classes.loyaltyIcon}/>
         </Toolbar>
       </AppBar>
-      <SideDrawer open={openDrawer} toggleDrawer={toggleDrawer}/>
+      <SideDrawer openDrawer={openDrawer} toggleDrawer={setOpenDrawer}/>
     </Box>
   );
 };
