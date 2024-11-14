@@ -1,9 +1,8 @@
 Front End
+optimistic ui
 
-add the color change logic.
 
 ask about figma fonts
-sidedrawer.style.ts
 
 
 

@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
+import { Link } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
 import ListItem from "@mui/material/ListItem";
+import { useStyles } from "./SideDrawer.style";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
-import { Link } from "react-router-dom";
-import { useStyles } from "./SideDrawer.style";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
