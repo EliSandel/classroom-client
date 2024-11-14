@@ -9,7 +9,7 @@ import { useStyles } from "./SideDrawer.style";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
-  toggleDrawer: (newOpen: boolean) => void;
+  toggleDrawer: (newOpen: boolean) => void; 
 }
 
 const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {

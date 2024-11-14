@@ -5,7 +5,7 @@ export const useStyles = makeStyles(() => ({
     "& .MuiTypography-root": {
       /* fontFamily: "Heebo", */ //this is weird
       fontSize: "1.125rem",
-      fontWeight: 400,
+      fontWeight: 400, 
       lineHeight: "1.5rem",
       textAlign: "center",
       textUnderlinePosition: "from-font",
