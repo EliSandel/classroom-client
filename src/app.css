@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    height: 100vh;
+}
+
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.appDiv {
+    height: 100%;
+}
