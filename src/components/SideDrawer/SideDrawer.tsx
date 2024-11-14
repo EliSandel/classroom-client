@@ -5,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Link } from "react-router-dom";
+import { useStyles } from "./SideDrawer.style";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
@@ -12,8 +13,9 @@ interface ISideDrawerProps {
 }
 
 const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {
+  const classes = useStyles();
   
-  const arrayOfButtonTextAndCorrespondingRoutes = [
+  const arrayOfLinkTextAndCorrespondingRoutes = [
     { text: "Classes", route: "/" },
     { text: "Students", route: "/students" },
     { text: "Create", route: "/create" },
@@ -21,15 +23,15 @@ const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {
 
   const DrawerList = (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 130 }}
       role="presentation"
       onClick={() => toggleDrawer(false)}
     >
       <List>
-        {arrayOfButtonTextAndCorrespondingRoutes.map((item) => (
+        {arrayOfLinkTextAndCorrespondingRoutes.map((item) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton component={Link} to={item.route}>
-              <ListItemText primary={item.text} />
+              <ListItemText className={classes.menuText} primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}

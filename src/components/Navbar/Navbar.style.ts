@@ -9,7 +9,9 @@ export const useStyles = makeStyles(() => ({
     marginLeft: "20px",
   },
   menuIcon: {
-    marginLeft: "10px",
+    "&. MuiSvgIcon-root": {
+      marginLeft: "10px",
+    },
   },
   appBarDiv: {
     height: "100%",
