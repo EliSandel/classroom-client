@@ -6,7 +6,14 @@ const Classes = () => {
 
   return (
     <div className={classes.classesPage}>
-      <h1>Classes page</h1>
+      <ClassCard />
+      <ClassCard />
+      <ClassCard />
+      <ClassCard />
+      <ClassCard />
+      <ClassCard />
+      <ClassCard />
+      <ClassCard />
       <ClassCard />
       <ClassCard />
     </div>
