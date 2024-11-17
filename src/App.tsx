@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { createTheme, ThemeProvider } from "@mui/material";
 
+
 const App = () => {
   const buttonColor = useSelector(
     (state: RootState) => state.color.buttonColor
@@ -15,6 +16,9 @@ const App = () => {
         main: buttonColor,
       },
     },
+    typography: {
+      fontFamily: "Heebo",
+    }
   });
 
   return (
