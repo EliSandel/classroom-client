@@ -5,11 +5,10 @@ import { RootState } from "../../store/store";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const ClassCard = () => {
-  const dispatch = useDispatch();
   const backgroundColor = useSelector(
     (state: RootState) => state.color.buttonColor
   );
