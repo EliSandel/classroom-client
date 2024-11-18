@@ -16,14 +16,14 @@ const ClassCard = () => {
 
   return (
     <Card className={classes.cardDiv} elevation={0}>
-      <CardContent>
-        <Typography variant="h6">Class Name</Typography>
-        <Typography variant="body2">There are 2 seats left</Typography>
-        <Typography >out of 2</Typography>
+      <CardContent sx={{paddingRight: "0 !important"}}>
+        <Typography className={classes.className}>אלון</Typography>
+        <Typography className={classes.seatsLeft}>There are 2 seats left</Typography>
+        <Typography className={classes.totalSeats}>out of 2</Typography>
       </CardContent>
-      <CardActions>
-        <Button style={{ whiteSpace: "nowrap" }}>Students List</Button>
-        <Button size="small"><DeleteIcon /></Button>
+      <CardActions sx={{paddingRight: "0 !important"}}>
+        <Button className={classes.studentsListButton}>Students List</Button>
+        <DeleteIcon className={classes.trashIcon} color="primary"/>
       </CardActions>
     </Card>
   );
