@@ -5,8 +5,6 @@ export const useStyles = makeStyles({
     boxShadow: "0px 4px 4px 0px #00000040 !important",
     width: "11.375rem",
     height: "10.03rem",
-    // marginTop: "1rem",
-    // marginLeft: "1rem",
     margin: "0",
     padding: "0",
   },
@@ -62,6 +60,11 @@ export const useStyles = makeStyles({
       // margin: "0",
       // padding: "0",
     }
-  }
+  },
+  cardContentClass: {
+    "&.MuiCardContent-root": {
+      paddingRight: "0",
+    }
+  },
 });
 

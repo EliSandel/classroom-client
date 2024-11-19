@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
@@ -6,25 +7,64 @@ import { RootState } from "../../store/store";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
+import StudentsPopup from "../StudentsPopup/StudentsPopup";
+import { IStudent } from "../../interfaces/student.interface";
 
-const ClassCard = () => {
+interface ClassCardProps {
+  className: string;
+  seatsLeft: number;
+  totalSeats: number;
+  studentsList: IStudent[];
+}
+
+const ClassCard = ({
+  className,
+  seatsLeft,
+  totalSeats,
+  studentsList,
+}: ClassCardProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleStudentsListClick = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsDialogOpen(false);
+  };
+
   const backgroundColor = useSelector(
     (state: RootState) => state.color.buttonColor
   );
+
   const classes = useStyles({ backgroundColor });
 
   return (
     <Card className={classes.cardDiv} elevation={0}>
-      <CardContent sx={{paddingRight: "0 !important"}}>
-        <Typography className={classes.className}>אלון</Typography>
-        <Typography className={classes.seatsLeft}>There are 2 seats left</Typography>
-        <Typography className={classes.totalSeats}>out of 2</Typography>
+      <CardContent className={classes.cardContentClass}>
+        <Typography className={classes.className}>{className}</Typography>
+        <Typography className={classes.seatsLeft}>
+          There are {seatsLeft} seats left
+        </Typography>
+        <Typography className={classes.totalSeats}>
+          out of {totalSeats}
+        </Typography>
       </CardContent>
-      <CardActions sx={{paddingRight: "0 !important"}}>
-        <Button className={classes.studentsListButton}>Students List</Button>
-        <DeleteIcon className={classes.trashIcon} color="primary"/>
+      <CardActions sx={{ paddingRight: "0 !important" }}>
+        <Button
+          className={classes.studentsListButton}
+          onClick={handleStudentsListClick}
+        >
+          Students List
+        </Button>
+        <DeleteIcon className={classes.trashIcon} color="primary" /> {/* add functionality to button */}
       </CardActions>
+      <StudentsPopup
+        open={isDialogOpen}
+        onClose={handleClose}
+        studentsList={studentsList}
+      />
     </Card>
   );
 };

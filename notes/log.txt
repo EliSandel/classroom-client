@@ -2,8 +2,8 @@ Front End
 optimistic ui
 
 
-ask about figma fonts
-
+for refetching use 
+react query invalidateQueries.
 
 
 
