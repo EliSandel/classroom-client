@@ -5,8 +5,13 @@ import Create from "../pages/create/Create";
 import Classes from "../pages/classes/Classes";
 import Students from "../pages/students/Students";
 import Navbar from "../components/Navbar/Navbar";
+import useClassrooms from "../hooks/useClassrooms.hook";
+import useStudents from "../hooks/useStudents.hook";
 
 const AppRoutes: React.FC = () => {
+  useClassrooms();
+  useStudents();
+
   return (
     <BrowserRouter>
       <Navbar />
