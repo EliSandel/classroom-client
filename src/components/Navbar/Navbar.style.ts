@@ -1,8 +1,5 @@
 import { makeStyles } from "@mui/styles";
 
-interface StyleProps {
-  backgroundColor: string;
-}
 
 export const useStyles = makeStyles({
   navbarBox: {
@@ -15,9 +12,8 @@ export const useStyles = makeStyles({
   appBarDiv: {
     height: "100%",
   },
-  toolBarDiv: (props: StyleProps) => ({
+  toolBarDiv: {
     height: "100%",
-    backgroundColor: props.backgroundColor,
-  }),
+  },
 });
 

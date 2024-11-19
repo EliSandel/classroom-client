@@ -1,10 +1,9 @@
 Front End
+optimistic ui
 
-add the color change logic.
 
-ask about figma fonts
-sidedrawer.style.ts
-
+for refetching use 
+react query invalidateQueries.
 
 
 
