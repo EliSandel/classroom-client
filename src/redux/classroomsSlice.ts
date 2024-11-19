@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface ClassroomState {
+interface IInitialClassroomState {
   classrooms: [];
 }
 
-const initialState: ClassroomState = {
+const initialState: IInitialClassroomState = {
   classrooms: [],
 }
 
@@ -18,5 +18,5 @@ const classroomsSlice = createSlice({
   },
 });
 
-export const { setClassrooms} = classroomsSlice.actions;
+export const { setClassrooms } = classroomsSlice.actions;
 export default classroomsSlice.reducer;
