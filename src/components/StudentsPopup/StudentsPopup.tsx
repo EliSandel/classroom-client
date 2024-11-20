@@ -12,8 +12,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import { IStudent } from "../../interfaces/student.interface";
 import { useRemoveStudentFromClassroom } from "../../hooks/useClassrooms.hook";
-// import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "../../store/store";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -21,20 +19,10 @@ export interface SimpleDialogProps {
   studentsList: IStudent[];
 }
 
-
 function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
-  
-  // const dispatch = useDispatch();
-  // const classrooms = useSelector((state: RootState) => state.classrooms.classrooms);
-  // const students = useSelector((state: RootState) => state.students.students);
-
-  // const handleRemoveStudentFromClass = async (classId: string, studentId: string) => {
-  //   await removeStudentFromClassroomService(classId, studentId, classrooms, students, dispatch);
-  // }
   const removeStudent = useRemoveStudentFromClassroom();
 
   console.log("rerender");
-  
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -51,7 +39,12 @@ function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
               primary={student.firstName + " " + student.lastName}
             />
             <ListItemButton>
-              <DeleteIcon color="primary" onClick={async() => removeStudent(student.classroomId, student.id)}/>
+              <DeleteIcon
+                color="primary"
+                onClick={async () =>
+                  removeStudent(student.classroomId, student.id)
+                }
+              />
             </ListItemButton>
           </ListItem>
         ))}
