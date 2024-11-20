@@ -1,43 +1,41 @@
 import { useQuery } from "react-query";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setStudents } from "../redux/studentsSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { setClassrooms } from "../redux/classroomsSlice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
-import { fetchClassrooms, removeStudentFromClassroom } from "../services/classroom.service";
+import {
+  fetchClassrooms,
+  removeStudentFromClassroomService,
+} from "../services/classroom.service";
 
-export const useGetAllClassrooms = () => {
+export const useClassroomsHook = () => {
   const dispatch = useDispatch();
 
-  const classState: IClassroom[] = useSelector(
+  // Redux selectors
+  const classrooms: IClassroom[] = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );
+  const students: IStudent[] = useSelector(
+    (state: RootState) => state.students.students
+  );
 
-  const { data, error, isLoading } = useQuery({
+  const queryResults = useQuery({
     queryKey: ["classrooms"],
     queryFn: fetchClassrooms,
-    enabled: classState.length === 0,
+    enabled: classrooms.length === 0,
     onSuccess: (data) => {
       if (data) {
         dispatch(setClassrooms(data));
       }
     },
   });
-  return { data, error, isLoading };
-};
 
-export const useRemoveStudentFromClassroom = (): ((
-  classroomId: string,
-  studentId: string
-) => Promise<void>) => {
-  const dispatch = useDispatch();
-  const classrooms = useSelector(
-    (state: RootState) => state.classrooms.classrooms
-  );
-  const students = useSelector((state: RootState) => state.students.students);
-
-  const removeStudent = async (classroomId: string, studentId: string) => {
+  const removeStudentFromClassroom = async (
+    classroomId: string,
+    studentId: string
+  ): Promise<void> => {
     const updatedClassrooms = classrooms.map((classroom: IClassroom) => {
       if (classroom.id === classroomId) {
         return {
@@ -63,8 +61,11 @@ export const useRemoveStudentFromClassroom = (): ((
     dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
 
-    await removeStudentFromClassroom(classroomId, studentId);
+    await removeStudentFromClassroomService(classroomId, studentId);
   };
 
-  return removeStudent;
+  return { 
+    getAllClassrooms: () => queryResults, 
+    removeStudentFromClassroom 
+  };
 };

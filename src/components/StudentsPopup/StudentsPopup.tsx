@@ -11,7 +11,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import { IStudent } from "../../interfaces/student.interface";
-import { useRemoveStudentFromClassroom } from "../../hooks/useClassrooms.hook";
+import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -20,9 +20,9 @@ export interface SimpleDialogProps {
 }
 
 function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
-  const removeStudent = useRemoveStudentFromClassroom();
 
   console.log("rerender");
+  const { removeStudentFromClassroom } = useClassroomsHook();
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -42,7 +42,7 @@ function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
               <DeleteIcon
                 color="primary"
                 onClick={async () =>
-                  removeStudent(student.classroomId, student.id)
+                  removeStudentFromClassroom(student.classroomId, student.id)
                 }
               />
             </ListItemButton>

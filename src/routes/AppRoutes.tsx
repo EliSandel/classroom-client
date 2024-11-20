@@ -5,12 +5,12 @@ import Create from "../pages/create/Create";
 import Classes from "../pages/classes/Classes";
 import Navbar from "../components/Navbar/Navbar";
 import Students from "../pages/students/Students";
-import useGetAllStudents from "../hooks/useStudents.hook";
-import { useGetAllClassrooms } from "../hooks/useClassrooms.hook";
+import { useStudentsHook } from "../hooks/useStudents.hook";
+import { useClassroomsHook } from "../hooks/useClassrooms.hook";
 
 const AppRoutes: React.FC = () => {
-  useGetAllClassrooms();
-  useGetAllStudents();
+  useClassroomsHook()
+  useStudentsHook();
 
   return (
     <BrowserRouter>
