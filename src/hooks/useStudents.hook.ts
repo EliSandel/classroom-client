@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setStudents } from "../redux/studentsSlice";
-import { getStudents } from "../services/students.service";
+import { fetchStudents } from "../services/students.service";
 import { IStudent } from "../interfaces/student.interface";
 
 const useGetAllStudents = () => {
@@ -14,7 +14,7 @@ const useGetAllStudents = () => {
   
   const { data, error, isLoading } = useQuery({
     queryKey: ["students"], 
-    queryFn: getStudents, 
+    queryFn: fetchStudents, 
     enabled: studentsState.length === 0,
     onSuccess: (data) => {
         if (data) {

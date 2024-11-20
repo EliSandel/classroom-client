@@ -1,9 +1,10 @@
-// src/services/classroomService.ts
-import { fetchStudents } from '../api/students.api';
+import axios from 'axios';
 
-export const getStudents = async () => {
-    const data = await fetchStudents();
-    //transform the data as neccessary 
+// Base URL setup (optional)
+const API_URL = 'http://localhost:3000/students';
 
-    return data;
+
+export const fetchStudents = async () => {
+    const response = await axios.get(`${API_URL}`);
+    return response.data;
 };
