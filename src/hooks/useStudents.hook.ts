@@ -1,13 +1,34 @@
-import { useQuery } from 'react-query';
-import { getStudents } from '../services/students.service';
+import { useQuery } from "react-query";
+import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setStudents } from "../redux/studentsSlice";
+import { fetchStudents } from "../services/students.service";
+import { IStudent } from "../interfaces/student.interface";
+import { IClassroom } from "../interfaces/classroom.interface";
 
-const useStudents = () => {
-    const { data, error, isLoading } = useQuery(
-        'students',       // Query key
-        getStudents,      // Query function
-    );
+export const useStudentsHook = () => {
+  const dispatch = useDispatch();
 
-    return { data, error, isLoading };
+  const studentsState: IStudent[] = useSelector(
+    (state: RootState) => state.students.students
+  );
+
+  const classroomsState: IClassroom[] = useSelector(
+    (state: RootState) => state.classrooms.classrooms
+  )
+
+  const queryResults = useQuery({
+    queryKey: ["classrooms"],
+    queryFn: fetchStudents,
+    enabled: studentsState.length === 0,
+    onSuccess: (data) => {
+      if (data) {
+        dispatch(setStudents(data));
+      }
+    },
+  });
+
+  return { 
+    getAllStudents: () => queryResults,  
+  };
 };
-
-export default useStudents;
