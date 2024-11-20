@@ -5,7 +5,7 @@ import { setStudents } from "../redux/studentsSlice";
 import { getStudents } from "../services/students.service";
 import { IStudent } from "../interfaces/student.interface";
 
-const useStudents = () => {
+const useGetAllStudents = () => {
   const dispatch = useDispatch();
 
   const studentsState: IStudent[] = useSelector(
@@ -25,5 +25,5 @@ const useStudents = () => {
   return { data, error, isLoading };
 };
 
-export default useStudents;
+export default useGetAllStudents;
 

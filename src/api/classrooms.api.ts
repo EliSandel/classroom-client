@@ -9,3 +9,8 @@ export const fetchClassrooms = async () => {
     const response = await axios.get(`${API_URL}`);
     return response.data;
 };
+
+export const removeStudentFromClassroom = async (classroomId: string, studentId: string) => {
+    const response = await axios.put(`${API_URL}/${classroomId}/removeStudent/${studentId}`)
+    return response.data;
+}

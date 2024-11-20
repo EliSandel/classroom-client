@@ -5,7 +5,7 @@ import { setClassrooms } from "../redux/classroomsSlice";
 import { getClassrooms } from "../services/classroom.service";
 import { IClassroom } from "../interfaces/classroom.interface";
 
-const useClassrooms = () => {
+export const useGetAllClassrooms = () => {
   const dispatch = useDispatch();
 
   const classState: IClassroom[] = useSelector(
@@ -15,7 +15,7 @@ const useClassrooms = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["classrooms"], 
     queryFn: getClassrooms, 
-    enabled: classState.length === 0, // Only fetch if state is empty
+    enabled: classState.length === 0,
     onSuccess: (data) => {
         if (data) {
             dispatch(setClassrooms(data));
@@ -24,5 +24,3 @@ const useClassrooms = () => {
   });
   return { data, error, isLoading };
 };
-
-export default useClassrooms;

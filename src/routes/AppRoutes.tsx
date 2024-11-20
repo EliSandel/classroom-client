@@ -3,14 +3,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Create from "../pages/create/Create";
 import Classes from "../pages/classes/Classes";
-import Students from "../pages/students/Students";
 import Navbar from "../components/Navbar/Navbar";
-import useClassrooms from "../hooks/useClassrooms.hook";
-import useStudents from "../hooks/useStudents.hook";
+import Students from "../pages/students/Students";
+import useGetAllStudents from "../hooks/useStudents.hook";
+import { useGetAllClassrooms } from "../hooks/useClassrooms.hook";
 
 const AppRoutes: React.FC = () => {
-  useClassrooms();
-  useStudents();
+  useGetAllClassrooms();
+  useGetAllStudents();
 
   return (
     <BrowserRouter>
