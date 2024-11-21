@@ -1,19 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IClassroom } from "../interfaces/classroom.interface";
 
 interface IInitialClassroomState {
-  classrooms: [];
+  classrooms: IClassroom[];
 }
 
 const initialState: IInitialClassroomState = {
   classrooms: [],
-}
+};
 
 const classroomsSlice = createSlice({
-  name: 'classrooms',
+  name: "classrooms",
   initialState: initialState,
   reducers: {
-    setClassrooms: (state, action) => {
-      state.classrooms = action.payload;
+    setClassrooms: (state, action: PayloadAction<IClassroom[]>) => {
+      state.classrooms = [...action.payload];
     },
   },
 });

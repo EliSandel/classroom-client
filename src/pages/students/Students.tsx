@@ -16,6 +16,8 @@ const StudentsPage = () => {
   const studentsState: IStudent[] = useSelector(
     (state: RootState) => state.students.students
   );
+  console.log(studentsState);
+  
   
 
   return (
