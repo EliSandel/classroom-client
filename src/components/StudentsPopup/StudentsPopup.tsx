@@ -27,16 +27,11 @@ function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
     studentId: string
   ) => {
     await removeStudentFromClassroom(classroomId, studentId);
-    console.log(studentsList);
-    if (studentsList.length === 0) {
-      onClose();
-    }
   };
-
+  
   return (
     <Dialog onClose={onClose} open={open}>
-      {/* <DialogTitle>{studentsList.length !== 0 ? "Students List" : "This class is empty"}</DialogTitle> */}
-      <DialogTitle>Students List</DialogTitle>
+      <DialogTitle>{studentsList.length !== 0 ? "Students List" : "This class is empty"}</DialogTitle>
       <List sx={{ pt: 0 }}>
         {studentsList.map((student, index) => (
           <ListItem key={index}>

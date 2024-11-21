@@ -46,6 +46,8 @@ const ClassCard = ({
 
   const classes = useStyles({ backgroundColor });
 
+  console.log("card component ", studentsList)
+
   return (
     <Card className={classes.cardDiv} elevation={0}>
       <CardContent className={classes.cardContentClass}>

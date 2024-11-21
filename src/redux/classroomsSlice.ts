@@ -7,14 +7,14 @@ interface IInitialClassroomState {
 
 const initialState: IInitialClassroomState = {
   classrooms: [],
-}
+};
 
 const classroomsSlice = createSlice({
-  name: 'classrooms',
+  name: "classrooms",
   initialState: initialState,
   reducers: {
     setClassrooms: (state, action: PayloadAction<IClassroom[]>) => {
-      state.classrooms = action.payload;
+      state.classrooms = [...action.payload];
     },
   },
 });

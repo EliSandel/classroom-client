@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { RootState } from "../store/store";
-import { useDispatch, useSelector } from "react-redux";
 import { setStudents } from "../redux/studentsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchStudents } from "../services/students.service";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
