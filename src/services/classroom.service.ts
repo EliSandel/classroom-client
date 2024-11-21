@@ -1,9 +1,26 @@
-// src/services/classroomService.ts
-import { fetchClassrooms } from '../api/classrooms.api';
+// src/api/classrooms.ts
+import axios from "axios";
 
-export const getClassrooms = async () => {
-    const data = await fetchClassrooms();
-    //transform the data as neccessary 
+// Base URL setup (optional)
+const API_URL = "http://localhost:3000/classrooms";
 
-    return data;
+export const fetchClassrooms = async () => {
+  const response = await axios.get(`${API_URL}`);
+  return response.data;
 };
+
+export const removeStudentFromClassroomService = async (
+  classroomId: string,
+  studentId: string
+) => {
+  const response = await axios.put(
+    `${API_URL}/${classroomId}/removeStudent/${studentId}`
+  );
+  return response.data;
+};
+
+export const deleteClassService = async (classroomId: string) => {
+  const response = await axios.delete(`${API_URL}/${classroomId}`);
+  return response.data;
+};
+//add try catch to all of my functions

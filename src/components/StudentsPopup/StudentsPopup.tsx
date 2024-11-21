@@ -2,15 +2,16 @@ import {
   Avatar,
   Dialog,
   DialogTitle,
+  IconButton,
   List,
   ListItem,
   ListItemAvatar,
-  ListItemButton,
   ListItemText,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import { IStudent } from "../../interfaces/student.interface";
+import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
 
 export interface SimpleDialogProps {
   open: boolean;
@@ -19,9 +20,18 @@ export interface SimpleDialogProps {
 }
 
 function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
+  const { removeStudentFromClassroom } = useClassroomsHook();
+
+  const handleRemoveStudentFromClassClick = async (
+    classroomId: string,
+    studentId: string
+  ) => {
+    await removeStudentFromClassroom(classroomId, studentId);
+  };
+  
   return (
     <Dialog onClose={onClose} open={open}>
-      <DialogTitle>Students List</DialogTitle>
+      <DialogTitle>{studentsList.length !== 0 ? "Students List" : "This class is empty"}</DialogTitle>
       <List sx={{ pt: 0 }}>
         {studentsList.map((student, index) => (
           <ListItem key={index}>
@@ -33,9 +43,16 @@ function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
             <ListItemText
               primary={student.firstName + " " + student.lastName}
             />
-            <ListItemButton>
-              <DeleteIcon color="primary" /> {/* //add button functionality */}
-            </ListItemButton>
+            <IconButton
+              onClick={async () =>
+                await handleRemoveStudentFromClassClick(
+                  student.classroomId,
+                  student.id
+                )
+              }
+            >
+              <DeleteIcon color="primary" />
+            </IconButton>
           </ListItem>
         ))}
       </List>

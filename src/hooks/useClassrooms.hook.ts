@@ -1,21 +1,93 @@
-import { getClassrooms } from "../services/classroom.service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { setStudents } from "../redux/studentsSlice";
 import { setClassrooms } from "../redux/classroomsSlice";
-import { useQuery } from "react-query";
+import { IStudent } from "../interfaces/student.interface";
+import { IClassroom } from "../interfaces/classroom.interface";
+import {
+  deleteClassService,
+  fetchClassrooms,
+  removeStudentFromClassroomService,
+} from "../services/classroom.service";
+import { useQueryClient } from "react-query";
+import { validationForDeleteClass } from "../utilities/classroom.util";
 
-const useClassrooms = () => {
+export const useClassroomsHook = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["classrooms"], 
-    queryFn: getClassrooms, 
-    onSuccess: (data) => {
-        if (data) {
-            dispatch(setClassrooms(data));
-        }
+  const classrooms: IClassroom[] = useSelector(
+    (state: RootState) => state.classrooms.classrooms
+  );
+  const students: IStudent[] = useSelector(
+    (state: RootState) => state.students.students
+  );
+
+  const removeStudentFromClassroom = async (
+    classroomId: string,
+    studentId: string
+  ): Promise<void> => {
+    const updatedClassrooms = classrooms.map((classroom: IClassroom) => {
+      if (classroom.id === classroomId) {
+        return {
+          ...classroom,
+          students: classroom.students.filter(
+            (student) => student.id !== studentId
+          ),
+        };
+      }
+      return classroom;
+    });
+
+    const updatedStudents = students.map((student: IStudent) => {
+      if (student.id === studentId) {
+        return {
+          ...student,
+          classroomId: null,
+        };
+      }
+      return student;
+    });
+
+    dispatch(setClassrooms(updatedClassrooms));
+    dispatch(setStudents(updatedStudents));
+    console.log(classrooms);
+
+    const response = await removeStudentFromClassroomService(
+      classroomId,
+      studentId
+    );
+    return response;
+  };
+
+  const deleteClass = async (classroomId: string, studentList: IStudent[]) => {
+    if (await validationForDeleteClass(studentList)) {
+      const updatedClassrooms = classrooms.filter(
+        (classroom: IClassroom) => classroom.id !== classroomId
+      );
+      dispatch(setClassrooms(updatedClassrooms));
+      const response = await deleteClassService(classroomId);
+      return response;
     }
-  });
-  return { data, error, isLoading };
-};
+    return "Cannot delete a class with students.";
+  };
 
-export default useClassrooms;
+  const fetchAllClassrooms = async () => {
+    const data = await queryClient.fetchQuery({
+      queryKey: ["classrooms"],
+      queryFn: fetchClassrooms,
+    });
+
+    if (data) {
+      dispatch(setClassrooms(data));
+    }
+
+    return data;
+  };
+
+  return {
+    fetchAllClassrooms,
+    removeStudentFromClassroom,
+    deleteClass,
+  };
+};
