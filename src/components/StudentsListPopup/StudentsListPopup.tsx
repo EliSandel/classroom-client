@@ -19,7 +19,7 @@ export interface SimpleDialogProps {
   studentsList: IStudent[];
 }
 
-function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
+function StudentsListPopup({ open, onClose, studentsList }: SimpleDialogProps) {
   const { removeStudentFromClassroom } = useClassroomsHook();
 
   const handleRemoveStudentFromClassClick = async (
@@ -60,4 +60,4 @@ function StudentsPopup({ open, onClose, studentsList }: SimpleDialogProps) {
   );
 }
 
-export default StudentsPopup;
+export default StudentsListPopup;
