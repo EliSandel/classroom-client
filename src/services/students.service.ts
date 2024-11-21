@@ -1,5 +1,6 @@
 import axios from 'axios';
-
+//must put url in .env.
+//must add try catch to all fuction
 // Base URL setup (optional)
 const API_URL = 'http://localhost:3000/students';
 
@@ -8,3 +9,14 @@ export const fetchStudentsService = async () => {
     const response = await axios.get(`${API_URL}`);
     return response.data;
 };
+
+export const deleteStudentService = async (studentId: string) => {
+    const response = await axios.delete(`${API_URL}/${studentId}`)
+    return response.data;
+}
+
+//this is not good. url is hardcoded
+export const addStudentToClassService = async (classId: string, studentId: string) => {
+    const response = await axios.put(`classrooms/${classId}/addStudent/${studentId}`)
+    return response.data;
+}

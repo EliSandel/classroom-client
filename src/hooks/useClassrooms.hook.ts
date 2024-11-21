@@ -51,7 +51,6 @@ export const useClassroomsHook = () => {
 
     dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
-    console.log(classrooms);
 
     const response = await removeStudentFromClassroomService(
       classroomId,
