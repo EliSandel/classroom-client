@@ -7,9 +7,9 @@ import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
+import { useStyles } from "./StudentsTable.style";
 import TableContainer from "@mui/material/TableContainer";
 import { IStudent } from "../../interfaces/student.interface";
-import { useStyles } from "./StudentsTable.style";
 
 const StudentsTable = () => {
   const classes = useStyles();
