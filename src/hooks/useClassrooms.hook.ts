@@ -22,17 +22,7 @@ export const useClassroomsHook = () => {
     (state: RootState) => state.students.students
   );
 
-  const queryResults = useQuery({
-    queryKey: ["classrooms"],
-    queryFn: fetchClassrooms,
-    enabled: classrooms.length === 0,
-    onSuccess: (data) => {
-      if (data) {
-        dispatch(setClassrooms(data));
-      }
-    },
-  });
-
+  
   const removeStudentFromClassroom = async (
     classroomId: string,
     studentId: string
@@ -58,7 +48,7 @@ export const useClassroomsHook = () => {
       }
       return student;
     });
-
+    
     dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
     console.log(classrooms)
@@ -77,7 +67,17 @@ export const useClassroomsHook = () => {
     return response;
   };
   
-
+  const queryResults = useQuery({
+    queryKey: ["classrooms"],
+    queryFn: fetchClassrooms,
+    enabled: classrooms.length === 0,
+    onSuccess: (data) => {
+      if (data) {
+        dispatch(setClassrooms(data));
+      }
+    },
+  });
+  
   return {
     getAllClassrooms: () => queryResults,
     removeStudentFromClassroom,
