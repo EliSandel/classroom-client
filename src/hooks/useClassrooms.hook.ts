@@ -69,7 +69,7 @@ export const useClassroomsHook = () => {
       const response = await deleteClassService(classroomId);
       return response;
     }
-    return "Cannot delete a class with students.";
+    return "Cannot delete a class with students."; //take care of this
   };
 
   const fetchAllClassrooms = async () => {
