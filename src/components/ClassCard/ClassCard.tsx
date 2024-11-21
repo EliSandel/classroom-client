@@ -10,8 +10,11 @@ import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StudentsPopup from "../StudentsPopup/StudentsPopup";
 import { IStudent } from "../../interfaces/student.interface";
+import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
+import { IconButton } from "@mui/material";
 
 interface ClassCardProps {
+  classId: string;
   className: string;
   seatsLeft: number;
   totalSeats: number;
@@ -19,12 +22,15 @@ interface ClassCardProps {
 }
 
 const ClassCard = ({
+  classId,
   className,
   seatsLeft,
   totalSeats,
   studentsList,
 }: ClassCardProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const { deleteClass } = useClassroomsHook();
 
   const handleStudentsListClick = () => {
     setIsDialogOpen(true);
@@ -52,13 +58,23 @@ const ClassCard = ({
         </Typography>
       </CardContent>
       <CardActions sx={{ paddingRight: "0 !important" }}>
+        {/* {totalSeats !== seatsLeft &&
+          <Button
+            className={classes.studentsListButton}
+            onClick={handleStudentsListClick}
+          >
+            Students List
+          </Button>
+        } */}
         <Button
-          className={classes.studentsListButton}
-          onClick={handleStudentsListClick}
-        >
-          Students List
-        </Button>
-        <DeleteIcon className={classes.trashIcon} color="primary" /> {/* add functionality to button */}
+            className={classes.studentsListButton}
+            onClick={handleStudentsListClick}
+          >
+            Students List
+          </Button>
+        <IconButton onClick={() => deleteClass(classId)}>
+          <DeleteIcon className={classes.trashIcon} color="primary" />
+        </IconButton>
       </CardActions>
       <StudentsPopup
         open={isDialogOpen}

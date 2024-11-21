@@ -16,6 +16,7 @@ const Classes = () => {
     return (
       <ClassCard
         key={classroom.id}
+        classId={classroom.id}
         className={classroom.name}
         seatsLeft={classroom.maxOccupancy - classroom.students.length}
         totalSeats={classroom.maxOccupancy}

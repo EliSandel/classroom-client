@@ -18,7 +18,7 @@ export const useStudentsHook = () => {
   )
 
   const queryResults = useQuery({
-    queryKey: ["classrooms"],
+    queryKey: ["students"],
     queryFn: fetchStudents,
     enabled: studentsState.length === 0,
     onSuccess: (data) => {

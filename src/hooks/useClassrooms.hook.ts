@@ -6,6 +6,7 @@ import { setClassrooms } from "../redux/classroomsSlice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import {
+  deleteClassService,
   fetchClassrooms,
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
@@ -60,12 +61,26 @@ export const useClassroomsHook = () => {
 
     dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
+    console.log(classrooms)
 
-    await removeStudentFromClassroomService(classroomId, studentId);
+    const response = await removeStudentFromClassroomService(classroomId, studentId);
+    return response;
   };
 
-  return { 
-    getAllClassrooms: () => queryResults, 
-    removeStudentFromClassroom 
+  const deleteClass = async (classroomId: string) => {
+    // Must add validation to this function in util
+    const updatedClassrooms = classrooms.filter(
+      (classroom: IClassroom) => classroom.id !== classroomId
+    );
+    dispatch(setClassrooms(updatedClassrooms));
+    const response = await deleteClassService(classroomId);
+    return response;
+  };
+  
+
+  return {
+    getAllClassrooms: () => queryResults,
+    removeStudentFromClassroom,
+    deleteClass,
   };
 };
