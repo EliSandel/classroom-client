@@ -2,16 +2,16 @@ import { useState } from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
+import { IconButton } from "@mui/material";
 import { useStyles } from "./ClassCard.style";
 import { RootState } from "../../store/store";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
-import StudentsPopup from "../StudentsPopup/StudentsPopup";
+import StudentsListPopup from "../StudentsListPopup/StudentsListPopup";
 import { IStudent } from "../../interfaces/student.interface";
 import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
-import { IconButton } from "@mui/material";
 
 interface ClassCardProps {
   classId: string;
@@ -75,7 +75,7 @@ const ClassCard = ({
           <DeleteIcon className={classes.trashIcon} color="primary" />
         </IconButton>
       </CardActions>
-      <StudentsPopup
+      <StudentsListPopup
         open={isDialogOpen}
         onClose={handleClose}
         studentsList={studentsList}
