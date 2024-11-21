@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Create from "../pages/create/Create";
@@ -9,8 +9,14 @@ import { useStudentsHook } from "../hooks/useStudents.hook";
 import { useClassroomsHook } from "../hooks/useClassrooms.hook";
 
 const AppRoutes: React.FC = () => {
-  useClassroomsHook()
-  useStudentsHook();
+  const { fetchAllClassrooms } = useClassroomsHook();
+  useEffect(() => {
+    fetchAllClassrooms();
+  }, []);
+  const { fetchAllStudents } = useStudentsHook();
+  useEffect(() => {
+    fetchAllStudents();
+  },[])
 
   return (
     <BrowserRouter>

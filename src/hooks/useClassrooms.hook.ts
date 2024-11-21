@@ -1,4 +1,3 @@
-import { useQuery } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setStudents } from "../redux/studentsSlice";
@@ -10,9 +9,11 @@ import {
   fetchClassrooms,
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
+import { useQueryClient } from "react-query";
 
 export const useClassroomsHook = () => {
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   // Redux selectors
   const classrooms: IClassroom[] = useSelector(
@@ -67,19 +68,22 @@ export const useClassroomsHook = () => {
     return response;
   };
   
-  const queryResults = useQuery({
-    queryKey: ["classrooms"],
-    queryFn: fetchClassrooms,
-    enabled: classrooms.length === 0,
-    onSuccess: (data) => {
-      if (data) {
-        dispatch(setClassrooms(data));
-      }
-    },
-  });
+  const fetchAllClassrooms = async () => {
+    const data = await queryClient.fetchQuery({
+      queryKey: ["classrooms"],
+      queryFn: fetchClassrooms,
+    });
+
+    if (data) {
+      dispatch(setClassrooms(data));
+    }
+
+    return data;
+  };
+
   
   return {
-    getAllClassrooms: () => queryResults,
+    fetchAllClassrooms,
     removeStudentFromClassroom,
     deleteClass,
   };
