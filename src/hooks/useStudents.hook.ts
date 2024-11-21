@@ -21,7 +21,7 @@ export const useStudentsHook = () => {
 
   const fetchAllStudents = async () => {
     const data = await queryClient.fetchQuery({
-      queryKey: ["classrooms"],
+      queryKey: ["students"],
       queryFn: fetchStudentsService,
     });
 
