@@ -10,12 +10,12 @@ import {
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
 import { useQueryClient } from "react-query";
+import { validationForDeleteClass } from "../utilities/classroom.util";
 
 export const useClassroomsHook = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  // Redux selectors
   const classrooms: IClassroom[] = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );
@@ -23,7 +23,6 @@ export const useClassroomsHook = () => {
     (state: RootState) => state.students.students
   );
 
-  
   const removeStudentFromClassroom = async (
     classroomId: string,
     studentId: string
@@ -49,25 +48,30 @@ export const useClassroomsHook = () => {
       }
       return student;
     });
-    
+
     dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
-    console.log(classrooms)
+    console.log(classrooms);
 
-    const response = await removeStudentFromClassroomService(classroomId, studentId);
-    return response;
-  };
-
-  const deleteClass = async (classroomId: string) => {
-    // Must add validation to this function in util
-    const updatedClassrooms = classrooms.filter(
-      (classroom: IClassroom) => classroom.id !== classroomId
+    const response = await removeStudentFromClassroomService(
+      classroomId,
+      studentId
     );
-    dispatch(setClassrooms(updatedClassrooms));
-    const response = await deleteClassService(classroomId);
     return response;
   };
-  
+
+  const deleteClass = async (classroomId: string, studentList: IStudent[]) => {
+    if (await validationForDeleteClass(studentList)) {
+      const updatedClassrooms = classrooms.filter(
+        (classroom: IClassroom) => classroom.id !== classroomId
+      );
+      dispatch(setClassrooms(updatedClassrooms));
+      const response = await deleteClassService(classroomId);
+      return response;
+    }
+    return "Cannot delete a class with students.";
+  };
+
   const fetchAllClassrooms = async () => {
     const data = await queryClient.fetchQuery({
       queryKey: ["classrooms"],
@@ -81,7 +85,6 @@ export const useClassroomsHook = () => {
     return data;
   };
 
-  
   return {
     fetchAllClassrooms,
     removeStudentFromClassroom,

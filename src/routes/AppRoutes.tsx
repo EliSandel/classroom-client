@@ -10,13 +10,16 @@ import { useClassroomsHook } from "../hooks/useClassrooms.hook";
 
 const AppRoutes: React.FC = () => {
   const { fetchAllClassrooms } = useClassroomsHook();
+
   useEffect(() => {
     fetchAllClassrooms();
   }, []);
+
   const { fetchAllStudents } = useStudentsHook();
+
   useEffect(() => {
     fetchAllStudents();
-  },[])
+  }, []);
 
   return (
     <BrowserRouter>

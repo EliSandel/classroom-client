@@ -12,7 +12,6 @@ import StudentsPopup from "../StudentsPopup/StudentsPopup";
 import { IStudent } from "../../interfaces/student.interface";
 import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
 import { IconButton } from "@mui/material";
-import { validationForDeleteClass } from "../../utilities/classroom.util";
 
 interface ClassCardProps {
   classId: string;
@@ -38,14 +37,9 @@ const ClassCard = ({
   };
 
   const handleDeleteClassClick = async () => {
-    if (await validationForDeleteClass(studentsList)) {
-      await deleteClass(classId);
-    }
-    else {
-      return
-      //add a error popup
-    }
-  }
+    const response = await deleteClass(classId, studentsList);
+    console.log(response) // add error popup if my response is no.
+  };
 
   const handleClose = () => {
     setIsDialogOpen(false);
