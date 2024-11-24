@@ -3,6 +3,7 @@ import { setStudents } from "../redux/studentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addStudentToClassService,
+  deleteStudentService,
   fetchStudentsService,
 } from "../services/students.service";
 import { IStudent } from "../interfaces/student.interface";
@@ -73,8 +74,44 @@ export const useStudentsHook = () => {
     return response;
   };
 
+  const deleteStudent = async (studentId: string) => {
+    const studentToDelete = studentsState.find(
+      (student) => student.id === studentId
+    );
+
+    if (!studentToDelete) {
+      throw new Error("Student not found");
+    }
+
+
+    if (studentToDelete.classroomId) {
+      const updatedClassrooms = classroomsState.map((classroom) => {
+        if (classroom.id === studentToDelete.classroomId) {
+          return {
+            ...classroom,
+            students: classroom.students.filter(
+              (student) => student.id !== studentId
+            ),
+          };
+        }
+        return classroom;
+      });
+      dispatch(setClassrooms(updatedClassrooms));
+    }
+
+    const updatedStudents = studentsState.filter(
+      (student) => student.id !== studentId
+    );
+
+    dispatch(setStudents(updatedStudents));
+
+    const response = await deleteStudentService(studentId);
+    return response;
+  };
+
   return {
     fetchAllStudents,
     addStudentToClass,
+    deleteStudent,
   };
 };

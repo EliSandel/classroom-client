@@ -13,6 +13,7 @@ import { IStudent } from "../../interfaces/student.interface";
 import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
 import { useState } from "react";
 import { IClassroom } from "../../interfaces/classroom.interface";
+import { useStudentsHook } from "../../hooks/useStudents.hook";
 
 const StudentsTable = () => {
   const classes = useStyles();
@@ -31,6 +32,8 @@ const StudentsTable = () => {
     setSelectedStudentId(studentId);
     setIsDialogOpen(true);
   };
+
+  const { deleteStudent } = useStudentsHook()
 
   const handleClose = () => {
     setIsDialogOpen(false);
@@ -80,7 +83,7 @@ const StudentsTable = () => {
                   </Button>
                 </TableCell>
                 <TableCell className={classes.alignCenter}>
-                  <Button variant="outlined">Delete</Button>
+                  <Button variant="outlined" onClick={async () => deleteStudent(student.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
