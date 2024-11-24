@@ -4,7 +4,7 @@ export interface IStudent {
   lastName: string;
   age: number;
   profession: string;
-  classroomId: string;
+  classroomId: string | null;
   createdAt: string;
   updatedAt: string;
 }

@@ -17,6 +17,6 @@ export const deleteStudentService = async (studentId: string) => {
 
 //this is not good. url is hardcoded
 export const addStudentToClassService = async (classId: string, studentId: string) => {
-    const response = await axios.put(`classrooms/${classId}/addStudent/${studentId}`)
+    const response = await axios.put(`http://localhost:3000/classrooms/${classId}/addStudent/${studentId}`)
     return response.data;
 }

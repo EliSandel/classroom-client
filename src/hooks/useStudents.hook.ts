@@ -1,7 +1,10 @@
 import { RootState } from "../store/store";
 import { setStudents } from "../redux/studentsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { addStudentToClassService, fetchStudentsService } from "../services/students.service";
+import {
+  addStudentToClassService,
+  fetchStudentsService,
+} from "../services/students.service";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { useQueryClient } from "react-query";
@@ -32,40 +35,42 @@ export const useStudentsHook = () => {
     return data;
   };
 
-  // when i create the list of classes popup. i will need to map over the classes. and if a class is full then dont render the +
   const addStudentToClass = async (classId: string, studentId: string) => {
+    const studentToAdd = studentsState.find(
+      (student) => student.id === studentId
+    );
+
+    if (!studentToAdd) {
+      throw new Error("Student not found");
+    }
+
+    const updatedStudentToAdd: IStudent = {
+      ...studentToAdd,
+      classroomId: classId,
+    };
 
     const updatedClassrooms = classroomsState.map((classroom) => {
       if (classroom.id === classId) {
-        // Remove the studentId from the classroom's students array
         return {
           ...classroom,
-          students: classroom.students.filter((student) => {
-            return student.id !== studentId;
-          }),
+          students: [...classroom.students, updatedStudentToAdd],
         };
       }
-      return classroom; // Return other classrooms unchanged
+      return classroom;
     });
 
     const updatedStudents = studentsState.map((student) => {
       if (student.id === studentId) {
-        // Change the student's classroomId to null
-        return {
-          ...student,
-          classroomId: null,
-        };
+        return updatedStudentToAdd;
       }
-      return student; // Return other students unchanged
+      return student;
     });
 
-    dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
-    console.log(updatedClassrooms);
+    dispatch(setClassrooms(updatedClassrooms));
 
     const response = await addStudentToClassService(classId, studentId);
     return response;
-
   };
 
   return {
