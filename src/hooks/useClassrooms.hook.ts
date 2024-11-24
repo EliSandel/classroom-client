@@ -1,16 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { useQueryClient } from "react-query";
 import { setStudents } from "../redux/studentsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { setClassrooms } from "../redux/classroomsSlice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
+import { validationForDeleteClass } from "../utilities/classroom.util";
 import {
   deleteClassService,
   fetchClassrooms,
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
-import { useQueryClient } from "react-query";
-import { validationForDeleteClass } from "../utilities/classroom.util";
 
 export const useClassroomsHook = () => {
   const dispatch = useDispatch();
@@ -51,7 +51,6 @@ export const useClassroomsHook = () => {
 
     dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
-    console.log(classrooms);
 
     const response = await removeStudentFromClassroomService(
       classroomId,

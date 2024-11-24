@@ -10,12 +10,35 @@ import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
 import TableContainer from "@mui/material/TableContainer";
 import { IStudent } from "../../interfaces/student.interface";
+import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
+import { useState } from "react";
+import { IClassroom } from "../../interfaces/classroom.interface";
+import { useStudentsHook } from "../../hooks/useStudents.hook";
 
 const StudentsTable = () => {
   const classes = useStyles();
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [selectedStudentId, setSelectedStudentId] = useState<string>("");
+
   const studentsState: IStudent[] = useSelector(
     (state: RootState) => state.students.students
   );
+
+  const classesState: IClassroom[] = useSelector(
+    (state: RootState) => state.classrooms.classrooms
+  );
+
+  const handleAssignToClassClick = (studentId: string) => {
+    setSelectedStudentId(studentId);
+    setIsDialogOpen(true);
+  };
+
+  const { deleteStudent } = useStudentsHook()
+
+  const handleClose = () => {
+    setIsDialogOpen(false);
+    setSelectedStudentId("");
+  };
 
   return (
     <Box className={classes.root}>
@@ -51,16 +74,28 @@ const StudentsTable = () => {
                   {student.profession}
                 </TableCell>
                 <TableCell className={classes.alignCenter}>
-                  <Button variant="outlined">Assign To Class</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => handleAssignToClassClick(student.id)}
+                    disabled={student.classroomId !== null}
+                  >
+                    Assign To Class
+                  </Button>
                 </TableCell>
                 <TableCell className={classes.alignCenter}>
-                  <Button variant="outlined">Delete</Button>
+                  <Button variant="outlined" onClick={async () => deleteStudent(student.id)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <ClassesListPopup
+        open={isDialogOpen}
+        onClose={handleClose}
+        classesList={classesState}
+        studentId={selectedStudentId}
+      />
     </Box>
   );
 };
