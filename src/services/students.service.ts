@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ICreateStudentBody } from '../interfaces/createStudentBody.interface';
 //must put url in .env.
 //must add try catch to all fuction
 // Base URL setup (optional)
@@ -18,5 +19,10 @@ export const deleteStudentService = async (studentId: string) => {
 //this is not good. url is hardcoded
 export const addStudentToClassService = async (classId: string, studentId: string) => {
     const response = await axios.put(`http://localhost:3000/classrooms/${classId}/addStudent/${studentId}`)
+    return response.data;
+}
+
+export const createStudentService = async (studentBody: ICreateStudentBody) => {
+    const response = await axios.post(`${API_URL}/addStudent`, studentBody)
     return response.data;
 }

@@ -7,10 +7,12 @@ import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { validationForDeleteClass } from "../utilities/classroom.util";
 import {
+  createClassroomService,
   deleteClassService,
   fetchClassrooms,
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
+import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
 
 export const useClassroomsHook = () => {
   const dispatch = useDispatch();
@@ -84,9 +86,17 @@ export const useClassroomsHook = () => {
     return data;
   };
 
+  const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
+    const response = await createClassroomService(createClassroomBody);
+    //verify the response
+    //add the response to the redux state
+    return response;
+  }
+
   return {
     fetchAllClassrooms,
     removeStudentFromClassroom,
     deleteClass,
+    createClassroom,
   };
 };

@@ -3,6 +3,7 @@ import { setStudents } from "../redux/studentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addStudentToClassService,
+  createStudentService,
   deleteStudentService,
   fetchStudentsService,
 } from "../services/students.service";
@@ -10,6 +11,7 @@ import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { useQueryClient } from "react-query";
 import { setClassrooms } from "../redux/classroomsSlice";
+import { ICreateStudentBody } from "../interfaces/createStudentBody.interface";
 
 export const useStudentsHook = () => {
   const dispatch = useDispatch();
@@ -109,9 +111,15 @@ export const useStudentsHook = () => {
     return response;
   };
 
+  const createStudent = async (createStudentBody: ICreateStudentBody) => {
+    const reply = await createStudentService(createStudentBody);
+    return reply;
+  }
+
   return {
     fetchAllStudents,
     addStudentToClass,
     deleteStudent,
+    createStudent,
   };
 };
