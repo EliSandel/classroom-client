@@ -32,17 +32,13 @@ export const createStudentService = async (studentBody: ICreateStudentBody) => {
 
     return response.data;
   } catch (error) {
-    
     if (axios.isAxiosError(error)) {
-      throw {
-        status: error.response?.status,
-        message: error.response?.data?.message || "Failed to create student",
-      };
+      throw new Error(
+        error.response?.data.message ||
+          "An error occurred while creating the student"
+      );
     }
 
-    throw {
-      status: null,
-      message: "An unknown error ocurred while creatin student",
-    };
+    throw new Error("An unexpected error occurred.");
   }
 };

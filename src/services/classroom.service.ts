@@ -23,24 +23,20 @@ export const deleteClassService = async (classroomId: string) => {
   return response.data;
 };
 
-export const createClassroomService = async (classroomBody: ICreateClassroomBody) => {
-
+export const createClassroomService = async (
+  classroomBody: ICreateClassroomBody
+) => {
   try {
-    const response = await axios.post(`${API_URL}/addClassroom`, classroomBody)
+    const response = await axios.post(`${API_URL}/addClassroom`, classroomBody);
+
     return response.data;
   } catch (error) {
-
-    if ( axios.isAxiosError(error) ) {
-      console.error("Error creating classroom: ", error.response?.data || error.message);
-      throw {
-        status: error.response?.status,
-        message: error.response?.data?.message || "Failed to create classroom",
-      };
+    if (axios.isAxiosError(error)) {
+      throw new Error(
+        error.response?.data.message ||
+          "An error occurred while creating the classroom"
+      );
     }
-    
-    throw {
-      status: null,
-      message: "An unknown error ocurred while creatin classroom"
-    }
+    throw new Error("An unexpected error occurred");
   }
 };

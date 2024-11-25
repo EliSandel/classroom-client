@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { FormControl, TextField, Button, Container, Typography, Box, FormHelperText } from '@mui/material';
+import React, { useState } from "react";
+import {
+  FormControl,
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Box,
+  FormHelperText,
+} from "@mui/material";
 import { useStudentsHook } from "../../../../hooks/useStudents.hook"; // Assuming this hook is similar to useClassroomsHook
-import { ICreateStudentBody } from '../../../../interfaces/createStudentBody.interface'; // Create this interface similar to ICreateClassroomBody
+import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface"; // Create this interface similar to ICreateClassroomBody
 
 const CreateStudentForm = () => {
   const [formData, setFormData] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
-    age: '',
-    profession: '',
+    id: "",
+    firstName: "",
+    lastName: "",
+    age: "",
+    profession: "",
   });
 
   const clearFormData = () => {
@@ -20,7 +28,7 @@ const CreateStudentForm = () => {
       age: "",
       profession: "",
     });
-  }
+  };
 
   const { createStudent } = useStudentsHook(); // Assuming you have this hook
 
@@ -34,7 +42,7 @@ const CreateStudentForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -43,7 +51,13 @@ const CreateStudentForm = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const formErrors = { id: false, firstName: false, lastName: false, age: false, profession: false };
+    const formErrors = {
+      id: false,
+      firstName: false,
+      lastName: false,
+      age: false,
+      profession: false,
+    };
 
     // Basic validation
     if (!formData.id) formErrors.id = true;
@@ -68,18 +82,27 @@ const CreateStudentForm = () => {
         await createStudent(createStudentBody);
         alert("Student created successfully!");
       } catch (error) {
-        alert(`Error: ${error.message}`)
+        alert(error);
       }
-      clearFormData();      
+      clearFormData();
     }
   };
 
   return (
     <Container maxWidth="xs">
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
-        <Typography variant="h5" gutterBottom>Add new student</Typography>
-        <form onSubmit={handleSubmit} style={{ width: '60%' }}>
-          <FormControl fullWidth margin='dense' error={errors.id}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          mt: 4,
+        }}
+      >
+        <Typography variant="h5" gutterBottom>
+          Add new student
+        </Typography>
+        <form onSubmit={handleSubmit} style={{ width: "60%" }}>
+          <FormControl fullWidth margin="dense" error={errors.id}>
             <TextField
               label="Student ID"
               variant="outlined"
@@ -88,7 +111,9 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.id && <FormHelperText>Student ID is required</FormHelperText>}
+            {errors.id && (
+              <FormHelperText>Student ID is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.firstName}>
@@ -100,7 +125,9 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.firstName && <FormHelperText>First name is required</FormHelperText>}
+            {errors.firstName && (
+              <FormHelperText>First name is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.lastName}>
@@ -112,7 +139,9 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.lastName && <FormHelperText>Last name is required</FormHelperText>}
+            {errors.lastName && (
+              <FormHelperText>Last name is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.age}>
@@ -125,7 +154,9 @@ const CreateStudentForm = () => {
               required
               type="number"
             />
-            {errors.age && <FormHelperText>Valid age is required</FormHelperText>}
+            {errors.age && (
+              <FormHelperText>Valid age is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.profession}>
@@ -137,7 +168,9 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.profession && <FormHelperText>Profession is required</FormHelperText>}
+            {errors.profession && (
+              <FormHelperText>Profession is required</FormHelperText>
+            )}
           </FormControl>
 
           <Button

@@ -92,15 +92,10 @@ export const useClassroomsHook = () => {
   };
 
   const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
-    try {
-      const response = await createClassroomService(createClassroomBody);
-      dispatch(setClassrooms([...classrooms, response]));
+    const response = await createClassroomService(createClassroomBody);
+    dispatch(setClassrooms([...classrooms, response]));
 
-      return response;
-    } catch (error) {
-      console.log("Failed to create classroom: ", error.message);
-      throw error;
-    }
+    return response;
   };
 
   return {

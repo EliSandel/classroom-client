@@ -65,7 +65,7 @@ const CreateClassForm = () => {
         await createClassroom(createClassroomBody);
         alert("Classroom created successfully!");
       } catch (error) {
-        alert(`Error: ${error.message}`);
+        alert(error);
       }
       clearFormData();
     }
