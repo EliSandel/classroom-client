@@ -12,6 +12,16 @@ const CreateStudentForm = () => {
     profession: '',
   });
 
+  const clearFormData = () => {
+    setFormData({
+      id: "",
+      firstName: "",
+      lastName: "",
+      age: "",
+      profession: "",
+    });
+  }
+
   const { createStudent } = useStudentsHook(); // Assuming you have this hook
 
   const [errors, setErrors] = useState({
@@ -30,8 +40,9 @@ const CreateStudentForm = () => {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
     const formErrors = { id: false, firstName: false, lastName: false, age: false, profession: false };
 
     // Basic validation
@@ -49,11 +60,17 @@ const CreateStudentForm = () => {
         id: formData.id,
         firstName: formData.firstName,
         lastName: formData.lastName,
-        age: Number(formData.age),  // Convert age to number
+        age: Number(formData.age),
         profession: formData.profession,
       };
 
-      const response = createStudent(createStudentBody);
+      try {
+        await createStudent(createStudentBody);
+        alert("Student created successfully!");
+        clearFormData();      
+      } catch (error) {
+        alert(`Error: ${error.message}`)
+      }
     }
   };
 
@@ -64,7 +81,7 @@ const CreateStudentForm = () => {
         <form onSubmit={handleSubmit} style={{ width: '100%' }}>
           <FormControl fullWidth margin="normal" error={errors.id}>
             <TextField
-              label="Student ID *"
+              label="Student ID"
               variant="outlined"
               name="id"
               value={formData.id}
@@ -76,7 +93,7 @@ const CreateStudentForm = () => {
 
           <FormControl fullWidth margin="normal" error={errors.firstName}>
             <TextField
-              label="First Name *"
+              label="First Name"
               variant="outlined"
               name="firstName"
               value={formData.firstName}
@@ -88,7 +105,7 @@ const CreateStudentForm = () => {
 
           <FormControl fullWidth margin="normal" error={errors.lastName}>
             <TextField
-              label="Last Name *"
+              label="Last Name"
               variant="outlined"
               name="lastName"
               value={formData.lastName}
@@ -100,7 +117,7 @@ const CreateStudentForm = () => {
 
           <FormControl fullWidth margin="normal" error={errors.age}>
             <TextField
-              label="Age *"
+              label="Age"
               variant="outlined"
               name="age"
               value={formData.age}
@@ -113,7 +130,7 @@ const CreateStudentForm = () => {
 
           <FormControl fullWidth margin="normal" error={errors.profession}>
             <TextField
-              label="Profession *"
+              label="Profession"
               variant="outlined"
               name="profession"
               value={formData.profession}

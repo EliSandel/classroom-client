@@ -9,8 +9,7 @@ const Classes = () => {
   
   const classState: IClassroom[] = useSelector(
     (state: RootState) => state.classrooms.classrooms
-  );
-  
+  );  
 
   const ClassCardElements = classState.map((classroom) => {
     return (

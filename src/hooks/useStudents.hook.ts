@@ -112,8 +112,16 @@ export const useStudentsHook = () => {
   };
 
   const createStudent = async (createStudentBody: ICreateStudentBody) => {
-    const reply = await createStudentService(createStudentBody);
-    return reply;
+    try {
+      const reply = await createStudentService(createStudentBody);
+      dispatch(setStudents([...studentsState, reply]))
+
+      return reply;
+
+    } catch (error) {// what to do with the type over here
+      console.log("Failed to create student: ", error.message);
+      throw error;
+    }
   }
 
   return {

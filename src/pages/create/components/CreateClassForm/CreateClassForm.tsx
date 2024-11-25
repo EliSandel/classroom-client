@@ -1,13 +1,13 @@
-import React, { useState } from "react";
 import {
-  FormControl,
-  TextField,
+  Box,
   Button,
+  TextField,
   Container,
   Typography,
-  Box,
+  FormControl,
   FormHelperText,
 } from "@mui/material";
+import React, { useState } from "react";
 import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
 import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
 
@@ -17,6 +17,14 @@ const CreateClassForm = () => {
     name: "",
     maxOccupancy: "",
   });
+
+  const clearFormData = () => {
+    setFormData({
+      id: "",
+      name: "",
+      maxOccupancy: "",
+    });
+  };
 
   const { createClassroom } = useClassroomsHook();
 
@@ -34,11 +42,11 @@ const CreateClassForm = () => {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
     const formErrors = { id: false, name: false, maxOccupancy: false };
 
-    // Basic validation
     if (!formData.id) formErrors.id = true;
     if (!formData.name) formErrors.name = true;
     if (!formData.maxOccupancy || isNaN(Number(formData.maxOccupancy)))
@@ -46,7 +54,6 @@ const CreateClassForm = () => {
 
     setErrors(formErrors);
 
-    // If no errors, handle form submission
     if (!Object.values(formErrors).includes(true)) {
       const createClassroomBody: ICreateClassroomBody = {
         id: formData.id,
@@ -54,7 +61,13 @@ const CreateClassForm = () => {
         maxOccupancy: Number(formData.maxOccupancy),
       };
 
-      const response = createClassroom(createClassroomBody);      
+      try {
+        await createClassroom(createClassroomBody);
+        alert("Classroom created successfully!");
+        clearFormData();
+      } catch (error) {
+        alert(`Error: ${error.message}`);
+      }
     }
   };
 

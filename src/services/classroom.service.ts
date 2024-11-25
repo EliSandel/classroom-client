@@ -26,8 +26,25 @@ export const deleteClassService = async (classroomId: string) => {
 };
 
 export const createClassroomService = async (classroomBody: ICreateClassroomBody) => {
-  const response = await axios.post(`${API_URL}/addClassroom`, classroomBody)
-  return response.data;
+
+  try {
+    const response = await axios.post(`${API_URL}/addClassroom`, classroomBody)
+    return response.data;
+  } catch (error) {
+
+    if ( axios.isAxiosError(error) ) {
+      console.error("Error creating classroom: ", error.response?.data || error.message);
+      throw {
+        status: error.response?.status,
+        message: error.response?.data?.message || "Failed to create classroom",
+      };
+    }
+    
+    throw {
+      status: null,
+      message: "An unknown error ocurred while creatin classroom"
+    }
+  }
 };
 
 //add try catch to all of my functions

@@ -70,7 +70,7 @@ export const useClassroomsHook = () => {
       const response = await deleteClassService(classroomId);
       return response;
     }
-    return "Cannot delete a class with students."; //take care of this
+    throw new Error("Cannot delete class: " + classroomId + ". Classroom must be empty in order to delete.");
   };
 
   const fetchAllClassrooms = async () => {
@@ -87,11 +87,17 @@ export const useClassroomsHook = () => {
   };
 
   const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
-    const response = await createClassroomService(createClassroomBody);
-    //verify the response
-    //add the response to the redux state
-    return response;
-  }
+    try {
+      const response = await createClassroomService(createClassroomBody);
+      dispatch(setClassrooms([...classrooms, response]));
+
+      return response;
+      
+    } catch (error) {
+      console.log("Failed to create classroom: ", error.message);
+      throw error;
+    }
+  };
 
   return {
     fetchAllClassrooms,
