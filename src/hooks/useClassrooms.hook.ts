@@ -81,6 +81,7 @@ export const useClassroomsHook = () => {
     const data = await queryClient.fetchQuery({
       queryKey: ["classrooms"],
       queryFn: fetchClassrooms,
+      staleTime: Infinity,
     });
 
     if (data) {

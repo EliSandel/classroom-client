@@ -29,6 +29,7 @@ export const useStudentsHook = () => {
     const data = await queryClient.fetchQuery({
       queryKey: ["students"],
       queryFn: fetchStudentsService,
+      staleTime: Infinity,
     });
 
     if (data) {
