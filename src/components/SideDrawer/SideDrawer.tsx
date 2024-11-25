@@ -9,12 +9,12 @@ import ListItemButton from "@mui/material/ListItemButton";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
-  toggleDrawer: (newOpen: boolean) => void; 
+  toggleDrawer: (newOpen: boolean) => void;
 }
 
 const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {
   const classes = useStyles();
-  
+
   const arrayOfLinkTextAndCorrespondingRoutes = [
     { text: "Classes", route: "/" },
     { text: "Students", route: "/students" },

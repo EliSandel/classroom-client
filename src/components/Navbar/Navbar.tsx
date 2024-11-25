@@ -16,25 +16,24 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
- 
-  return (  
-    <Box className={classes.navbarBox}> 
+  return (
+    <Box className={classes.navbarBox}>
       <AppBar position="static" className={classes.appBarDiv}>
         <Toolbar variant="dense" className={classes.toolBarDiv}>
           <IconButton
             edge="start"
-            color="inherit" 
+            color="inherit"
             aria-label="menu"
-            sx={{ mr: 2, ml: 0}}
+            sx={{ mr: 2, ml: 0 }}
             onClick={() => setOpenDrawer(true)}
           >
-            <MenuIcon/>
+            <MenuIcon />
           </IconButton>
           <Typography variant="h5" color="inherit" component="div">
             Shob Classes
           </Typography>
-          <LoyaltyIcon 
-            className={classes.loyaltyIcon} 
+          <LoyaltyIcon
+            className={classes.loyaltyIcon}
             onClick={() => dispatch(toggleColor())}
           />
         </Toolbar>

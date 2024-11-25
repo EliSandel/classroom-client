@@ -1,7 +1,8 @@
-import { Box, Button } from "@mui/material";
+import { useState } from "react";
 import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
+import { Box, Button } from "@mui/material";
 import { RootState } from "../../store/store";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
@@ -10,10 +11,9 @@ import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
 import TableContainer from "@mui/material/TableContainer";
 import { IStudent } from "../../interfaces/student.interface";
-import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
-import { useState } from "react";
-import { IClassroom } from "../../interfaces/classroom.interface";
 import { useStudentsHook } from "../../hooks/useStudents.hook";
+import { IClassroom } from "../../interfaces/classroom.interface";
+import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
 
 const StudentsTable = () => {
   const classes = useStyles();
@@ -33,13 +33,14 @@ const StudentsTable = () => {
     setIsDialogOpen(true);
   };
 
-  const { deleteStudent } = useStudentsHook()
+  const { deleteStudent } = useStudentsHook();
 
   const handleClose = () => {
     setIsDialogOpen(false);
     setSelectedStudentId("");
   };
 
+  //check for a way to do it from the table row and access its children that are tablecell
   return (
     <Box className={classes.root}>
       <TableContainer component={Paper}>
@@ -83,7 +84,12 @@ const StudentsTable = () => {
                   </Button>
                 </TableCell>
                 <TableCell className={classes.alignCenter}>
-                  <Button variant="outlined" onClick={async () => deleteStudent(student.id)}>Delete</Button>
+                  <Button
+                    variant="outlined"
+                    onClick={async () => deleteStudent(student.id)}
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
