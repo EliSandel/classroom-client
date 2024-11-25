@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import colorReducer from "../redux/colorSlice";
 import studentsReducer from "../redux/studentsSlice";
 import classroomsReducer from '../redux/classroomsSlice';
 
@@ -8,7 +7,6 @@ import classroomsReducer from '../redux/classroomsSlice';
 
 const store = configureStore({
   reducer: {
-    color: colorReducer,
     classrooms: classroomsReducer,
     students: studentsReducer,
   },

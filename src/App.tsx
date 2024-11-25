@@ -1,16 +1,13 @@
 import "./app.css";
 import AppRoutes from "./routes/AppRoutes";
-import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { useButtonColor } from "./context/ButtonColorContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const App = () => {
-  const buttonColor = useSelector(
-    (state: RootState) => state.color.buttonColor
-  );
-
   const queryClient = new QueryClient();
+
+  const { buttonColor } = useButtonColor();
 
   const theme = createTheme({
     palette: {

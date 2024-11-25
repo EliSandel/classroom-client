@@ -1,10 +1,8 @@
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
-import { useSelector } from "react-redux";
 import { IconButton } from "@mui/material";
 import { useStyles } from "./ClassCard.style";
-import { RootState } from "../../store/store";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -48,11 +46,8 @@ const ClassCard = ({
     setIsDialogOpen(false);
   };
 
-  const backgroundColor = useSelector(
-    (state: RootState) => state.color.buttonColor
-  );
 
-  const classes = useStyles({ backgroundColor });
+  const classes = useStyles();
 
   return (
     <Card className={classes.cardDiv} elevation={0}>

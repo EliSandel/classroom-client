@@ -1,20 +1,19 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
-import { useDispatch } from "react-redux";
 import { useStyles } from "./Navbar.style";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SideDrawer from "../SideDrawer/SideDrawer";
-import { toggleColor } from "../../redux/colorSlice";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
+import { useButtonColor } from "../../context/ButtonColorContext";
 
 const Navbar = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const dispatch = useDispatch();
   const classes = useStyles();
+  const { toggleColor } = useButtonColor();
 
   return (
     <Box className={classes.navbarBox}>
@@ -34,7 +33,7 @@ const Navbar = () => {
           </Typography>
           <LoyaltyIcon
             className={classes.loyaltyIcon}
-            onClick={() => dispatch(toggleColor())}
+            onClick={toggleColor}
           />
         </Toolbar>
       </AppBar>
