@@ -1,12 +1,12 @@
 import {
+  List,
   Avatar,
   Dialog,
-  DialogTitle,
-  IconButton,
-  List,
   ListItem,
-  ListItemAvatar,
+  IconButton,
+  DialogTitle,
   ListItemText,
+  ListItemAvatar,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";

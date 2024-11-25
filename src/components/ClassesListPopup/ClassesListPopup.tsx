@@ -20,22 +20,22 @@ interface SimpleDialogProps {
   classesList: IClassroom[];
 }
 
-
-function ClassesListPopup({
+const ClassesListPopup = ({
   open,
   studentId,
   onClose,
   classesList,
-}: SimpleDialogProps) {
+}: SimpleDialogProps) => {
   const { addStudentToClass } = useStudentsHook();
 
   const handleAddStudentToClassClick = async (classId: string) => {
-    const response = await addStudentToClass(classId, studentId);
+    await addStudentToClass(classId, studentId);
     onClose();
   };
 
   const availableClasses: IClassroom[] = classesList.filter(
-    (classroom: IClassroom) => classroom.students.length < classroom.maxOccupancy
+    (classroom: IClassroom) =>
+      classroom.students.length < classroom.maxOccupancy
   );
 
   return (
@@ -53,7 +53,7 @@ function ClassesListPopup({
             <IconButton
               onClick={async () => handleAddStudentToClassClick(classroom.id)}
             >
-              <AddIcon color="primary"/>
+              <AddIcon color="primary" />
             </IconButton>
           </ListItem>
         ))}

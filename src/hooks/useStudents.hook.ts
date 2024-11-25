@@ -1,15 +1,17 @@
-import { RootState } from "../store/store";
-import { setStudents } from "../redux/studentsSlice";
-import { useDispatch, useSelector } from "react-redux";
 import {
   addStudentToClassService,
+  createStudentService,
   deleteStudentService,
   fetchStudentsService,
 } from "../services/students.service";
+import { RootState } from "../store/store";
+import { useQueryClient } from "react-query";
+import { setStudents } from "../redux/studentsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setClassrooms } from "../redux/classroomsSlice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
-import { useQueryClient } from "react-query";
-import { setClassrooms } from "../redux/classroomsSlice";
+import { ICreateStudentBody } from "../interfaces/createStudentBody.interface";
 
 export const useStudentsHook = () => {
   const dispatch = useDispatch();
@@ -57,6 +59,7 @@ export const useStudentsHook = () => {
           students: [...classroom.students, updatedStudentToAdd],
         };
       }
+
       return classroom;
     });
 
@@ -64,6 +67,7 @@ export const useStudentsHook = () => {
       if (student.id === studentId) {
         return updatedStudentToAdd;
       }
+
       return student;
     });
 
@@ -71,6 +75,7 @@ export const useStudentsHook = () => {
     dispatch(setClassrooms(updatedClassrooms));
 
     const response = await addStudentToClassService(classId, studentId);
+
     return response;
   };
 
@@ -83,7 +88,6 @@ export const useStudentsHook = () => {
       throw new Error("Student not found");
     }
 
-
     if (studentToDelete.classroomId) {
       const updatedClassrooms = classroomsState.map((classroom) => {
         if (classroom.id === studentToDelete.classroomId) {
@@ -94,6 +98,7 @@ export const useStudentsHook = () => {
             ),
           };
         }
+
         return classroom;
       });
       dispatch(setClassrooms(updatedClassrooms));
@@ -104,14 +109,28 @@ export const useStudentsHook = () => {
     );
 
     dispatch(setStudents(updatedStudents));
-
     const response = await deleteStudentService(studentId);
+
     return response;
+  };
+
+  const createStudent = async (createStudentBody: ICreateStudentBody) => {
+    try {
+      const reply = await createStudentService(createStudentBody);
+      dispatch(setStudents([...studentsState, reply]));
+
+      return reply;
+    } catch (error) {
+      // what to do with the type over here
+      console.log("Failed to create student: ", error.message);
+      throw error;
+    }
   };
 
   return {
     fetchAllStudents,
     addStudentToClass,
     deleteStudent,
+    createStudent,
   };
 };

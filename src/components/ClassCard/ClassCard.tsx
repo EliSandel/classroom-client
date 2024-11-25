@@ -9,9 +9,9 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
-import StudentsListPopup from "../StudentsListPopup/StudentsListPopup";
 import { IStudent } from "../../interfaces/student.interface";
 import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
+import StudentsListPopup from "../StudentsListPopup/StudentsListPopup";
 
 interface ClassCardProps {
   classId: string;
@@ -37,8 +37,11 @@ const ClassCard = ({
   };
 
   const handleDeleteClassClick = async () => {
-    const response = await deleteClass(classId, studentsList);
-    console.log(response) // add error popup if my response is no.
+    try {
+      await deleteClass(classId, studentsList);
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
   };
 
   const handleClose = () => {
@@ -50,8 +53,6 @@ const ClassCard = ({
   );
 
   const classes = useStyles({ backgroundColor });
-
-  console.log("card component ", studentsList);
 
   return (
     <Card className={classes.cardDiv} elevation={0}>

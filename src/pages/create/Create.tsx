@@ -1,7 +1,11 @@
+import CreateClassForm from "./components/CreateClassForm/CreateClassForm";
+import CreateStudentForm from "./components/CreateStudentForm/CreateStudentForm";
+
 const Create = () => {
   return (
-    <div>
-      <h1>Create page</h1>
+    <div style={ { display: "flex" } }>
+      <CreateClassForm />
+      <CreateStudentForm />
     </div>
   );
 };

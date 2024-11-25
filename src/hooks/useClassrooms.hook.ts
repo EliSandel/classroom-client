@@ -1,3 +1,9 @@
+import {
+  fetchClassrooms,
+  deleteClassService,
+  createClassroomService,
+  removeStudentFromClassroomService,
+} from "../services/classroom.service";
 import { RootState } from "../store/store";
 import { useQueryClient } from "react-query";
 import { setStudents } from "../redux/studentsSlice";
@@ -6,11 +12,7 @@ import { setClassrooms } from "../redux/classroomsSlice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { validationForDeleteClass } from "../utilities/classroom.util";
-import {
-  deleteClassService,
-  fetchClassrooms,
-  removeStudentFromClassroomService,
-} from "../services/classroom.service";
+import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
 
 export const useClassroomsHook = () => {
   const dispatch = useDispatch();
@@ -49,8 +51,8 @@ export const useClassroomsHook = () => {
       return student;
     });
 
-    dispatch(setClassrooms(updatedClassrooms));
     dispatch(setStudents(updatedStudents));
+    dispatch(setClassrooms(updatedClassrooms));
 
     const response = await removeStudentFromClassroomService(
       classroomId,
@@ -68,7 +70,11 @@ export const useClassroomsHook = () => {
       const response = await deleteClassService(classroomId);
       return response;
     }
-    return "Cannot delete a class with students."; //take care of this
+    throw new Error(
+      "Cannot delete class: " +
+        classroomId +
+        ". Classroom must be empty in order to delete."
+    );
   };
 
   const fetchAllClassrooms = async () => {
@@ -84,9 +90,22 @@ export const useClassroomsHook = () => {
     return data;
   };
 
+  const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
+    try {
+      const response = await createClassroomService(createClassroomBody);
+      dispatch(setClassrooms([...classrooms, response]));
+
+      return response;
+    } catch (error) {
+      console.log("Failed to create classroom: ", error.message);
+      throw error;
+    }
+  };
+
   return {
     fetchAllClassrooms,
     removeStudentFromClassroom,
     deleteClass,
+    createClassroom,
   };
 };
