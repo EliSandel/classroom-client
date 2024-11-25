@@ -20,12 +20,12 @@ interface SimpleDialogProps {
   classesList: IClassroom[];
 }
 
-function ClassesListPopup({
+const ClassesListPopup = ({
   open,
   studentId,
   onClose,
   classesList,
-}: SimpleDialogProps) {
+}: SimpleDialogProps) => {
   const { addStudentToClass } = useStudentsHook();
 
   const handleAddStudentToClassClick = async (classId: string) => {

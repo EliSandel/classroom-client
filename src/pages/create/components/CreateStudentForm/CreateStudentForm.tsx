@@ -67,10 +67,10 @@ const CreateStudentForm = () => {
       try {
         await createStudent(createStudentBody);
         alert("Student created successfully!");
-        clearFormData();      
       } catch (error) {
         alert(`Error: ${error.message}`)
       }
+      clearFormData();      
     }
   };
 
@@ -78,8 +78,8 @@ const CreateStudentForm = () => {
     <Container maxWidth="xs">
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
         <Typography variant="h5" gutterBottom>Add new student</Typography>
-        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-          <FormControl fullWidth margin="normal" error={errors.id}>
+        <form onSubmit={handleSubmit} style={{ width: '60%' }}>
+          <FormControl fullWidth margin='dense' error={errors.id}>
             <TextField
               label="Student ID"
               variant="outlined"
@@ -91,7 +91,7 @@ const CreateStudentForm = () => {
             {errors.id && <FormHelperText>Student ID is required</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={errors.firstName}>
+          <FormControl fullWidth margin="dense" error={errors.firstName}>
             <TextField
               label="First Name"
               variant="outlined"
@@ -103,7 +103,7 @@ const CreateStudentForm = () => {
             {errors.firstName && <FormHelperText>First name is required</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={errors.lastName}>
+          <FormControl fullWidth margin="dense" error={errors.lastName}>
             <TextField
               label="Last Name"
               variant="outlined"
@@ -115,7 +115,7 @@ const CreateStudentForm = () => {
             {errors.lastName && <FormHelperText>Last name is required</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={errors.age}>
+          <FormControl fullWidth margin="dense" error={errors.age}>
             <TextField
               label="Age"
               variant="outlined"
@@ -128,7 +128,7 @@ const CreateStudentForm = () => {
             {errors.age && <FormHelperText>Valid age is required</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={errors.profession}>
+          <FormControl fullWidth margin="dense" error={errors.profession}>
             <TextField
               label="Profession"
               variant="outlined"

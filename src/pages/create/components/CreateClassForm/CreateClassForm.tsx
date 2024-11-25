@@ -64,10 +64,10 @@ const CreateClassForm = () => {
       try {
         await createClassroom(createClassroomBody);
         alert("Classroom created successfully!");
-        clearFormData();
       } catch (error) {
         alert(`Error: ${error.message}`);
       }
+      clearFormData();
     }
   };
 
@@ -84,10 +84,10 @@ const CreateClassForm = () => {
         <Typography variant="h5" gutterBottom>
           Create new class
         </Typography>
-        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
-          <FormControl fullWidth margin="normal" error={errors.id}>
+        <form onSubmit={handleSubmit} style={{ width: "60%" }}>
+          <FormControl fullWidth margin="dense" error={errors.id}>
             <TextField
-              label="Class ID *"
+              label="Class ID"
               variant="outlined"
               name="id"
               value={formData.id}
@@ -97,9 +97,9 @@ const CreateClassForm = () => {
             {errors.id && <FormHelperText>Class ID is required</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={errors.name}>
+          <FormControl fullWidth margin="dense" error={errors.name}>
             <TextField
-              label="Name *"
+              label="Name"
               variant="outlined"
               name="name"
               value={formData.name}
@@ -109,9 +109,9 @@ const CreateClassForm = () => {
             {errors.name && <FormHelperText>Name is required</FormHelperText>}
           </FormControl>
 
-          <FormControl fullWidth margin="normal" error={errors.maxOccupancy}>
+          <FormControl fullWidth margin="dense" error={errors.maxOccupancy}>
             <TextField
-              label="Max Seats *"
+              label="Max Seats"
               variant="outlined"
               name="maxOccupancy"
               value={formData.maxOccupancy}

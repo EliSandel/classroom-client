@@ -1,8 +1,6 @@
-// src/api/classrooms.ts
 import axios from "axios";
 import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
 
-// Base URL setup (optional)
 const API_URL = "http://localhost:3000/classrooms";
 
 export const fetchClassrooms = async () => {
@@ -46,5 +44,3 @@ export const createClassroomService = async (classroomBody: ICreateClassroomBody
     }
   }
 };
-
-//add try catch to all of my functions

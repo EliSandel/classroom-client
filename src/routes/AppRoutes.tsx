@@ -1,26 +1,11 @@
-import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Create from "../pages/create/Create";
 import Classes from "../pages/classes/Classes";
 import Navbar from "../components/Navbar/Navbar";
 import Students from "../pages/students/Students";
-import { useStudentsHook } from "../hooks/useStudents.hook";
-import { useClassroomsHook } from "../hooks/useClassrooms.hook";
 
 const AppRoutes: React.FC = () => {
-  const { fetchAllClassrooms } = useClassroomsHook();
-
-  useEffect(() => {
-    fetchAllClassrooms();
-  }, []);
-
-  const { fetchAllStudents } = useStudentsHook();
-
-  useEffect(() => {
-    fetchAllStudents();
-  }, []);
-
   return (
     <BrowserRouter>
       <Navbar />

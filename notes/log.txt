@@ -1,18 +1,3 @@
-Front End
-optimistic ui
+create image of my project. ci/cd GitHub action create image.
 
-
-for refetching use 
-react query invalidateQueries.
-
-
-
-
-
-
-
-Back End
-
-add soft-delete. deleted at column.
-pay attention, when i add a student again after deleting it there will be an error.
-before adding i need to check if it exists. if yes check if it was deleted. if yes set deleted at to null and update the info. or delete it and add a new one.
+automatically publich branch to the image
