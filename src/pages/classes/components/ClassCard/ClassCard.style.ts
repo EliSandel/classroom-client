@@ -57,8 +57,6 @@ export const useStyles = makeStyles({
   },
   trashIcon: {
     "&.MuiSvgIcon-root": {
-      // margin: "0",
-      // padding: "0",
     }
   },
   cardContentClass: {

@@ -8,8 +8,8 @@ import {
   Box,
   FormHelperText,
 } from "@mui/material";
-import { useStudentsHook } from "../../../../hooks/useStudents.hook"; // Assuming this hook is similar to useClassroomsHook
-import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface"; // Create this interface similar to ICreateClassroomBody
+import { useStudentsHook } from "../../../../hooks/useStudents.hook";
+import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface";
 
 const CreateStudentForm = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +30,7 @@ const CreateStudentForm = () => {
     });
   };
 
-  const { createStudent } = useStudentsHook(); // Assuming you have this hook
+  const { createStudent } = useStudentsHook();
 
   const [errors, setErrors] = useState({
     id: false,
