@@ -20,11 +20,11 @@ const StudentsTable = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedStudentId, setSelectedStudentId] = useState<string>("");
 
-  const studentsState: IStudent[] = useSelector(
+  const studentsState: IStudent[] | null = useSelector(
     (state: RootState) => state.students.students
   );
 
-  const classesState: IClassroom[] = useSelector(
+  const classesState: IClassroom[] | null = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );
 
@@ -56,7 +56,7 @@ const StudentsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {studentsState.map((student) => (
+            {studentsState?.map((student) => (
               <TableRow key={student.id}>
                 <TableCell className={classes.alignCenter}>
                   {student.id}
@@ -95,12 +95,14 @@ const StudentsTable = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <ClassesListPopup
-        open={isDialogOpen}
-        onClose={handleClose}
-        classesList={classesState}
-        studentId={selectedStudentId}
-      />
+      {classesState && (
+        <ClassesListPopup
+          open={isDialogOpen}
+          onClose={handleClose}
+          classesList={classesState}
+          studentId={selectedStudentId}
+        />
+      )}
     </Box>
   );
 };
