@@ -17,15 +17,18 @@ export const useStudentsHook = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
 
-  const studentsState: IStudent[] = useSelector(
+  const studentsState: IStudent[] | null = useSelector(
     (state: RootState) => state.students.students
   );
 
-  const classroomsState: IClassroom[] = useSelector(
+  const classroomsState: IClassroom[] | null = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );
 
   const fetchAllStudents = async () => {
+    if (studentsState !== null) {
+      return
+    }
     const data = await queryClient.fetchQuery({
       queryKey: ["students"],
       queryFn: fetchStudentsService,
@@ -40,6 +43,11 @@ export const useStudentsHook = () => {
   };
 
   const addStudentToClass = async (classId: string, studentId: string) => {
+
+    if (classroomsState === null || studentsState === null) {
+      throw new Error("This error will never be called. it is just here to fix typescript issues.");
+    }
+
     const studentToAdd = studentsState.find(
       (student) => student.id === studentId
     );
@@ -81,6 +89,11 @@ export const useStudentsHook = () => {
   };
 
   const deleteStudent = async (studentId: string) => {
+
+    if (classroomsState === null || studentsState === null) {
+      throw new Error("This error will never be called. it is just here to fix typescript issues.");
+    }
+
     const studentToDelete = studentsState.find(
       (student) => student.id === studentId
     );
@@ -116,6 +129,11 @@ export const useStudentsHook = () => {
   };
 
   const createStudent = async (createStudentBody: ICreateStudentBody) => {
+
+    if (studentsState === null) {
+      throw new Error("This error will never be called. it is just here to fix typescript issues.");
+    }
+
     const reply = await createStudentService(createStudentBody);
     dispatch(setStudents([...studentsState, reply]));
 

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
 
-const API_URL = "http://localhost:3000/classrooms";
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 export const fetchClassrooms = async () => {
-  const response = await axios.get(`${API_URL}`);
+  const response = await axios.get(`${API_URL}/classrooms`);
   return response.data;
 };
 
@@ -13,13 +14,13 @@ export const removeStudentFromClassroomService = async (
   studentId: string
 ) => {
   const response = await axios.put(
-    `${API_URL}/${classroomId}/removeStudent/${studentId}`
+    `${API_URL}/classrooms/${classroomId}/removeStudent/${studentId}`
   );
   return response.data;
 };
 
 export const deleteClassService = async (classroomId: string) => {
-  const response = await axios.delete(`${API_URL}/${classroomId}`);
+  const response = await axios.delete(`${API_URL}/classrooms/${classroomId}`);
   return response.data;
 };
 
@@ -27,7 +28,7 @@ export const createClassroomService = async (
   classroomBody: ICreateClassroomBody
 ) => {
   try {
-    const response = await axios.post(`${API_URL}/addClassroom`, classroomBody);
+    const response = await axios.post(`${API_URL}/classrooms/addClassroom`, classroomBody);
 
     return response.data;
   } catch (error) {

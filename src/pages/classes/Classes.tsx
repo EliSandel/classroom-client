@@ -9,24 +9,24 @@ import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
 
 const Classes = () => {
   const classes = useStyles();
-
   const { fetchAllClassrooms } = useClassroomsHook();
-
-  useEffect(() => {
-    fetchAllClassrooms();
-  }, []);
-
   const { fetchAllStudents } = useStudentsHook();
 
   useEffect(() => {
-    fetchAllStudents();
-  }, []);
+    const fetchData = async () => {
+      await fetchAllStudents();
+      await fetchAllClassrooms();
+    }
+    fetchData();
+  }, [])
   
-  const classState: IClassroom[] = useSelector(
+  const classState: IClassroom[] | null = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );  
 
-  const ClassCardElements = classState.map((classroom) => {
+  console.log("classes page classes state: ", classState)
+
+  const ClassCardElements = classState?.map((classroom) => {
     return (
       <ClassCard
         key={classroom.id}

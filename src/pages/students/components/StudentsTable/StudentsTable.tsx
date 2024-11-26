@@ -11,7 +11,7 @@ import { useStyles } from "./StudentsTable.style";
 import { RootState } from "../../../../store/store";
 import TableContainer from "@mui/material/TableContainer";
 import { IStudent } from "../../../../interfaces/student.interface";
-import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
+import ClassesListPopup from "../../../../components/ClassesListPopup/ClassesListPopup";
 import { useStudentsHook } from "../../../../hooks/useStudents.hook";
 import { IClassroom } from "../../../../interfaces/classroom.interface";
 
@@ -40,7 +40,6 @@ const StudentsTable = () => {
     setSelectedStudentId("");
   };
 
-  //check for a way to do it from the table row and access its children that are tablecell
   return (
     <Box className={classes.root}>
       <TableContainer component={Paper}>

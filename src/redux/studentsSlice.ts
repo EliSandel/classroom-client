@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IStudent } from "../interfaces/student.interface";
 
 interface IInitialStudentsState {
-  students: IStudent[];
+  students: IStudent[] | null;
 }
 
 const initialState: IInitialStudentsState = {
-  students: [],
+  students: null,
 };
 
 const studentsSlice = createSlice({
@@ -14,7 +14,10 @@ const studentsSlice = createSlice({
   initialState: initialState,
   reducers: {
     setStudents: (state, action: PayloadAction<IStudent[]>) => {
-      state.students = [...action.payload];
+      return {
+        ...state,
+        students: [...action.payload]
+      }
     },
   },
 });

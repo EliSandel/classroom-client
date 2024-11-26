@@ -15,20 +15,43 @@ import { validationForDeleteClass } from "../utilities/classroom.util";
 import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
 
 export const useClassroomsHook = () => {
-  const dispatch = useDispatch();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
-  const classrooms: IClassroom[] = useSelector(
+  const classrooms: IClassroom[] | null = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );
-  const students: IStudent[] = useSelector(
+  const students: IStudent[] | null = useSelector(
     (state: RootState) => state.students.students
   );
+
+  const fetchAllClassrooms = async () => {
+    if (classrooms !== null) {
+      return;
+    }
+    const data = await queryClient.fetchQuery({
+      queryKey: ["classrooms"],
+      queryFn: fetchClassrooms,
+      staleTime: Infinity,
+    });
+
+    if (data) {
+      dispatch(setClassrooms(data));
+    }
+
+    return data;
+  };
 
   const removeStudentFromClassroom = async (
     classroomId: string,
     studentId: string
   ): Promise<void> => {
+    if (classrooms === null || students === null) {
+      throw new Error(
+        "This error will never be called. it is just here to fix typescript issues."
+      );
+    }
+
     const updatedClassrooms = classrooms.map((classroom: IClassroom) => {
       if (classroom.id === classroomId) {
         return {
@@ -62,6 +85,12 @@ export const useClassroomsHook = () => {
   };
 
   const deleteClass = async (classroomId: string, studentList: IStudent[]) => {
+    if (classrooms === null || students === null) {
+      throw new Error(
+        "This error will never be called. it is just here to fix typescript issues."
+      );
+    }
+
     if (await validationForDeleteClass(studentList)) {
       const updatedClassrooms = classrooms.filter(
         (classroom: IClassroom) => classroom.id !== classroomId
@@ -77,21 +106,13 @@ export const useClassroomsHook = () => {
     );
   };
 
-  const fetchAllClassrooms = async () => {
-    const data = await queryClient.fetchQuery({
-      queryKey: ["classrooms"],
-      queryFn: fetchClassrooms,
-      staleTime: Infinity,
-    });
-
-    if (data) {
-      dispatch(setClassrooms(data));
+  const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
+    if (classrooms === null) {
+      throw new Error(
+        "This error will never be called. it is just here to fix typescript issues."
+      );
     }
 
-    return data;
-  };
-
-  const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
     const response = await createClassroomService(createClassroomBody);
     dispatch(setClassrooms([...classrooms, response]));
 
