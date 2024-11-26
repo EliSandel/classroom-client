@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useStudentsHook } from "../../hooks/useStudents.hook";
 import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
-import StudentsTable from "../../components/StudentsTable/StudentsTable";
+import StudentsTable from "./components/StudentsTable/StudentsTable";
 
 const StudentsPage = () => {
   

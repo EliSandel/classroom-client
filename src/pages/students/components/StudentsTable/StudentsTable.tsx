@@ -3,17 +3,17 @@ import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
 import { Box, Button } from "@mui/material";
-import { RootState } from "../../store/store";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
+import { RootState } from "../../../../store/store";
 import TableContainer from "@mui/material/TableContainer";
-import { IStudent } from "../../interfaces/student.interface";
-import { useStudentsHook } from "../../hooks/useStudents.hook";
-import { IClassroom } from "../../interfaces/classroom.interface";
+import { IStudent } from "../../../../interfaces/student.interface";
 import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
+import { useStudentsHook } from "../../../../hooks/useStudents.hook";
+import { IClassroom } from "../../../../interfaces/classroom.interface";
 
 const StudentsTable = () => {
   const classes = useStyles();

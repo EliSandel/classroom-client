@@ -7,9 +7,9 @@ import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IStudent } from "../../interfaces/student.interface";
-import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
-import StudentsListPopup from "../StudentsListPopup/StudentsListPopup";
+import { IStudent } from "../../../../interfaces/student.interface";
+import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
+import StudentsListPopup from "../../components/StudentsListPopup/StudentsListPopup";
 
 interface ClassCardProps {
   classId: string;
@@ -38,14 +38,13 @@ const ClassCard = ({
     try {
       await deleteClass(classId, studentsList);
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      alert(error);
     }
   };
 
   const handleClose = () => {
     setIsDialogOpen(false);
   };
-
 
   const classes = useStyles();
 
