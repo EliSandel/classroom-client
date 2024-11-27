@@ -26,6 +26,7 @@ export const useStudentsHook = () => {
   );
 
   const fetchAllStudents = async () => {
+
     if (studentsState !== null) {
       return
     }
@@ -44,11 +45,7 @@ export const useStudentsHook = () => {
 
   const addStudentToClass = async (classId: string, studentId: string) => {
 
-    if (classroomsState === null || studentsState === null) {
-      throw new Error("This error will never be called. it is just here to fix typescript issues.");
-    }
-
-    const studentToAdd = studentsState.find(
+    const studentToAdd = studentsState?.find(
       (student) => student.id === studentId
     );
 
@@ -61,7 +58,8 @@ export const useStudentsHook = () => {
       classroomId: classId,
     };
 
-    const updatedClassrooms = classroomsState.map((classroom) => {
+    const updatedClassrooms = classroomsState?.map((classroom) => {
+
       if (classroom.id === classId) {
         return {
           ...classroom,
@@ -70,15 +68,15 @@ export const useStudentsHook = () => {
       }
 
       return classroom;
-    });
+    }) ?? [];
 
-    const updatedStudents = studentsState.map((student) => {
+    const updatedStudents = studentsState?.map((student) => {
       if (student.id === studentId) {
         return updatedStudentToAdd;
       }
 
       return student;
-    });
+    }) ?? [];
 
     dispatch(setStudents(updatedStudents));
     dispatch(setClassrooms(updatedClassrooms));
@@ -90,11 +88,8 @@ export const useStudentsHook = () => {
 
   const deleteStudent = async (studentId: string) => {
 
-    if (classroomsState === null || studentsState === null) {
-      throw new Error("This error will never be called. it is just here to fix typescript issues.");
-    }
 
-    const studentToDelete = studentsState.find(
+    const studentToDelete = studentsState?.find(
       (student) => student.id === studentId
     );
 
@@ -103,7 +98,7 @@ export const useStudentsHook = () => {
     }
 
     if (studentToDelete.classroomId) {
-      const updatedClassrooms = classroomsState.map((classroom) => {
+      const updatedClassrooms = classroomsState?.map((classroom) => {
         if (classroom.id === studentToDelete.classroomId) {
           return {
             ...classroom,
@@ -114,13 +109,13 @@ export const useStudentsHook = () => {
         }
 
         return classroom;
-      });
+      }) ?? [];
       dispatch(setClassrooms(updatedClassrooms));
     }
 
-    const updatedStudents = studentsState.filter(
+    const updatedStudents = studentsState?.filter(
       (student) => student.id !== studentId
-    );
+    ) ?? [];
 
     dispatch(setStudents(updatedStudents));
     const response = await deleteStudentService(studentId);
@@ -130,12 +125,8 @@ export const useStudentsHook = () => {
 
   const createStudent = async (createStudentBody: ICreateStudentBody) => {
 
-    if (studentsState === null) {
-      throw new Error("This error will never be called. it is just here to fix typescript issues.");
-    }
-
     const reply = await createStudentService(createStudentBody);
-    dispatch(setStudents([...studentsState, reply]));
+    dispatch(setStudents([...(studentsState || []), reply]));
 
     return reply;
   };

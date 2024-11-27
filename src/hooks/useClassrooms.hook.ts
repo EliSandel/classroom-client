@@ -26,6 +26,7 @@ export const useClassroomsHook = () => {
   );
 
   const fetchAllClassrooms = async () => {
+    
     if (classrooms !== null) {
       return;
     }
@@ -46,33 +47,30 @@ export const useClassroomsHook = () => {
     classroomId: string,
     studentId: string
   ): Promise<void> => {
-    if (classrooms === null || students === null) {
-      throw new Error(
-        "This error will never be called. it is just here to fix typescript issues."
-      );
-    }
+    const updatedClassrooms =
+      classrooms?.map((classroom: IClassroom) => {
 
-    const updatedClassrooms = classrooms.map((classroom: IClassroom) => {
-      if (classroom.id === classroomId) {
-        return {
-          ...classroom,
-          students: classroom.students.filter(
-            (student) => student.id !== studentId
-          ),
-        };
-      }
-      return classroom;
-    });
+        if (classroom.id === classroomId) {
+          return {
+            ...classroom,
+            students: classroom.students.filter(
+              (student) => student.id !== studentId
+            ),
+          };
+        }
+        return classroom;
+      }) ?? [];
 
-    const updatedStudents = students.map((student: IStudent) => {
-      if (student.id === studentId) {
-        return {
-          ...student,
-          classroomId: null,
-        };
-      }
-      return student;
-    });
+    const updatedStudents =
+      students?.map((student: IStudent) => {
+        if (student.id === studentId) {
+          return {
+            ...student,
+            classroomId: null,
+          };
+        }
+        return student;
+      }) ?? [];
 
     dispatch(setStudents(updatedStudents));
     dispatch(setClassrooms(updatedClassrooms));
@@ -81,20 +79,16 @@ export const useClassroomsHook = () => {
       classroomId,
       studentId
     );
+
     return response;
   };
 
   const deleteClass = async (classroomId: string, studentList: IStudent[]) => {
-    if (classrooms === null || students === null) {
-      throw new Error(
-        "This error will never be called. it is just here to fix typescript issues."
-      );
-    }
 
     if (await validationForDeleteClass(studentList)) {
-      const updatedClassrooms = classrooms.filter(
-        (classroom: IClassroom) => classroom.id !== classroomId
-      );
+      const updatedClassrooms =
+        classrooms?.filter((classroom) => classroom.id !== classroomId) ?? [];
+
       dispatch(setClassrooms(updatedClassrooms));
       const response = await deleteClassService(classroomId);
       return response;
@@ -107,14 +101,8 @@ export const useClassroomsHook = () => {
   };
 
   const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
-    if (classrooms === null) {
-      throw new Error(
-        "This error will never be called. it is just here to fix typescript issues."
-      );
-    }
-
     const response = await createClassroomService(createClassroomBody);
-    dispatch(setClassrooms([...classrooms, response]));
+    dispatch(setClassrooms([...(classrooms || []), response]));
 
     return response;
   };
