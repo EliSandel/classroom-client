@@ -1,9 +1,12 @@
 import CreateClassForm from "./components/CreateClassForm/CreateClassForm";
 import CreateStudentForm from "./components/CreateStudentForm/CreateStudentForm";
+import { useStyles } from "./Create.style";
 
-const Create = () => {
+const Create: React.FC = () => {
+  const classes = useStyles();
+
   return (
-    <div style={ { display: "flex" } }>
+    <div className={classes.mainDiv}>
       <CreateClassForm />
       <CreateStudentForm />
     </div>

@@ -10,14 +10,14 @@ const initialState: IInitialStudentsState = {
 };
 
 const studentsSlice = createSlice({
-  name: 'students',
+  name: "students",
   initialState: initialState,
   reducers: {
     setStudents: (state, action: PayloadAction<IStudent[]>) => {
       return {
         ...state,
-        students: [...action.payload]
-      }
+        students: [...action.payload],
+      };
     },
   },
 });

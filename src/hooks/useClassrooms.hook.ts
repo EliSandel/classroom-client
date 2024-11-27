@@ -25,12 +25,12 @@ export const useClassroomsHook = () => {
     (state: RootState) => state.students.students
   );
 
-  const fetchAllClassrooms = async () => {
-    
+  const fetchAllClassrooms = async (): Promise<IClassroom[]> => {
     if (classrooms !== null) {
-      return;
+      throw new Error("");
     }
-    const data = await queryClient.fetchQuery({
+
+    const data = await queryClient.fetchQuery<IClassroom[]>({
       queryKey: ["classrooms"],
       queryFn: fetchClassrooms,
       staleTime: Infinity,
@@ -48,8 +48,7 @@ export const useClassroomsHook = () => {
     studentId: string
   ): Promise<void> => {
     const updatedClassrooms =
-      classrooms?.map((classroom: IClassroom) => {
-
+      classrooms?.map((classroom) => {
         if (classroom.id === classroomId) {
           return {
             ...classroom,
@@ -62,7 +61,7 @@ export const useClassroomsHook = () => {
       }) ?? [];
 
     const updatedStudents =
-      students?.map((student: IStudent) => {
+      students?.map((student) => {
         if (student.id === studentId) {
           return {
             ...student,
@@ -75,32 +74,31 @@ export const useClassroomsHook = () => {
     dispatch(setStudents(updatedStudents));
     dispatch(setClassrooms(updatedClassrooms));
 
-    const response = await removeStudentFromClassroomService(
-      classroomId,
-      studentId
-    );
-
-    return response;
+    await removeStudentFromClassroomService(classroomId, studentId);
   };
 
-  const deleteClass = async (classroomId: string, studentList: IStudent[]) => {
+  const deleteClass = async (
+    classroomId: string,
+    studentList: IStudent[]
+  ): Promise<void> => {
+    const canDelete = await validationForDeleteClass(studentList);
 
-    if (await validationForDeleteClass(studentList)) {
+    if (canDelete) {
       const updatedClassrooms =
         classrooms?.filter((classroom) => classroom.id !== classroomId) ?? [];
 
       dispatch(setClassrooms(updatedClassrooms));
-      const response = await deleteClassService(classroomId);
-      return response;
+      await deleteClassService(classroomId);
+    } else {
+      throw new Error(
+        `Cannot delete class: ${classroomId}. Classroom must be empty in order to delete.`
+      );
     }
-    throw new Error(
-      "Cannot delete class: " +
-        classroomId +
-        ". Classroom must be empty in order to delete."
-    );
   };
 
-  const createClassroom = async (createClassroomBody: ICreateClassroomBody) => {
+  const createClassroom = async (
+    createClassroomBody: ICreateClassroomBody
+  ): Promise<IClassroom> => {
     const response = await createClassroomService(createClassroomBody);
     dispatch(setClassrooms([...(classrooms || []), response]));
 

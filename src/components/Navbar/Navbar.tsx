@@ -10,8 +10,8 @@ import SideDrawer from "../SideDrawer/SideDrawer";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import { useButtonColor } from "../../context/ButtonColorContext";
 
-const Navbar = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+const Navbar: React.FC = () => {
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
   const classes = useStyles();
   const { toggleColor } = useButtonColor();
 

@@ -10,9 +10,22 @@ import {
 import React, { useState } from "react";
 import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
 import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
+import { useStyles } from "./CreateClassForm.style";
 
-const CreateClassForm = () => {
-  const [formData, setFormData] = useState({
+interface IFormData {
+  id: string;
+  name: string;
+  maxOccupancy: string;
+}
+
+interface IFormErrors {
+  id: boolean;
+  name: boolean;
+  maxOccupancy: boolean;
+}
+
+const CreateClassForm: React.FC = () => {
+  const [formData, setFormData] = useState<IFormData>({
     id: "",
     name: "",
     maxOccupancy: "",
@@ -26,9 +39,11 @@ const CreateClassForm = () => {
     });
   };
 
+  const classes = useStyles();
+
   const { createClassroom } = useClassroomsHook();
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<IFormErrors>({
     id: false,
     name: false,
     maxOccupancy: false,
@@ -42,7 +57,7 @@ const CreateClassForm = () => {
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
     const formErrors = { id: false, name: false, maxOccupancy: false };
@@ -73,18 +88,11 @@ const CreateClassForm = () => {
 
   return (
     <Container maxWidth="xs">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mt: 4,
-        }}
-      >
+      <Box className={classes.mainBox}>
         <Typography variant="h5" gutterBottom>
           Create new class
         </Typography>
-        <form onSubmit={handleSubmit} style={{ width: "60%" }}>
+        <form onSubmit={handleSubmit} className={classes.formDiv}>
           <FormControl fullWidth margin="dense" error={errors.id}>
             <TextField
               label="Class ID"
@@ -127,9 +135,8 @@ const CreateClassForm = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            sx={{ mt: 3 }}
+            className={classes.submitButton}
           >
             CREATE CLASS
           </Button>

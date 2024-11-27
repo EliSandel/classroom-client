@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
@@ -11,12 +11,13 @@ import { useStyles } from "./StudentsTable.style";
 import { RootState } from "../../../../store/store";
 import TableContainer from "@mui/material/TableContainer";
 import { IStudent } from "../../../../interfaces/student.interface";
-import ClassesListPopup from "../../../../components/ClassesListPopup/ClassesListPopup";
 import { useStudentsHook } from "../../../../hooks/useStudents.hook";
 import { IClassroom } from "../../../../interfaces/classroom.interface";
+import ClassesListPopup from "../../../../components/ClassesListPopup/ClassesListPopup";
 
-const StudentsTable = () => {
+const StudentsTable: React.FC = () => {
   const classes = useStyles();
+
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedStudentId, setSelectedStudentId] = useState<string>("");
 
@@ -28,14 +29,14 @@ const StudentsTable = () => {
     (state: RootState) => state.classrooms.classrooms
   );
 
-  const handleAssignToClassClick = (studentId: string) => {
+  const { deleteStudent } = useStudentsHook();
+
+  const handleAssignToClassClick = (studentId: string): void => {
     setSelectedStudentId(studentId);
     setIsDialogOpen(true);
   };
 
-  const { deleteStudent } = useStudentsHook();
-
-  const handleClose = () => {
+  const handleClose = (): void => {
     setIsDialogOpen(false);
     setSelectedStudentId("");
   };
@@ -43,7 +44,7 @@ const StudentsTable = () => {
   return (
     <Box className={classes.root}>
       <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table aria-label="Students table">
           <TableHead>
             <TableRow>
               <TableCell className={classes.alignCenter}>ID</TableCell>

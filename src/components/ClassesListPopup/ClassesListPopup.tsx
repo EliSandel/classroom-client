@@ -20,7 +20,7 @@ interface SimpleDialogProps {
   classesList: IClassroom[];
 }
 
-const ClassesListPopup = ({
+const ClassesListPopup: React.FC<SimpleDialogProps> = ({
   open,
   studentId,
   onClose,
@@ -60,6 +60,6 @@ const ClassesListPopup = ({
       </List>
     </Dialog>
   );
-}
+};
 
 export default ClassesListPopup;

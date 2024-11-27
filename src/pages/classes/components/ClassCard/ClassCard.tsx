@@ -11,7 +11,7 @@ import { IStudent } from "../../../../interfaces/student.interface";
 import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
 import StudentsListPopup from "../../components/StudentsListPopup/StudentsListPopup";
 
-interface ClassCardProps {
+interface IClassCardProps {
   classId: string;
   className: string;
   seatsLeft: number;
@@ -19,14 +19,14 @@ interface ClassCardProps {
   studentsList: IStudent[];
 }
 
-const ClassCard = ({
+const ClassCard: React.FC<IClassCardProps> = ({
   classId,
   className,
   seatsLeft,
   totalSeats,
   studentsList,
-}: ClassCardProps) => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+}: IClassCardProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const { deleteClass } = useClassroomsHook();
 
@@ -34,7 +34,7 @@ const ClassCard = ({
     setIsDialogOpen(true);
   };
 
-  const handleDeleteClassClick = async () => {
+  const handleDeleteClassClick = async (): Promise<void> => {
     try {
       await deleteClass(classId, studentsList);
     } catch (error) {
@@ -42,7 +42,7 @@ const ClassCard = ({
     }
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setIsDialogOpen(false);
   };
 

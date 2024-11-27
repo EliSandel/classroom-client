@@ -1,38 +1,39 @@
 import axios from "axios";
+import { IStudent } from "../interfaces/student.interface";
 import { ICreateStudentBody } from "../interfaces/createStudentBody.interface";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const fetchStudentsService = async () => {
-  const response = await axios.get(`${API_URL}/students`);
+export const fetchStudentsService = async (): Promise<IStudent[]> => {
+  const response = await axios.get<IStudent[]>(`${API_URL}/students`);
 
   return response.data;
 };
 
-export const deleteStudentService = async (studentId: string) => {
-  const response = await axios.delete(`${API_URL}/students/${studentId}`);
-
-  return response.data;
+export const deleteStudentService = async (
+  studentId: string
+): Promise<void> => {
+  await axios.delete(`${API_URL}/students/${studentId}`);
 };
 
 export const addStudentToClassService = async (
   classId: string,
   studentId: string
-) => {
-  const response = await axios.put(
-    `${API_URL}/classrooms/${classId}/addStudent/${studentId}`
-  );
-
-  return response.data;
+): Promise<void> => {
+  await axios.put(`${API_URL}/classrooms/${classId}/addStudent/${studentId}`);
 };
 
-export const createStudentService = async (studentBody: ICreateStudentBody) => {
+export const createStudentService = async (
+  studentBody: ICreateStudentBody
+): Promise<IStudent> => {
   try {
-    const response = await axios.post(`${API_URL}/students/addStudent`, studentBody);
+    const response = await axios.post<IStudent>(
+      `${API_URL}/students/addStudent`,
+      studentBody
+    );
 
     return response.data;
   } catch (error) {
-    
     if (axios.isAxiosError(error)) {
       throw new Error(
         error.response?.data.message ||

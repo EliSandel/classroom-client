@@ -13,19 +13,23 @@ import PersonIcon from "@mui/icons-material/Person";
 import { IStudent } from "../../../../interfaces/student.interface";
 import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
 
-export interface SimpleDialogProps {
+export interface IStudentsListPopupProps {
   open: boolean;
   onClose: () => void;
   studentsList: IStudent[];
 }
 
-function StudentsListPopup({ open, onClose, studentsList }: SimpleDialogProps) {
+const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
+  open,
+  onClose,
+  studentsList,
+}: IStudentsListPopupProps) => {
   const { removeStudentFromClassroom } = useClassroomsHook();
 
   const handleRemoveStudentFromClassClick = async (
     classroomId: string | null,
     studentId: string
-  ) => {
+  ): Promise<void> => {
     if (classroomId) {
       await removeStudentFromClassroom(classroomId, studentId);
     }
@@ -62,6 +66,6 @@ function StudentsListPopup({ open, onClose, studentsList }: SimpleDialogProps) {
       </List>
     </Dialog>
   );
-}
+};
 
 export default StudentsListPopup;

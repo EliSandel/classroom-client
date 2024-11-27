@@ -1,18 +1,35 @@
-import React, { useState } from "react";
 import {
-  FormControl,
-  TextField,
+  Box,
   Button,
+  TextField,
   Container,
   Typography,
-  Box,
+  FormControl,
   FormHelperText,
 } from "@mui/material";
+import React, { useState } from "react";
 import { useStudentsHook } from "../../../../hooks/useStudents.hook";
 import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface";
+import { useStyles } from "./CreateStudentForm.style";
 
-const CreateStudentForm = () => {
-  const [formData, setFormData] = useState({
+interface IFormData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  age: string;
+  profession: string;
+}
+
+interface IFormErrors {
+  id: boolean;
+  firstName: boolean;
+  lastName: boolean;
+  age: boolean;
+  profession: boolean;
+}
+
+const CreateStudentForm: React.FC = () => {
+  const [formData, setFormData] = useState<IFormData>({
     id: "",
     firstName: "",
     lastName: "",
@@ -20,7 +37,19 @@ const CreateStudentForm = () => {
     profession: "",
   });
 
-  const clearFormData = () => {
+  const [errors, setErrors] = useState<IFormErrors>({
+    id: false,
+    firstName: false,
+    lastName: false,
+    age: false,
+    profession: false,
+  });
+
+  const { createStudent } = useStudentsHook();
+
+  const classes = useStyles();
+
+  const clearFormData = (): void => {
     setFormData({
       id: "",
       firstName: "",
@@ -30,17 +59,7 @@ const CreateStudentForm = () => {
     });
   };
 
-  const { createStudent } = useStudentsHook();
-
-  const [errors, setErrors] = useState({
-    id: false,
-    firstName: false,
-    lastName: false,
-    age: false,
-    profession: false,
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -58,10 +77,10 @@ const CreateStudentForm = () => {
     }));
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const formErrors = {
+    const formErrors: IFormErrors = {
       id: false,
       firstName: false,
       lastName: false,
@@ -104,18 +123,11 @@ const CreateStudentForm = () => {
 
   return (
     <Container maxWidth="xs">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mt: 4,
-        }}
-      >
+      <Box className={classes.mainBox}>
         <Typography variant="h5" gutterBottom>
           Add new student
         </Typography>
-        <form onSubmit={handleSubmit} style={{ width: "60%" }}>
+        <form onSubmit={handleSubmit} className={classes.formDiv}>
           <FormControl fullWidth margin="dense" error={errors.id}>
             <TextField
               label="Student ID"
@@ -127,7 +139,9 @@ const CreateStudentForm = () => {
               type="number"
             />
             {errors.id && (
-              <FormHelperText>Student ID must be a 9-digit number</FormHelperText>
+              <FormHelperText>
+                Student ID must be a 9-digit number
+              </FormHelperText>
             )}
           </FormControl>
 
@@ -191,9 +205,8 @@ const CreateStudentForm = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            sx={{ mt: 3 }}
+            className={classes.submitButton}
           >
             ADD STUDENT
           </Button>

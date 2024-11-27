@@ -13,11 +13,11 @@ const classroomsSlice = createSlice({
   name: "classrooms",
   initialState: initialState,
   reducers: {
-    setClassrooms: (state, action: PayloadAction<IClassroom[]>) => {    
+    setClassrooms: (state, action: PayloadAction<IClassroom[]>) => {
       return {
         ...state,
-        classrooms: [...action.payload]
-      }
+        classrooms: [...action.payload],
+      };
     },
   },
 });

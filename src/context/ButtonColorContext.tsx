@@ -1,17 +1,14 @@
 import React, { createContext, useContext, useState } from "react";
 
-// Define the context type
-interface ButtonColorContextType {
+interface IButtonColorContext {
   buttonColor: string;
   toggleColor: () => void;
 }
 
-// Create the context
-const ButtonColorContext = createContext<ButtonColorContextType | undefined>(
+const ButtonColorContext = createContext<IButtonColorContext | undefined>(
   undefined
 );
 
-// Custom hook to use the context
 // eslint-disable-next-line react-refresh/only-export-components
 export const useButtonColor = () => {
   const context = useContext(ButtonColorContext);
@@ -21,11 +18,11 @@ export const useButtonColor = () => {
   return context;
 };
 
-// Context provider component
 export const ButtonColorProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [buttonColor, setButtonColor] = useState("#3F50B5"); // Default color
+  
+  const [buttonColor, setButtonColor] = useState<string>("#3F50B5");
 
   const toggleColor = () => {
     setButtonColor((prevColor) =>

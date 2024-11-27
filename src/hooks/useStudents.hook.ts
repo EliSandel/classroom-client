@@ -25,12 +25,11 @@ export const useStudentsHook = () => {
     (state: RootState) => state.classrooms.classrooms
   );
 
-  const fetchAllStudents = async () => {
-
+  const fetchAllStudents = async (): Promise<IStudent[]> => {
     if (studentsState !== null) {
-      return
+      throw new Error("");
     }
-    const data = await queryClient.fetchQuery({
+    const data = await queryClient.fetchQuery<IStudent[]>({
       queryKey: ["students"],
       queryFn: fetchStudentsService,
       staleTime: Infinity,
@@ -43,8 +42,10 @@ export const useStudentsHook = () => {
     return data;
   };
 
-  const addStudentToClass = async (classId: string, studentId: string) => {
-
+  const addStudentToClass = async (
+    classId: string,
+    studentId: string
+  ): Promise<void> => {
     const studentToAdd = studentsState?.find(
       (student) => student.id === studentId
     );
@@ -58,37 +59,34 @@ export const useStudentsHook = () => {
       classroomId: classId,
     };
 
-    const updatedClassrooms = classroomsState?.map((classroom) => {
+    const updatedClassrooms =
+      classroomsState?.map((classroom) => {
+        if (classroom.id === classId) {
+          return {
+            ...classroom,
+            students: [...classroom.students, updatedStudentToAdd],
+          };
+        }
 
-      if (classroom.id === classId) {
-        return {
-          ...classroom,
-          students: [...classroom.students, updatedStudentToAdd],
-        };
-      }
+        return classroom;
+      }) ?? [];
 
-      return classroom;
-    }) ?? [];
+    const updatedStudents =
+      studentsState?.map((student) => {
+        if (student.id === studentId) {
+          return updatedStudentToAdd;
+        }
 
-    const updatedStudents = studentsState?.map((student) => {
-      if (student.id === studentId) {
-        return updatedStudentToAdd;
-      }
-
-      return student;
-    }) ?? [];
+        return student;
+      }) ?? [];
 
     dispatch(setStudents(updatedStudents));
     dispatch(setClassrooms(updatedClassrooms));
 
-    const response = await addStudentToClassService(classId, studentId);
-
-    return response;
+    addStudentToClassService(classId, studentId);
   };
 
-  const deleteStudent = async (studentId: string) => {
-
-
+  const deleteStudent = async (studentId: string): Promise<void> => {
     const studentToDelete = studentsState?.find(
       (student) => student.id === studentId
     );
@@ -98,33 +96,33 @@ export const useStudentsHook = () => {
     }
 
     if (studentToDelete.classroomId) {
-      const updatedClassrooms = classroomsState?.map((classroom) => {
-        if (classroom.id === studentToDelete.classroomId) {
-          return {
-            ...classroom,
-            students: classroom.students.filter(
-              (student) => student.id !== studentId
-            ),
-          };
-        }
+      const updatedClassrooms =
+        classroomsState?.map((classroom) => {
+          if (classroom.id === studentToDelete.classroomId) {
+            return {
+              ...classroom,
+              students: classroom.students.filter(
+                (student) => student.id !== studentId
+              ),
+            };
+          }
 
-        return classroom;
-      }) ?? [];
+          return classroom;
+        }) ?? [];
+
       dispatch(setClassrooms(updatedClassrooms));
     }
 
-    const updatedStudents = studentsState?.filter(
-      (student) => student.id !== studentId
-    ) ?? [];
+    const updatedStudents =
+      studentsState?.filter((student) => student.id !== studentId) ?? [];
 
     dispatch(setStudents(updatedStudents));
-    const response = await deleteStudentService(studentId);
-
-    return response;
+    await deleteStudentService(studentId);
   };
 
-  const createStudent = async (createStudentBody: ICreateStudentBody) => {
-
+  const createStudent = async (
+    createStudentBody: ICreateStudentBody
+  ): Promise<IStudent> => {
     const reply = await createStudentService(createStudentBody);
     dispatch(setStudents([...(studentsState || []), reply]));
 

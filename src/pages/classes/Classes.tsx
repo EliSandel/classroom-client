@@ -7,7 +7,7 @@ import { useStudentsHook } from "../../hooks/useStudents.hook";
 import { IClassroom } from "../../interfaces/classroom.interface";
 import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
 
-const Classes = () => {
+const Classes: React.FC = () => {
   const classes = useStyles();
   const { fetchAllClassrooms } = useClassroomsHook();
   const { fetchAllStudents } = useStudentsHook();
@@ -16,15 +16,13 @@ const Classes = () => {
     const fetchData = async () => {
       await fetchAllStudents();
       await fetchAllClassrooms();
-    }
+    };
     fetchData();
-  }, [])
-  
+  }, []);
+
   const classState: IClassroom[] | null = useSelector(
     (state: RootState) => state.classrooms.classrooms
-  );  
-
-  console.log("classes page classes state: ", classState)
+  );
 
   const ClassCardElements = classState?.map((classroom) => {
     return (
@@ -39,9 +37,7 @@ const Classes = () => {
     );
   });
 
-  return <div className={classes.classesPage}>
-    {ClassCardElements}
-  </div>;
+  return <div className={classes.classesPage}>{ClassCardElements}</div>;
 };
 
 export default Classes;

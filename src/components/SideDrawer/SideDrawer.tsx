@@ -12,7 +12,10 @@ interface ISideDrawerProps {
   toggleDrawer: (newOpen: boolean) => void;
 }
 
-const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {
+const SideDrawer: React.FC<ISideDrawerProps> = ({
+  openDrawer,
+  toggleDrawer,
+}: ISideDrawerProps) => {
   const classes = useStyles();
 
   const arrayOfLinkTextAndCorrespondingRoutes = [
