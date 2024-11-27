@@ -46,6 +46,16 @@ const CreateStudentForm = () => {
       ...prevData,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]:
+        name === "id"
+          ? !value || isNaN(Number(value)) || value.length !== 9
+          : name === "age"
+          ? !value || isNaN(Number(value))
+          : !value,
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -59,8 +69,13 @@ const CreateStudentForm = () => {
       profession: false,
     };
 
-    // Basic validation
-    if (!formData.id) formErrors.id = true;
+    if (
+      !formData.id ||
+      isNaN(Number(formData.id)) ||
+      formData.id.length !== 9
+    ) {
+      formErrors.id = true;
+    }
     if (!formData.firstName) formErrors.firstName = true;
     if (!formData.lastName) formErrors.lastName = true;
     if (!formData.age || isNaN(Number(formData.age))) formErrors.age = true;
@@ -68,7 +83,6 @@ const CreateStudentForm = () => {
 
     setErrors(formErrors);
 
-    // If no errors, handle form submission
     if (!Object.values(formErrors).includes(true)) {
       const createStudentBody: ICreateStudentBody = {
         id: formData.id,
@@ -110,9 +124,10 @@ const CreateStudentForm = () => {
               value={formData.id}
               onChange={handleChange}
               required
+              type="number"
             />
             {errors.id && (
-              <FormHelperText>Student ID is required</FormHelperText>
+              <FormHelperText>Student ID must be a 9-digit number</FormHelperText>
             )}
           </FormControl>
 
