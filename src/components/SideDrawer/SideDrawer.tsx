@@ -6,6 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import { useStyles } from "./SideDrawer.style";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import { arrayOfLinkTextAndCorrespondingRoutes } from "./SideDrawer.data";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
@@ -17,13 +18,6 @@ const SideDrawer: React.FC<ISideDrawerProps> = ({
   toggleDrawer,
 }: ISideDrawerProps) => {
   const classes = useStyles();
-
-  //move to constants dir
-  const arrayOfLinkTextAndCorrespondingRoutes = [
-    { text: "Classes", route: "/" },
-    { text: "Students", route: "/students" },
-    { text: "Create", route: "/create" },
-  ];
 
   return (
     <Drawer open={openDrawer} onClose={() => toggleDrawer(false)}>

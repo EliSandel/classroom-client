@@ -1,18 +1,18 @@
 import "./app.css";
 import AppRoutes from "./routes/AppRoutes";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { useButtonColor } from "./context/ButtonColorContext";
+import { useThemeColor } from "./context/ThemeColorContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const { buttonColor } = useButtonColor();
+  const { themeColor } = useThemeColor();
 
   const theme = createTheme({
     palette: {
       primary: {
-        main: buttonColor,
+        main: themeColor,
       },
     },
     typography: {
