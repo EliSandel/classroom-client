@@ -56,13 +56,14 @@ export const useStyles = makeStyles({
     },
   },
   trashIcon: {
-    "&.MuiSvgIcon-root": {
-    }
+    "&.MuiSvgIcon-root": {},
   },
   cardContentClass: {
     "&.MuiCardContent-root": {
       paddingRight: "0",
-    }
+    },
+  },
+  cardActionsDiv: {
+    paddingRight: "0 !important",
   },
 });
-

@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import { IStudent } from "../../../../interfaces/student.interface";
 import useClassroomsHook from "../../../../hooks/useClassrooms.hook";
+import { useStyles } from "./StudentsListPopup.style";
 
 export interface IStudentsListPopupProps {
   open: boolean;
@@ -25,6 +26,8 @@ const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
   studentsList,
 }: IStudentsListPopupProps) => {
   const { removeStudentFromClassroom } = useClassroomsHook();
+
+  const classes = useStyles();
 
   const handleRemoveStudentFromClassClick = async (
     classroomId: string | null,
@@ -40,7 +43,7 @@ const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
       <DialogTitle>
         {studentsList.length !== 0 ? "Students List" : "This class is empty"}
       </DialogTitle>
-      <List sx={{ pt: 0 }}>
+      <List className={classes.listDiv}>
         {studentsList.map(({ id, firstName, lastName, classroomId }) => (
           <ListItem key={id}>
             <ListItemAvatar>

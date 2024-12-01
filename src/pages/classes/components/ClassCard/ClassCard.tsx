@@ -59,7 +59,7 @@ const ClassCard: React.FC<IClassCardProps> = ({
           out of {totalSeats}
         </Typography>
       </CardContent>
-      <CardActions sx={{ paddingRight: "0 !important" }}>
+      <CardActions className={classes.cardActionsDiv}>
         <Button
           className={classes.studentsListButton}
           onClick={handleStudentsListClick}

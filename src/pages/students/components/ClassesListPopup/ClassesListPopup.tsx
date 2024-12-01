@@ -12,6 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import SchoolIcon from "@mui/icons-material/School";
 import useStudentsHook from "../../../../hooks/useStudents.hook";
 import { IClassroom } from "../../../../interfaces/classroom.interface";
+import { useStyles } from "./ClassesListPopup.style";
 
 interface ISimpleDialogProps {
   open: boolean;
@@ -28,6 +29,8 @@ const ClassesListPopup: React.FC<ISimpleDialogProps> = ({
 }: ISimpleDialogProps) => {
   const { addStudentToClass } = useStudentsHook();
 
+  const classes = useStyles();
+
   const handleAddStudentToClassClick = async (
     classId: string
   ): Promise<void> => {
@@ -42,7 +45,7 @@ const ClassesListPopup: React.FC<ISimpleDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>Available Classes</DialogTitle>
-      <List sx={{ pt: 0 }}>
+      <List className={classes.listDiv}>
         {availableClasses.map(({ id, name }) => (
           <ListItem key={id}>
             <ListItemAvatar>

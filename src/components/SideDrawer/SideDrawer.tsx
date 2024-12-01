@@ -21,15 +21,15 @@ const SideDrawer: React.FC<ISideDrawerProps> = ({
 
   return (
     <Drawer open={openDrawer} onClose={() => toggleDrawer(false)}>
-      <Box sx={{ width: 130 }} onClick={() => toggleDrawer(false)}>
+      <Box
+        className={classes.drawerContent}
+        onClick={() => toggleDrawer(false)}
+      >
         <List>
-          {arrayOfLinkTextAndCorrespondingRoutes.map(({ text, route}) => (
+          {arrayOfLinkTextAndCorrespondingRoutes.map(({ text, route }) => (
             <ListItem key={text} disablePadding>
               <ListItemButton component={Link} to={route}>
-                <ListItemText
-                  className={classes.menuText}
-                  primary={text}
-                />
+                <ListItemText className={classes.menuText} primary={text} />
               </ListItemButton>
             </ListItem>
           ))}
