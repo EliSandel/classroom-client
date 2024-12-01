@@ -1,5 +1,1 @@
-create image of my project. ci/cd GitHub action create image.
-
-automatically publich branch to the image
-
 add taz validation to back

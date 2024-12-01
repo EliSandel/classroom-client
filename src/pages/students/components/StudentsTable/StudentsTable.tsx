@@ -8,6 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
 import TableContainer from "@mui/material/TableContainer";
+import { STUDENT_TABLE_HEADERS } from "./StudentsTable.data";
 import useStudentsHook from "../../../../hooks/useStudents.hook";
 import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
 import useFetchStudents from "../../../../hooks/useFetchStudents.hook";
@@ -39,32 +40,22 @@ const StudentsTable: React.FC = () => {
       <TableContainer component={Paper}>
         <Table aria-label="Students table">
           <TableHead>
-            <TableRow>
-              <TableCell className={classes.alignCenter}>ID</TableCell>
-              <TableCell className={classes.alignCenter}>First Name</TableCell>
-              <TableCell className={classes.alignCenter}>Last Name</TableCell>
-              <TableCell className={classes.alignCenter}>Age</TableCell>
-              <TableCell className={classes.alignCenter}>Profession</TableCell>
-              <TableCell className={classes.alignCenter}>Assign</TableCell>
-              <TableCell className={classes.alignCenter}>Delete</TableCell>
+            <TableRow className={classes.tableRow}>
+              {STUDENT_TABLE_HEADERS.map((columnHeader) => (
+                <TableCell key={columnHeader}> {columnHeader} </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {studentsState?.map(
               ({ id, firstName, lastName, age, profession, classroomId }) => (
-                <TableRow key={id}>
-                  <TableCell className={classes.alignCenter}>{id}</TableCell>
-                  <TableCell className={classes.alignCenter}>
-                    {firstName}
-                  </TableCell>
-                  <TableCell className={classes.alignCenter}>
-                    {lastName}
-                  </TableCell>
-                  <TableCell className={classes.alignCenter}>{age}</TableCell>
-                  <TableCell className={classes.alignCenter}>
-                    {profession}
-                  </TableCell>
-                  <TableCell className={classes.alignCenter}>
+                <TableRow key={id} className={classes.tableRow}>
+                  <TableCell>{id}</TableCell>
+                  <TableCell>{firstName}</TableCell>
+                  <TableCell>{lastName}</TableCell>
+                  <TableCell>{age}</TableCell>
+                  <TableCell>{profession}</TableCell>
+                  <TableCell>
                     <Button
                       variant="outlined"
                       onClick={() => handleAssignToClassClick(id)}
@@ -73,7 +64,7 @@ const StudentsTable: React.FC = () => {
                       Assign To Class
                     </Button>
                   </TableCell>
-                  <TableCell className={classes.alignCenter}>
+                  <TableCell>
                     <Button
                       variant="outlined"
                       onClick={async () => deleteStudent(id)}

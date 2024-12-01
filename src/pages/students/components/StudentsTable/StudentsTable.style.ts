@@ -5,12 +5,14 @@ export const useStyles = makeStyles({
     padding: "4rem",
     paddingTop: "2rem",
   },
-  alignCenter: {
-    "&.css-12e3s4g-MuiTableCell-root": {
-      textAlign: "center",
-    },
-    "&.css-1v9dacs-MuiTableCell-root": {
-      textAlign: "center",
+  tableRow: {
+    "& > *": {
+      "&.css-12e3s4g-MuiTableCell-root": {
+        textAlign: "center",
+      },
+      "&.css-1v9dacs-MuiTableCell-root": {
+        textAlign: "center",
+      },
     },
   },
 });
