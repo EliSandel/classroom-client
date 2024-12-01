@@ -22,19 +22,13 @@ const Navbar: React.FC = () => {
           <IconButton
             edge="start"
             color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2, ml: 0 }}
+            className={classes.menuIconButton}
             onClick={() => setOpenDrawer(true)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h5" color="inherit" component="div">
-            Shob Classes
-          </Typography>
-          <LoyaltyIcon
-            className={classes.loyaltyIcon}
-            onClick={toggleColor}
-          />
+          <Typography variant="h5">Shob Classes</Typography>
+          <LoyaltyIcon className={classes.loyaltyIcon} onClick={toggleColor} />
         </Toolbar>
       </AppBar>
       <SideDrawer openDrawer={openDrawer} toggleDrawer={setOpenDrawer} />

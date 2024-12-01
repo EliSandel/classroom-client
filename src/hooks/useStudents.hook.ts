@@ -2,10 +2,8 @@ import {
   addStudentToClassService,
   createStudentService,
   deleteStudentService,
-  fetchStudentsService,
 } from "../services/students.service";
 import { RootState } from "../store/store";
-import { useQueryClient } from "react-query";
 import { setStudents } from "../redux/studentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setClassrooms } from "../redux/classroomsSlice";
@@ -13,9 +11,8 @@ import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { ICreateStudentBody } from "../interfaces/createStudentBody.interface";
 
-export const useStudentsHook = () => {
+const useStudentsHook = () => {
   const dispatch = useDispatch();
-  const queryClient = useQueryClient();
 
   const studentsState: IStudent[] | null = useSelector(
     (state: RootState) => state.students.students
@@ -24,23 +21,6 @@ export const useStudentsHook = () => {
   const classroomsState: IClassroom[] | null = useSelector(
     (state: RootState) => state.classrooms.classrooms
   );
-
-  const fetchAllStudents = async (): Promise<IStudent[]> => {
-    if (studentsState !== null) {
-      throw new Error("");
-    }
-    const data = await queryClient.fetchQuery<IStudent[]>({
-      queryKey: ["students"],
-      queryFn: fetchStudentsService,
-      staleTime: Infinity,
-    });
-
-    if (data) {
-      dispatch(setStudents(data));
-    }
-
-    return data;
-  };
 
   const addStudentToClass = async (
     classId: string,
@@ -130,9 +110,10 @@ export const useStudentsHook = () => {
   };
 
   return {
-    fetchAllStudents,
     addStudentToClass,
     deleteStudent,
     createStudent,
   };
 };
+
+export default useStudentsHook;

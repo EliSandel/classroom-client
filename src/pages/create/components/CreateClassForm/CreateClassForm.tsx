@@ -8,9 +8,9 @@ import {
   FormHelperText,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
-import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
 import { useStyles } from "./CreateClassForm.style";
+import useClassroomsHook from "../../../../hooks/useClassrooms.hook";
+import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
 
 interface IFormData {
   id: string;
@@ -31,6 +31,16 @@ const CreateClassForm: React.FC = () => {
     maxOccupancy: "",
   });
 
+  const [errors, setErrors] = useState<IFormErrors>({
+    id: false,
+    name: false,
+    maxOccupancy: false,
+  });
+
+  const { createClassroom } = useClassroomsHook();
+
+  const classes = useStyles();
+
   const clearFormData = () => {
     setFormData({
       id: "",
@@ -39,32 +49,40 @@ const CreateClassForm: React.FC = () => {
     });
   };
 
-  const classes = useStyles();
-
-  const { createClassroom } = useClassroomsHook();
-
-  const [errors, setErrors] = useState<IFormErrors>({
-    id: false,
-    name: false,
-    maxOccupancy: false,
-  });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]:
+        name === "id"
+          ? !value
+          : name === "age"
+          ? !value || isNaN(Number(value)) || Number(value) <= 0
+          : !value,
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const formErrors = { id: false, name: false, maxOccupancy: false };
+    const formErrors: IFormErrors = {
+      id: false,
+      name: false,
+      maxOccupancy: false,
+    };
 
     if (!formData.id) formErrors.id = true;
     if (!formData.name) formErrors.name = true;
-    if (!formData.maxOccupancy || isNaN(Number(formData.maxOccupancy)))
+    if (
+      !formData.maxOccupancy ||
+      isNaN(Number(formData.maxOccupancy)) ||
+      Number(formData.maxOccupancy) <= 0
+    )
       formErrors.maxOccupancy = true;
 
     setErrors(formErrors);

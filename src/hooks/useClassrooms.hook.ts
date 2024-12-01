@@ -1,11 +1,9 @@
 import {
-  fetchClassrooms,
   deleteClassService,
   createClassroomService,
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
 import { RootState } from "../store/store";
-import { useQueryClient } from "react-query";
 import { setStudents } from "../redux/studentsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setClassrooms } from "../redux/classroomsSlice";
@@ -14,8 +12,7 @@ import { IClassroom } from "../interfaces/classroom.interface";
 import { validationForDeleteClass } from "../utilities/classroom.util";
 import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
 
-export const useClassroomsHook = () => {
-  const queryClient = useQueryClient();
+const useClassroomsHook = () => {
   const dispatch = useDispatch();
 
   const classrooms: IClassroom[] | null = useSelector(
@@ -24,24 +21,6 @@ export const useClassroomsHook = () => {
   const students: IStudent[] | null = useSelector(
     (state: RootState) => state.students.students
   );
-
-  const fetchAllClassrooms = async (): Promise<IClassroom[]> => {
-    if (classrooms !== null) {
-      throw new Error("");
-    }
-
-    const data = await queryClient.fetchQuery<IClassroom[]>({
-      queryKey: ["classrooms"],
-      queryFn: fetchClassrooms,
-      staleTime: Infinity,
-    });
-
-    if (data) {
-      dispatch(setClassrooms(data));
-    }
-
-    return data;
-  };
 
   const removeStudentFromClassroom = async (
     classroomId: string,
@@ -81,19 +60,19 @@ export const useClassroomsHook = () => {
     classroomId: string,
     studentList: IStudent[]
   ): Promise<void> => {
-    const canDelete = await validationForDeleteClass(studentList);
+    const canDelete = validationForDeleteClass(studentList);
 
-    if (canDelete) {
-      const updatedClassrooms =
-        classrooms?.filter((classroom) => classroom.id !== classroomId) ?? [];
-
-      dispatch(setClassrooms(updatedClassrooms));
-      await deleteClassService(classroomId);
-    } else {
+    if (!canDelete) {
       throw new Error(
         `Cannot delete class: ${classroomId}. Classroom must be empty in order to delete.`
       );
     }
+
+    const updatedClassrooms =
+      classrooms?.filter((classroom) => classroom.id !== classroomId) ?? [];
+
+    dispatch(setClassrooms(updatedClassrooms));
+    await deleteClassService(classroomId);
   };
 
   const createClassroom = async (
@@ -106,9 +85,11 @@ export const useClassroomsHook = () => {
   };
 
   return {
-    fetchAllClassrooms,
+    classrooms,
     removeStudentFromClassroom,
     deleteClass,
     createClassroom,
   };
 };
+
+export default useClassroomsHook;

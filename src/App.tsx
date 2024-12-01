@@ -4,9 +4,9 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import { useButtonColor } from "./context/ButtonColorContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const App = () => {
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
+const App = () => {
   const { buttonColor } = useButtonColor();
 
   const theme = createTheme({

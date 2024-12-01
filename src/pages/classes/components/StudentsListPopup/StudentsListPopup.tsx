@@ -11,7 +11,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonIcon from "@mui/icons-material/Person";
 import { IStudent } from "../../../../interfaces/student.interface";
-import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
+import useClassroomsHook from "../../../../hooks/useClassrooms.hook";
 
 export interface IStudentsListPopupProps {
   open: boolean;

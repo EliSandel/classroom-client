@@ -18,33 +18,29 @@ const SideDrawer: React.FC<ISideDrawerProps> = ({
 }: ISideDrawerProps) => {
   const classes = useStyles();
 
+  //move to constants dir
   const arrayOfLinkTextAndCorrespondingRoutes = [
     { text: "Classes", route: "/" },
     { text: "Students", route: "/students" },
     { text: "Create", route: "/create" },
   ];
 
-  const DrawerList = (
-    <Box
-      sx={{ width: 130 }}
-      role="presentation"
-      onClick={() => toggleDrawer(false)}
-    >
-      <List>
-        {arrayOfLinkTextAndCorrespondingRoutes.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton component={Link} to={item.route}>
-              <ListItemText className={classes.menuText} primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
     <Drawer open={openDrawer} onClose={() => toggleDrawer(false)}>
-      {DrawerList}
+      <Box sx={{ width: 130 }} onClick={() => toggleDrawer(false)}>
+        <List>
+          {arrayOfLinkTextAndCorrespondingRoutes.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton component={Link} to={item.route}>
+                <ListItemText
+                  className={classes.menuText}
+                  primary={item.text}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Drawer>
   );
 };

@@ -8,9 +8,9 @@ import {
   FormHelperText,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useStudentsHook } from "../../../../hooks/useStudents.hook";
-import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface";
 import { useStyles } from "./CreateStudentForm.style";
+import useStudentsHook from "../../../../hooks/useStudents.hook";
+import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface";
 
 interface IFormData {
   id: string;
@@ -70,9 +70,12 @@ const CreateStudentForm: React.FC = () => {
       ...prevErrors,
       [name]:
         name === "id"
-          ? !value || isNaN(Number(value)) || value.length !== 9
+          ? !value ||
+            isNaN(Number(value)) ||
+            Number(value) < 0 ||
+            value.length !== 9
           : name === "age"
-          ? !value || isNaN(Number(value))
+          ? !value || isNaN(Number(value)) || Number(value) <= 0
           : !value,
     }));
   };
@@ -91,13 +94,19 @@ const CreateStudentForm: React.FC = () => {
     if (
       !formData.id ||
       isNaN(Number(formData.id)) ||
-      formData.id.length !== 9
+      formData.id.length !== 9 ||
+      Number(formData.id) < 0
     ) {
       formErrors.id = true;
     }
     if (!formData.firstName) formErrors.firstName = true;
     if (!formData.lastName) formErrors.lastName = true;
-    if (!formData.age || isNaN(Number(formData.age))) formErrors.age = true;
+    if (
+      !formData.age ||
+      isNaN(Number(formData.age)) ||
+      Number(formData.age) <= 0
+    )
+      formErrors.age = true;
     if (!formData.profession) formErrors.profession = true;
 
     setErrors(formErrors);

@@ -5,14 +5,21 @@ import Classes from "../pages/classes/Classes";
 import Navbar from "../components/Navbar/Navbar";
 import Students from "../pages/students/Students";
 
+//maybe move const to const dir
 const AppRoutes: React.FC = () => {
+  const routes = [
+    { path: "/", element: <Classes /> },
+    { path: "/students", element: <Students /> },
+    { path: "/create", element: <Create /> },
+  ];
+
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Classes />} />
-        <Route path="/students" element={<Students />} />
-        <Route path="/create" element={<Create />} />
+        {routes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
       </Routes>
     </BrowserRouter>
   );

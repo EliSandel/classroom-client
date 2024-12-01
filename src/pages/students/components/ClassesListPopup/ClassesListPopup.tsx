@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SchoolIcon from "@mui/icons-material/School";
-import { useStudentsHook } from "../../../../hooks/useStudents.hook";
+import useStudentsHook from "../../../../hooks/useStudents.hook";
 import { IClassroom } from "../../../../interfaces/classroom.interface";
 
 interface ISimpleDialogProps {

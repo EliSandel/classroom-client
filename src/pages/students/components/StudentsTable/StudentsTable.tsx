@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
 import { Box, Button } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
-import { RootState } from "../../../../store/store";
 import TableContainer from "@mui/material/TableContainer";
-import { IStudent } from "../../../../interfaces/student.interface";
-import { useStudentsHook } from "../../../../hooks/useStudents.hook";
-import { IClassroom } from "../../../../interfaces/classroom.interface";
+import useStudentsHook from "../../../../hooks/useStudents.hook";
+import useFetchStudents from "../../../../hooks/useFetchStudents.hook";
+import useFetchClassrooms from "../../../../hooks/useFetchClassrooms.hook";
 import ClassesListPopup from "../../../../components/ClassesListPopup/ClassesListPopup";
 
 const StudentsTable: React.FC = () => {
@@ -21,13 +19,8 @@ const StudentsTable: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedStudentId, setSelectedStudentId] = useState<string>("");
 
-  const studentsState: IStudent[] | null = useSelector(
-    (state: RootState) => state.students.students
-  );
-
-  const classesState: IClassroom[] | null = useSelector(
-    (state: RootState) => state.classrooms.classrooms
-  );
+  const studentsState = useFetchStudents();
+  const classesState = useFetchClassrooms();
 
   const { deleteStudent } = useStudentsHook();
 

@@ -18,10 +18,12 @@ export const useButtonColor = () => {
   return context;
 };
 
+//rename to themeContext
 export const ButtonColorProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  
+  //circle theme color
+  //move to const
   const [buttonColor, setButtonColor] = useState<string>("#3F50B5");
 
   const toggleColor = () => {
