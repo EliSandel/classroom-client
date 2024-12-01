@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { THEME_COLORS } from "./ThemeColorContext.data";
 
 interface IThemeColorContext {
   themeColor: string;
@@ -21,15 +22,15 @@ export const useThemeColor = () => {
 export const ThemeColorProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  //circle theme color
-  //move to const
-  const [themeColor, setThemeColor] = useState<string>("#3F50B5");
+  const [currentColorIndex, setCurrentColorIndex] = useState<number>(0);
 
   const toggleColor = () => {
-    setThemeColor((prevThemeColor) =>
-      prevThemeColor === "#3F50B5" ? "#F50057" : "#3F50B5"
+    setCurrentColorIndex(
+      (prevColorIndex) => (prevColorIndex + 1) % THEME_COLORS.length
     );
   };
+
+  const themeColor = THEME_COLORS[currentColorIndex];
 
   return (
     <ThemeColorContext.Provider value={{ themeColor, toggleColor }}>

@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SideDrawer from "../SideDrawer/SideDrawer";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
-import { useThemeColor } from "../../context/ThemeColorContext";
+import { useThemeColor } from "../../context/ThemeColorContext/ThemeColorContext";
 
 const Navbar: React.FC = () => {
   const [openDrawer, setOpenDrawer] = useState<boolean>(false);

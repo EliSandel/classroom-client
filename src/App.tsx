@@ -1,7 +1,7 @@
 import "./app.css";
 import AppRoutes from "./routes/AppRoutes";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { useThemeColor } from "./context/ThemeColorContext";
+import { useThemeColor } from "./context/ThemeColorContext/ThemeColorContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
