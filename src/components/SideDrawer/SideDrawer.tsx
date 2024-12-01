@@ -23,12 +23,12 @@ const SideDrawer: React.FC<ISideDrawerProps> = ({
     <Drawer open={openDrawer} onClose={() => toggleDrawer(false)}>
       <Box sx={{ width: 130 }} onClick={() => toggleDrawer(false)}>
         <List>
-          {arrayOfLinkTextAndCorrespondingRoutes.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton component={Link} to={item.route}>
+          {arrayOfLinkTextAndCorrespondingRoutes.map(({ text, route}) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton component={Link} to={route}>
                 <ListItemText
                   className={classes.menuText}
-                  primary={item.text}
+                  primary={text}
                 />
               </ListItemButton>
             </ListItem>

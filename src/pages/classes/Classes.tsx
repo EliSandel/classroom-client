@@ -9,15 +9,15 @@ const Classes: React.FC = () => {
 
   return (
     <div className={classes.classesPage}>
-      {classrooms?.map((classroom) => {
+      {classrooms?.map(({ id, name, maxOccupancy, students }) => {
         return (
           <ClassCard
-            key={classroom.id}
-            classId={classroom.id}
-            className={classroom.name}
-            seatsLeft={classroom.maxOccupancy - classroom.students.length}
-            totalSeats={classroom.maxOccupancy}
-            studentsList={classroom.students}
+            key={id}
+            classId={id}
+            className={name}
+            seatsLeft={maxOccupancy - students.length}
+            totalSeats={maxOccupancy}
+            studentsList={students}
           />
         );
       })}

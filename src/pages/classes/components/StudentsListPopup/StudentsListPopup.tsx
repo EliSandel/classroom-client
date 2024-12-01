@@ -41,22 +41,17 @@ const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
         {studentsList.length !== 0 ? "Students List" : "This class is empty"}
       </DialogTitle>
       <List sx={{ pt: 0 }}>
-        {studentsList.map((student, index) => (
-          <ListItem key={index}>
+        {studentsList.map(({ id, firstName, lastName, classroomId }) => (
+          <ListItem key={id}>
             <ListItemAvatar>
               <Avatar>
                 <PersonIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText
-              primary={student.firstName + " " + student.lastName}
-            />
+            <ListItemText primary={firstName + " " + lastName} />
             <IconButton
               onClick={async () =>
-                await handleRemoveStudentFromClassClick(
-                  student.classroomId,
-                  student.id
-                )
+                await handleRemoveStudentFromClassClick(classroomId, id)
               }
             >
               <DeleteIcon color="primary" />

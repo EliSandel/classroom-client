@@ -43,17 +43,15 @@ const ClassesListPopup: React.FC<ISimpleDialogProps> = ({
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>Available Classes</DialogTitle>
       <List sx={{ pt: 0 }}>
-        {availableClasses.map((classroom) => (
-          <ListItem key={classroom.id}>
+        {availableClasses.map(({ id, name }) => (
+          <ListItem key={id}>
             <ListItemAvatar>
               <Avatar>
                 <SchoolIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={classroom.name} />
-            <IconButton
-              onClick={async () => handleAddStudentToClassClick(classroom.id)}
-            >
+            <ListItemText primary={name} />
+            <IconButton onClick={async () => handleAddStudentToClassClick(id)}>
               <AddIcon color="primary" />
             </IconButton>
           </ListItem>

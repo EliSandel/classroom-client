@@ -9,9 +9,9 @@ import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
 import TableContainer from "@mui/material/TableContainer";
 import useStudentsHook from "../../../../hooks/useStudents.hook";
+import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
 import useFetchStudents from "../../../../hooks/useFetchStudents.hook";
 import useFetchClassrooms from "../../../../hooks/useFetchClassrooms.hook";
-import ClassesListPopup from "../../../../components/ClassesListPopup/ClassesListPopup";
 
 const StudentsTable: React.FC = () => {
   const classes = useStyles();
@@ -50,42 +50,40 @@ const StudentsTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {studentsState?.map((student) => (
-              <TableRow key={student.id}>
-                <TableCell className={classes.alignCenter}>
-                  {student.id}
-                </TableCell>
-                <TableCell className={classes.alignCenter}>
-                  {student.firstName}
-                </TableCell>
-                <TableCell className={classes.alignCenter}>
-                  {student.lastName}
-                </TableCell>
-                <TableCell className={classes.alignCenter}>
-                  {student.age}
-                </TableCell>
-                <TableCell className={classes.alignCenter}>
-                  {student.profession}
-                </TableCell>
-                <TableCell className={classes.alignCenter}>
-                  <Button
-                    variant="outlined"
-                    onClick={() => handleAssignToClassClick(student.id)}
-                    disabled={student.classroomId !== null}
-                  >
-                    Assign To Class
-                  </Button>
-                </TableCell>
-                <TableCell className={classes.alignCenter}>
-                  <Button
-                    variant="outlined"
-                    onClick={async () => deleteStudent(student.id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {studentsState?.map(
+              ({ id, firstName, lastName, age, profession, classroomId }) => (
+                <TableRow key={id}>
+                  <TableCell className={classes.alignCenter}>{id}</TableCell>
+                  <TableCell className={classes.alignCenter}>
+                    {firstName}
+                  </TableCell>
+                  <TableCell className={classes.alignCenter}>
+                    {lastName}
+                  </TableCell>
+                  <TableCell className={classes.alignCenter}>{age}</TableCell>
+                  <TableCell className={classes.alignCenter}>
+                    {profession}
+                  </TableCell>
+                  <TableCell className={classes.alignCenter}>
+                    <Button
+                      variant="outlined"
+                      onClick={() => handleAssignToClassClick(id)}
+                      disabled={classroomId !== null}
+                    >
+                      Assign To Class
+                    </Button>
+                  </TableCell>
+                  <TableCell className={classes.alignCenter}>
+                    <Button
+                      variant="outlined"
+                      onClick={async () => deleteStudent(id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>
