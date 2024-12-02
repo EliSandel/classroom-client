@@ -66,18 +66,28 @@ const CreateStudentForm: React.FC = () => {
       [name]: value,
     }));
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]:
-        name === "id"
-          ? !value ||
-            isNaN(Number(value)) ||
-            Number(value) < 0 ||
-            value.length !== 9
-          : name === "age"
-          ? !value || isNaN(Number(value)) || Number(value) <= 0
-          : !value,
-    }));
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+
+      if (name === "id") {
+        updatedErrors.id =
+          !value ||
+          isNaN(Number(value)) ||
+          Number(value) < 0 ||
+          value.length !== 9;
+      } else if (name === "age") {
+        updatedErrors.age =
+          !value || isNaN(Number(value)) || Number(value) <= 0;
+      } else if (
+        name === "firstName" ||
+        name === "lastName" ||
+        name === "profession"
+      ) {
+        updatedErrors[name] = !value;
+      }
+
+      return updatedErrors;
+    });
   };
 
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {

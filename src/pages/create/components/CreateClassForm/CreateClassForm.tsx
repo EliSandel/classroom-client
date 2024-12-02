@@ -56,15 +56,20 @@ const CreateClassForm: React.FC = () => {
       [name]: value,
     }));
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]:
-        name === "id"
-          ? !value
-          : name === "age"
-          ? !value || isNaN(Number(value)) || Number(value) <= 0
-          : !value,
-    }));
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+
+      if (name === "id") {
+        updatedErrors.id = !value;
+      } else if (name === "maxOccupancy") {
+        updatedErrors.maxOccupancy =
+          !value || isNaN(Number(value)) || Number(value) <= 0;
+      } else if (name === "name") {
+        updatedErrors.name = !value;
+      }
+
+      return updatedErrors;
+    });
   };
 
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {
