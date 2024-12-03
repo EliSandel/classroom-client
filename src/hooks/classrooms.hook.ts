@@ -3,9 +3,9 @@ import {
   createClassroomService,
   removeStudentFromClassroomService,
 } from "../services/classroom.service";
-import { RootState } from "../store/store";
+import { useAppSelector } from "../store/store";
 import { setStudents } from "../redux/students.slice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setClassrooms } from "../redux/classrooms.slice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
@@ -19,13 +19,8 @@ const useClassroomsHook = () => {
 
   //change to classroomsState
 
-  const classrooms: IClassroom[] | null = useSelector(
-    (state: RootState) => state.classrooms.classrooms
-  );
-
-  const students: IStudent[] | null = useSelector(
-    (state: RootState) => state.students.students
-  );
+  const students = useAppSelector((state) => state.students.students);
+  const classrooms = useAppSelector((state) => state.classrooms.classrooms);
 
   const rollbackState = (
     previousStudentsState: IStudent[] | null,
