@@ -9,10 +9,10 @@ import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
 import TableContainer from "@mui/material/TableContainer";
 import { STUDENT_TABLE_HEADERS } from "./StudentsTable.data";
-import useStudentsHook from "../../../../hooks/useStudents.hook";
+import useStudentsHook from "../../../../hooks/students.hook";
 import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
-import useFetchStudents from "../../../../hooks/useFetchStudents.hook";
-import useFetchClassrooms from "../../../../hooks/useFetchClassrooms.hook";
+import useFetchStudents from "../../../../hooks/fetch-students.hook";
+import useFetchClassrooms from "../../../../hooks/fetch-classrooms.hook";
 
 const StudentsTable: React.FC = () => {
   const classes = useStyles();

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useStyles } from "./CreateStudentForm.style";
-import useStudentsHook from "../../../../hooks/useStudents.hook";
+import useStudentsHook from "../../../../hooks/students.hook";
 import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface";
 
 interface IFormData {
@@ -130,12 +130,8 @@ const CreateStudentForm: React.FC = () => {
         profession: formData.profession,
       };
 
-      try {
-        await createStudent(createStudentBody);
-        alert("Student created successfully!");
-      } catch (error) {
-        alert(error);
-      }
+      await createStudent(createStudentBody);
+
       clearFormData();
     }
   };

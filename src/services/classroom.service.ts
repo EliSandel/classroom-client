@@ -28,20 +28,11 @@ export const deleteClassService = async (
 export const createClassroomService = async (
   classroomBody: ICreateClassroomBody
 ): Promise<IClassroom> => {
-  try {
-    const response = await axios.post<IClassroom>(
-      `${API_URL}/classrooms/addClassroom`,
-      classroomBody
-    );
+  const response = await axios.post<IClassroom>(
+    `${API_URL}/classrooms/addClassroom`,
+    classroomBody
+  );
 
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data.message ||
-          "An error occurred while creating the classroom"
-      );
-    }
-    throw new Error("An unexpected error occurred");
-  }
+  //if i add to redux locally i dont need response
+  return response.data;
 };

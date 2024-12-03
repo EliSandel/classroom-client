@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useStyles } from "./CreateClassForm.style";
-import useClassroomsHook from "../../../../hooks/useClassrooms.hook";
+import useClassroomsHook from "../../../../hooks/classrooms.hook";
 import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
 
 interface IFormData {
@@ -99,12 +99,7 @@ const CreateClassForm: React.FC = () => {
         maxOccupancy: Number(formData.maxOccupancy),
       };
 
-      try {
-        await createClassroom(createClassroomBody);
-        alert("Classroom created successfully!");
-      } catch (error) {
-        alert(error);
-      }
+      await createClassroom(createClassroomBody);
       clearFormData();
     }
   };

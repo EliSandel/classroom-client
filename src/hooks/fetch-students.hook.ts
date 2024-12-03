@@ -1,7 +1,8 @@
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { RootState } from "../store/store";
 import { useQueryClient } from "react-query";
-import { setStudents } from "../redux/studentsSlice";
+import { setStudents } from "../redux/students.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { IStudent } from "../interfaces/student.interface";
 import { fetchStudentsService } from "../services/students.service";
@@ -20,14 +21,19 @@ const useFetchStudents = () => {
     }
 
     const fetchAndSetStudents = async () => {
-      const data = await queryClient.fetchQuery<IStudent[]>({
-        queryKey: ["students"],
-        queryFn: fetchStudentsService,
-        staleTime: Infinity,
-      });
+      try {
+        const data = await queryClient.fetchQuery<IStudent[]>({
+          queryKey: ["students"],
+          queryFn: fetchStudentsService,
+          staleTime: Infinity,
+        });
 
-      if (data) {
-        dispatch(setStudents(data));
+        if (data) {
+          dispatch(setStudents(data));
+        }
+      } catch (error) {
+        console.error("Failed to fetch students:", error);
+        toast.error("Failed to load students. Please try again later.");
       }
     };
 

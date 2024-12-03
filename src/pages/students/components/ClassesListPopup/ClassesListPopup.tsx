@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SchoolIcon from "@mui/icons-material/School";
-import useStudentsHook from "../../../../hooks/useStudents.hook";
-import { IClassroom } from "../../../../interfaces/classroom.interface";
 import { useStyles } from "./ClassesListPopup.style";
+import useStudentsHook from "../../../../hooks/students.hook";
+import { IClassroom } from "../../../../interfaces/classroom.interface";
 
 interface ISimpleDialogProps {
   open: boolean;

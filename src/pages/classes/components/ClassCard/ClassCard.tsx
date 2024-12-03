@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IStudent } from "../../../../interfaces/student.interface";
-import useClassroomsHook from "../../../../hooks/useClassrooms.hook";
+import useClassroomsHook from "../../../../hooks/classrooms.hook";
 import StudentsListPopup from "../../components/StudentsListPopup/StudentsListPopup";
 
 interface IClassCardProps {
@@ -35,11 +35,7 @@ const ClassCard: React.FC<IClassCardProps> = ({
   };
 
   const handleDeleteClassClick = async (): Promise<void> => {
-    try {
-      await deleteClass(classId, studentsList);
-    } catch (error) {
-      alert(error);
-    }
+    await deleteClass(classId, studentsList);
   };
 
   const handleClose = (): void => {

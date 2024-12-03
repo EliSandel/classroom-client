@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IStudent } from "../interfaces/student.interface";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface IInitialStudentsState {
   students: IStudent[] | null;

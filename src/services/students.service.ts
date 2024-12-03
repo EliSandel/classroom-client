@@ -26,21 +26,10 @@ export const addStudentToClassService = async (
 export const createStudentService = async (
   studentBody: ICreateStudentBody
 ): Promise<IStudent> => {
-  try {
-    const response = await axios.post<IStudent>(
-      `${API_URL}/students/addStudent`,
-      studentBody
-    );
-
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data.message ||
-          "An error occurred while creating the student"
-      );
-    }
-
-    throw new Error("An unexpected error occurred.");
-  }
+  const response = await axios.post<IStudent>(
+    `${API_URL}/students/addStudent`,
+    studentBody
+  );
+  //if i add to redux locally i dont need response
+  return response.data;
 };
