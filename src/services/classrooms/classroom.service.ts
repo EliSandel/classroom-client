@@ -1,6 +1,6 @@
 import axios from "axios";
-import { IClassroom } from "../interfaces/classroom.interface";
-import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
+import { IClassroom } from "../../interfaces/classroom.interface";
+import { ICreateClassroomDto } from "./dto/create-classroom.dto";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -26,7 +26,7 @@ export const deleteClassService = async (
 };
 
 export const createClassroomService = async (
-  classroomBody: ICreateClassroomBody
+  classroomBody: ICreateClassroomDto
 ): Promise<void> => {
   await axios.post<IClassroom>(
     `${API_URL}/classrooms/addClassroom`,

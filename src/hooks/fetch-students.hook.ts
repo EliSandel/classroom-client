@@ -5,7 +5,7 @@ import { useQueryClient } from "react-query";
 import { setStudents } from "../redux/students.slice";
 import { useDispatch } from "react-redux";
 import { IStudent } from "../interfaces/student.interface";
-import { fetchStudentsService } from "../services/students.service";
+import { fetchStudentsService } from "../services/students/students.service";
 
 const useFetchStudents = () => {
   const queryClient = useQueryClient();

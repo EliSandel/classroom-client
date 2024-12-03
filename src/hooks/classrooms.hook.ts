@@ -2,7 +2,7 @@ import {
   deleteClassService,
   createClassroomService,
   removeStudentFromClassroomService,
-} from "../services/classroom.service";
+} from "../services/classrooms/classroom.service";
 import { useAppSelector } from "../store/store";
 import { setStudents } from "../redux/students.slice";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import { setClassrooms } from "../redux/classrooms.slice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { validationForDeleteClass } from "../utilities/classroom.util";
-import { ICreateClassroomBody } from "../interfaces/createClassroomBody.interface";
+import { ICreateClassroomBody } from "../services/classrooms/dto/create-classroom.dto";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "../utilities/error.util";
 

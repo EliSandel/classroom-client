@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { useStyles } from "./CreateStudentForm.style";
 import useStudentsHook from "../../../../hooks/students.hook";
-import { ICreateStudentBody } from "../../../../interfaces/createStudentBody.interface";
+import { ICreateStudentDto } from "../../../../services/students/dto/create-student.dto";
 
 interface IFormData {
   id: string;
@@ -122,7 +122,7 @@ const CreateStudentForm: React.FC = () => {
     setErrors(formErrors);
 
     if (!Object.values(formErrors).includes(true)) {
-      const createStudentBody: ICreateStudentBody = {
+      const createStudentBody: ICreateStudentDto = {
         id: formData.id,
         firstName: formData.firstName,
         lastName: formData.lastName,

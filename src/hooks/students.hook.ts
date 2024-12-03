@@ -2,7 +2,7 @@ import {
   addStudentToClassService,
   createStudentService,
   deleteStudentService,
-} from "../services/students.service";
+} from "../services/students/students.service";
 import { toast } from "react-toastify";
 import { useAppSelector } from "../store/store";
 import { setStudents } from "../redux/students.slice";
@@ -11,13 +11,15 @@ import { getErrorMessage } from "../utilities/error.util";
 import { setClassrooms } from "../redux/classrooms.slice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
-import { ICreateStudentBody } from "../interfaces/createStudentBody.interface";
+import { ICreateStudentBody } from "../services/students/dto/create-student.dto";
 
 const useStudentsHook = () => {
   const dispatch = useDispatch();
 
   const studentsState = useAppSelector((state) => state.students.students);
-  const classroomsState = useAppSelector((state) => state.classrooms.classrooms);
+  const classroomsState = useAppSelector(
+    (state) => state.classrooms.classrooms
+  );
 
   const rollbackState = (
     previousStudentsState: IStudent[] | null,
@@ -138,7 +140,7 @@ const useStudentsHook = () => {
       const newStudent: IStudent = {
         ...createStudentBody,
         classroomId: null,
-      }
+      };
       await createStudentService(createStudentBody);
       dispatch(setStudents([...(studentsState ?? []), newStudent]));
       toast.success("Student successfully created.");

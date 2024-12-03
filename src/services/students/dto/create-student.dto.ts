@@ -1,4 +1,4 @@
-export interface ICreateStudentBody {
+export interface ICreateStudentDto {
     id: string;
     firstName: string;
     lastName: string;

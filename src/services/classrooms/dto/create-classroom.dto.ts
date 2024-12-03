@@ -1,4 +1,4 @@
-export interface ICreateClassroomBody {
+export interface ICreateClassroomDto {
     id: string;
     name: string;
     maxOccupancy: number;

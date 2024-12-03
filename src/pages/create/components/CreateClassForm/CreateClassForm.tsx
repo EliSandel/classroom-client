@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { useStyles } from "./CreateClassForm.style";
 import useClassroomsHook from "../../../../hooks/classrooms.hook";
-import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
+import { ICreateClassroomDto } from "../../../../services/classrooms/dto/create-classroom.dto";
 
 interface IFormData {
   id: string;
@@ -93,7 +93,7 @@ const CreateClassForm: React.FC = () => {
     setErrors(formErrors);
 
     if (!Object.values(formErrors).includes(true)) {
-      const createClassroomBody: ICreateClassroomBody = {
+      const createClassroomBody: ICreateClassroomDto = {
         id: formData.id,
         name: formData.name,
         maxOccupancy: Number(formData.maxOccupancy),

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { IStudent } from "../interfaces/student.interface";
-import { ICreateStudentBody } from "../interfaces/createStudentBody.interface";
+import { IStudent } from "../../interfaces/student.interface";
+import { ICreateStudentDto } from "./dto/create-student.dto";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -24,7 +24,7 @@ export const addStudentToClassService = async (
 };
 
 export const createStudentService = async (
-  studentBody: ICreateStudentBody
+  studentBody: ICreateStudentDto
 ): Promise<void> => {
   await axios.post<IStudent>(`${API_URL}/students/addStudent`, studentBody);
 };
