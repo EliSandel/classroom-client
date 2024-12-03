@@ -1,4 +1,4 @@
-import "./app.css";
+import "./styles/app.css";
 import AppRoutes from "./routes/AppRoutes";
 import { ThemeProvider } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
