@@ -1,8 +1,9 @@
 import "./app.css";
 import AppRoutes from "./routes/AppRoutes";
+import { ThemeProvider } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
+import createCustomTheme from "./styles/theme";
 import { ToastContainer } from "react-toastify";
-import { createTheme, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useThemeColor } from "./context/ThemeColorContext/ThemeColorContext";
 
@@ -11,16 +12,7 @@ const queryClient = new QueryClient();
 const App = () => {
   const { themeColor } = useThemeColor();
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: themeColor,
-      },
-    },
-    typography: {
-      fontFamily: "Heebo",
-    },
-  });
+  const theme = createCustomTheme(themeColor);
 
   return (
     <QueryClientProvider client={queryClient}>
