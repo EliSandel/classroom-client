@@ -11,7 +11,7 @@ import { getErrorMessage } from "../utilities/error.util";
 import { setClassrooms } from "../redux/classrooms.slice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
-import { ICreateStudentBody } from "../services/students/dto/create-student.dto";
+import { ICreateStudentDto } from "../services/students/dto/create-student.dto";
 
 const useStudentsHook = () => {
   const dispatch = useDispatch();
@@ -132,7 +132,7 @@ const useStudentsHook = () => {
   };
 
   const createStudent = async (
-    createStudentBody: ICreateStudentBody
+    createStudentBody: ICreateStudentDto
   ): Promise<void> => {
     const previousStudentsState: IStudent[] = studentsState ?? [];
 

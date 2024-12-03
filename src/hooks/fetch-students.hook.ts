@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useAppSelector } from "../store/store";
-import { useQueryClient } from "react-query";
-import { setStudents } from "../redux/students.slice";
 import { useDispatch } from "react-redux";
+import { useQueryClient } from "react-query";
+import { useAppSelector } from "../store/store";
+import { setStudents } from "../redux/students.slice";
 import { IStudent } from "../interfaces/student.interface";
 import { fetchStudentsService } from "../services/students/students.service";
 
