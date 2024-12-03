@@ -27,12 +27,9 @@ export const deleteClassService = async (
 
 export const createClassroomService = async (
   classroomBody: ICreateClassroomBody
-): Promise<IClassroom> => {
-  const response = await axios.post<IClassroom>(
+): Promise<void> => {
+  await axios.post<IClassroom>(
     `${API_URL}/classrooms/addClassroom`,
     classroomBody
   );
-
-  //if i add to redux locally i dont need response
-  return response.data;
 };

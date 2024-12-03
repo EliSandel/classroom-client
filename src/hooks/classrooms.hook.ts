@@ -17,10 +17,10 @@ import { getErrorMessage } from "../utilities/error.util";
 const useClassroomsHook = () => {
   const dispatch = useDispatch();
 
-  //change to classroomsState
-
-  const students = useAppSelector((state) => state.students.students);
-  const classrooms = useAppSelector((state) => state.classrooms.classrooms);
+  const studentsState = useAppSelector((state) => state.students.students);
+  const classroomsState = useAppSelector(
+    (state) => state.classrooms.classrooms
+  );
 
   const rollbackState = (
     previousStudentsState: IStudent[] | null,
@@ -38,12 +38,12 @@ const useClassroomsHook = () => {
     classroomId: string,
     studentId: string
   ): Promise<void> => {
-    const previousStudentsState: IStudent[] = students ?? [];
-    const previousClassroomsState: IClassroom[] = classrooms ?? [];
+    const previousStudentsState: IStudent[] = studentsState ?? [];
+    const previousClassroomsState: IClassroom[] = classroomsState ?? [];
 
     try {
       const updatedClassrooms =
-        classrooms?.map((classroom) => {
+        classroomsState?.map((classroom) => {
           if (classroom.id === classroomId) {
             return {
               ...classroom,
@@ -56,7 +56,7 @@ const useClassroomsHook = () => {
         }) ?? [];
 
       const updatedStudents =
-        students?.map((student) => {
+        studentsState?.map((student) => {
           if (student.id === studentId) {
             return {
               ...student,
@@ -82,7 +82,7 @@ const useClassroomsHook = () => {
     classroomId: string,
     studentList: IStudent[]
   ): Promise<void> => {
-    const previousClassroomsState: IClassroom[] = classrooms ?? [];
+    const previousClassroomsState: IClassroom[] = classroomsState ?? [];
 
     try {
       const canDelete = validationForDeleteClass(studentList);
@@ -95,7 +95,8 @@ const useClassroomsHook = () => {
       }
 
       const updatedClassrooms =
-        classrooms?.filter((classroom) => classroom.id !== classroomId) ?? [];
+        classroomsState?.filter((classroom) => classroom.id !== classroomId) ??
+        [];
 
       dispatch(setClassrooms(updatedClassrooms));
       await deleteClassService(classroomId);
@@ -110,12 +111,15 @@ const useClassroomsHook = () => {
   const createClassroom = async (
     createClassroomBody: ICreateClassroomBody
   ): Promise<void> => {
-    const previousClassroomsState: IClassroom[] = classrooms ?? [];
+    const previousClassroomsState: IClassroom[] = classroomsState ?? [];
 
     try {
-      //add local class to redux instead of response
-      const response = await createClassroomService(createClassroomBody);
-      dispatch(setClassrooms([...(classrooms || []), response]));
+      const newClassroom: IClassroom = {
+        ...createClassroomBody,
+        students: [],
+      };
+      await createClassroomService(createClassroomBody);
+      dispatch(setClassrooms([...(classroomsState || []), newClassroom]));
       toast.success("Classroom successfully created.");
     } catch (error) {
       console.log(error);
@@ -125,7 +129,7 @@ const useClassroomsHook = () => {
   };
 
   return {
-    classrooms,
+    classrooms: classroomsState,
     removeStudentFromClassroom,
     deleteClass,
     createClassroom,

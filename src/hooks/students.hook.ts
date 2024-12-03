@@ -135,9 +135,12 @@ const useStudentsHook = () => {
     const previousStudentsState: IStudent[] = studentsState ?? [];
 
     try {
-      const reply = await createStudentService(createStudentBody);
-      //add to redux the local student instead of the response
-      dispatch(setStudents([...(studentsState ?? []), reply]));
+      const newStudent: IStudent = {
+        ...createStudentBody,
+        classroomId: null,
+      }
+      await createStudentService(createStudentBody);
+      dispatch(setStudents([...(studentsState ?? []), newStudent]));
       toast.success("Student successfully created.");
     } catch (error) {
       console.log(error);

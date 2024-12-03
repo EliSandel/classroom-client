@@ -25,11 +25,6 @@ export const addStudentToClassService = async (
 
 export const createStudentService = async (
   studentBody: ICreateStudentBody
-): Promise<IStudent> => {
-  const response = await axios.post<IStudent>(
-    `${API_URL}/students/addStudent`,
-    studentBody
-  );
-  //if i add to redux locally i dont need response
-  return response.data;
+): Promise<void> => {
+  await axios.post<IStudent>(`${API_URL}/students/addStudent`, studentBody);
 };
