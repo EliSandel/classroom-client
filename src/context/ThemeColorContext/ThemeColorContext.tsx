@@ -1,4 +1,4 @@
-import { THEME_COLORS } from "./ThemeColorContext.data";
+import { THEME_COLORS } from "../../constants/theme-colors.const";
 import React, { createContext, useContext, useState } from "react";
 
 interface IThemeColorContext {

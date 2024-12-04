@@ -15,9 +15,9 @@ const Classes: React.FC = () => {
             key={id}
             classId={id}
             className={name}
-            seatsLeft={maxOccupancy - students.length}
-            totalSeats={maxOccupancy}
             studentsList={students}
+            totalSeats={maxOccupancy}
+            seatsLeft={maxOccupancy - students.length}
           />
         );
       })}
