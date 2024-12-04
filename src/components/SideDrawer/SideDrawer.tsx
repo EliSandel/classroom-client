@@ -6,7 +6,7 @@ import ListItem from "@mui/material/ListItem";
 import { useStyles } from "./SideDrawer.style";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
-import { arrayOfLinkTextAndCorrespondingRoutes } from "./SideDrawer.data";
+import { APP_ROUTES } from "../../constants/routes.const";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
@@ -26,7 +26,7 @@ const SideDrawer: React.FC<ISideDrawerProps> = ({
         onClick={() => toggleDrawer(false)}
       >
         <List>
-          {arrayOfLinkTextAndCorrespondingRoutes.map(({ text, route }) => (
+          {APP_ROUTES.map(({ text, route }) => (
             <ListItem key={text} disablePadding>
               <ListItemButton component={Link} to={route}>
                 <ListItemText className={classes.menuText} primary={text} />
