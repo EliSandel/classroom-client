@@ -1,6 +1,6 @@
 import Create from "../pages/create/Create";
-import Classes from "../pages/classes/Classes";
 import Students from "../pages/students/Students";
+import Classes from "../pages/classrooms/Classrooms";
 
 export const APP_ROUTES = [
   { text: "Classes", route: "/", element: <Classes /> },

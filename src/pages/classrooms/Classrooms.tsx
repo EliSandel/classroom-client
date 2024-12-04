@@ -1,5 +1,5 @@
-import { useStyles } from "./Classes.style";
-import ClassCard from "./components/ClassCard/ClassCard";
+import { useStyles } from "./Classrooms.style";
+import ClassCard from "./components/ClassroomCard/ClassroomCard";
 import useFetchClassrooms from "../../hooks/fetch-classrooms.hook";
 
 const Classes: React.FC = () => {

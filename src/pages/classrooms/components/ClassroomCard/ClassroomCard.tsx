@@ -2,14 +2,14 @@ import { useState } from "react";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
-import { useStyles } from "./ClassCard.style";
+import { useStyles } from "./ClassroomCard.style";
 import Typography from "@mui/material/Typography";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { IStudent } from "../../../../interfaces/student.interface";
 import useClassroomsHook from "../../../../hooks/classrooms.hook";
-import StudentsListPopup from "../../components/StudentsListPopup/StudentsListPopup";
+import { IStudent } from "../../../../interfaces/student.interface";
+import StudentsListPopup from "../StudentsListPopup/StudentsListPopup";
 
 interface IClassCardProps {
   classId: string;
