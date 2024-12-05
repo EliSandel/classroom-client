@@ -8,15 +8,38 @@ import {
   FormHelperText,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useClassroomsHook } from "../../../../hooks/useClassrooms.hook";
-import { ICreateClassroomBody } from "../../../../interfaces/createClassroomBody.interface";
+import { useStyles } from "./CreateClassForm.style";
+import useClassroomsHook from "../../../../hooks/classrooms.hook";
+import { ICreateClassroomDto } from "../../../../services/classrooms/dto/create-classroom.dto";
 
-const CreateClassForm = () => {
-  const [formData, setFormData] = useState({
+interface IFormData {
+  id: string;
+  name: string;
+  maxOccupancy: string;
+}
+
+interface IFormErrors {
+  id: boolean;
+  name: boolean;
+  maxOccupancy: boolean;
+}
+
+const CreateClassForm: React.FC = () => {
+  const [formData, setFormData] = useState<IFormData>({
     id: "",
     name: "",
     maxOccupancy: "",
   });
+
+  const [errors, setErrors] = useState<IFormErrors>({
+    id: false,
+    name: false,
+    maxOccupancy: false,
+  });
+
+  const { createClassroom } = useClassroomsHook();
+
+  const classes = useStyles();
 
   const clearFormData = () => {
     setFormData({
@@ -26,65 +49,68 @@ const CreateClassForm = () => {
     });
   };
 
-  const { createClassroom } = useClassroomsHook();
-
-  const [errors, setErrors] = useState({
-    id: false,
-    name: false,
-    maxOccupancy: false,
-  });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+
+      if (name === "id") {
+        updatedErrors.id = !value;
+      } else if (name === "maxOccupancy") {
+        updatedErrors.maxOccupancy =
+          !value || isNaN(Number(value)) || Number(value) <= 0;
+      } else if (name === "name") {
+        updatedErrors.name = !value;
+      }
+
+      return updatedErrors;
+    });
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const formErrors = { id: false, name: false, maxOccupancy: false };
+    const formErrors: IFormErrors = {
+      id: false,
+      name: false,
+      maxOccupancy: false,
+    };
 
     if (!formData.id) formErrors.id = true;
     if (!formData.name) formErrors.name = true;
-    if (!formData.maxOccupancy || isNaN(Number(formData.maxOccupancy)))
+    if (
+      !formData.maxOccupancy ||
+      isNaN(Number(formData.maxOccupancy)) ||
+      Number(formData.maxOccupancy) <= 0
+    )
       formErrors.maxOccupancy = true;
 
     setErrors(formErrors);
 
     if (!Object.values(formErrors).includes(true)) {
-      const createClassroomBody: ICreateClassroomBody = {
+      const createClassroomBody: ICreateClassroomDto = {
         id: formData.id,
         name: formData.name,
         maxOccupancy: Number(formData.maxOccupancy),
       };
 
-      try {
-        await createClassroom(createClassroomBody);
-        alert("Classroom created successfully!");
-      } catch (error) {
-        alert(`Error: ${error.message}`);
-      }
+      await createClassroom(createClassroomBody);
       clearFormData();
     }
   };
 
   return (
     <Container maxWidth="xs">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          mt: 4,
-        }}
-      >
+      <Box className={classes.mainBox}>
         <Typography variant="h5" gutterBottom>
           Create new class
         </Typography>
-        <form onSubmit={handleSubmit} style={{ width: "60%" }}>
+        <form onSubmit={handleSubmit} className={classes.formDiv}>
           <FormControl fullWidth margin="dense" error={errors.id}>
             <TextField
               label="Class ID"
@@ -127,9 +153,8 @@ const CreateClassForm = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            sx={{ mt: 3 }}
+            className={classes.submitButton}
           >
             CREATE CLASS
           </Button>

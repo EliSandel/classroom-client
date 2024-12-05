@@ -1,30 +1,43 @@
-import React, { useState } from 'react';
-import { FormControl, TextField, Button, Container, Typography, Box, FormHelperText } from '@mui/material';
-import { useStudentsHook } from "../../../../hooks/useStudents.hook"; // Assuming this hook is similar to useClassroomsHook
-import { ICreateStudentBody } from '../../../../interfaces/createStudentBody.interface'; // Create this interface similar to ICreateClassroomBody
+import {
+  Box,
+  Button,
+  TextField,
+  Container,
+  Typography,
+  FormControl,
+  FormHelperText,
+} from "@mui/material";
+import React, { useState } from "react";
+import { useStyles } from "./CreateStudentForm.style";
+import useStudentsHook from "../../../../hooks/students.hook";
+import { ICreateStudentDto } from "../../../../services/students/dto/create-student.dto";
 
-const CreateStudentForm = () => {
-  const [formData, setFormData] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
-    age: '',
-    profession: '',
+interface IFormData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  age: string;
+  profession: string;
+}
+
+interface IFormErrors {
+  id: boolean;
+  firstName: boolean;
+  lastName: boolean;
+  age: boolean;
+  profession: boolean;
+}
+
+const CreateStudentForm: React.FC = () => {
+  const [formData, setFormData] = useState<IFormData>({
+    id: "",
+    firstName: "",
+    lastName: "",
+    age: "",
+    profession: "",
   });
 
-  const clearFormData = () => {
-    setFormData({
-      id: "",
-      firstName: "",
-      lastName: "",
-      age: "",
-      profession: "",
-    });
-  }
-
-  const { createStudent } = useStudentsHook(); // Assuming you have this hook
-
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<IFormErrors>({
     id: false,
     firstName: false,
     lastName: false,
@@ -32,31 +45,84 @@ const CreateStudentForm = () => {
     profession: false,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { createStudent } = useStudentsHook();
+
+  const classes = useStyles();
+
+  const clearFormData = (): void => {
+    setFormData({
+      id: "",
+      firstName: "",
+      lastName: "",
+      age: "",
+      profession: "",
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+
+      if (name === "id") {
+        updatedErrors.id =
+          !value ||
+          isNaN(Number(value)) ||
+          Number(value) < 0 ||
+          value.length !== 9;
+      } else if (name === "age") {
+        updatedErrors.age =
+          !value || isNaN(Number(value)) || Number(value) <= 0;
+      } else if (
+        name === "firstName" ||
+        name === "lastName" ||
+        name === "profession"
+      ) {
+        updatedErrors[name] = !value;
+      }
+
+      return updatedErrors;
+    });
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const formErrors = { id: false, firstName: false, lastName: false, age: false, profession: false };
+    const formErrors: IFormErrors = {
+      id: false,
+      firstName: false,
+      lastName: false,
+      age: false,
+      profession: false,
+    };
 
-    // Basic validation
-    if (!formData.id) formErrors.id = true;
+    if (
+      !formData.id ||
+      isNaN(Number(formData.id)) ||
+      formData.id.length !== 9 ||
+      Number(formData.id) < 0
+    ) {
+      formErrors.id = true;
+    }
     if (!formData.firstName) formErrors.firstName = true;
     if (!formData.lastName) formErrors.lastName = true;
-    if (!formData.age || isNaN(Number(formData.age))) formErrors.age = true;
+    if (
+      !formData.age ||
+      isNaN(Number(formData.age)) ||
+      Number(formData.age) <= 0
+    )
+      formErrors.age = true;
     if (!formData.profession) formErrors.profession = true;
 
     setErrors(formErrors);
 
-    // If no errors, handle form submission
     if (!Object.values(formErrors).includes(true)) {
-      const createStudentBody: ICreateStudentBody = {
+      const createStudentBody: ICreateStudentDto = {
         id: formData.id,
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -64,22 +130,20 @@ const CreateStudentForm = () => {
         profession: formData.profession,
       };
 
-      try {
-        await createStudent(createStudentBody);
-        alert("Student created successfully!");
-      } catch (error) {
-        alert(`Error: ${error.message}`)
-      }
-      clearFormData();      
+      await createStudent(createStudentBody);
+
+      clearFormData();
     }
   };
 
   return (
     <Container maxWidth="xs">
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
-        <Typography variant="h5" gutterBottom>Add new student</Typography>
-        <form onSubmit={handleSubmit} style={{ width: '60%' }}>
-          <FormControl fullWidth margin='dense' error={errors.id}>
+      <Box className={classes.mainBox}>
+        <Typography variant="h5" gutterBottom>
+          Add new student
+        </Typography>
+        <form onSubmit={handleSubmit} className={classes.formDiv}>
+          <FormControl fullWidth margin="dense" error={errors.id}>
             <TextField
               label="Student ID"
               variant="outlined"
@@ -87,8 +151,13 @@ const CreateStudentForm = () => {
               value={formData.id}
               onChange={handleChange}
               required
+              type="number"
             />
-            {errors.id && <FormHelperText>Student ID is required</FormHelperText>}
+            {errors.id && (
+              <FormHelperText>
+                Student ID must be a 9-digit number
+              </FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.firstName}>
@@ -100,7 +169,9 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.firstName && <FormHelperText>First name is required</FormHelperText>}
+            {errors.firstName && (
+              <FormHelperText>First name is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.lastName}>
@@ -112,7 +183,9 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.lastName && <FormHelperText>Last name is required</FormHelperText>}
+            {errors.lastName && (
+              <FormHelperText>Last name is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.age}>
@@ -125,7 +198,9 @@ const CreateStudentForm = () => {
               required
               type="number"
             />
-            {errors.age && <FormHelperText>Valid age is required</FormHelperText>}
+            {errors.age && (
+              <FormHelperText>Valid age is required</FormHelperText>
+            )}
           </FormControl>
 
           <FormControl fullWidth margin="dense" error={errors.profession}>
@@ -137,15 +212,16 @@ const CreateStudentForm = () => {
               onChange={handleChange}
               required
             />
-            {errors.profession && <FormHelperText>Profession is required</FormHelperText>}
+            {errors.profession && (
+              <FormHelperText>Profession is required</FormHelperText>
+            )}
           </FormControl>
 
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
-            sx={{ mt: 3 }}
+            className={classes.submitButton}
           >
             ADD STUDENT
           </Button>

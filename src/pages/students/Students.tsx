@@ -1,22 +1,6 @@
-import { useEffect } from "react";
-import { useStudentsHook } from "../../hooks/useStudents.hook";
-import { useClassroomsHook } from "../../hooks/useClassrooms.hook";
-import StudentsTable from "../../components/StudentsTable/StudentsTable";
+import StudentsTable from "./components/StudentsTable/StudentsTable";
 
-const StudentsPage = () => {
-  
-  const { fetchAllStudents } = useStudentsHook();
-
-  useEffect(() => {
-    fetchAllStudents();
-  }, []);
-
-  const { fetchAllClassrooms } = useClassroomsHook();
-
-  useEffect(() => {
-    fetchAllClassrooms();
-  }, [])
-
+const StudentsPage: React.FC = () => {
   return <StudentsTable />;
 };
 

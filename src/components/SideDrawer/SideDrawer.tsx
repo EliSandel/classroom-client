@@ -6,42 +6,35 @@ import ListItem from "@mui/material/ListItem";
 import { useStyles } from "./SideDrawer.style";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import { APP_ROUTES } from "../../constants/routes.const";
 
 interface ISideDrawerProps {
   openDrawer: boolean;
   toggleDrawer: (newOpen: boolean) => void;
 }
 
-const SideDrawer = ({ openDrawer, toggleDrawer }: ISideDrawerProps) => {
+const SideDrawer: React.FC<ISideDrawerProps> = ({
+  openDrawer,
+  toggleDrawer,
+}: ISideDrawerProps) => {
   const classes = useStyles();
-
-  const arrayOfLinkTextAndCorrespondingRoutes = [
-    { text: "Classes", route: "/" },
-    { text: "Students", route: "/students" },
-    { text: "Create", route: "/create" },
-  ];
-
-  const DrawerList = (
-    <Box
-      sx={{ width: 130 }}
-      role="presentation"
-      onClick={() => toggleDrawer(false)}
-    >
-      <List>
-        {arrayOfLinkTextAndCorrespondingRoutes.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton component={Link} to={item.route}>
-              <ListItemText className={classes.menuText} primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
 
   return (
     <Drawer open={openDrawer} onClose={() => toggleDrawer(false)}>
-      {DrawerList}
+      <Box
+        className={classes.drawerContent}
+        onClick={() => toggleDrawer(false)}
+      >
+        <List>
+          {APP_ROUTES.map(({ text, route }) => (
+            <ListItem key={text} disablePadding>
+              <ListItemButton component={Link} to={route}>
+                <ListItemText className={classes.menuText} primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Drawer>
   );
 };

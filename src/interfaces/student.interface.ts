@@ -5,6 +5,6 @@ export interface IStudent {
   age: number;
   profession: string;
   classroomId: string | null;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

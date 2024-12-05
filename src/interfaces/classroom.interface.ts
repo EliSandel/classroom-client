@@ -4,7 +4,7 @@ export interface IClassroom {
     id: string;
     name: string;
     maxOccupancy: number;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
     students: IStudent[];
 }

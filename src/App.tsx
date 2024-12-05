@@ -1,33 +1,25 @@
-import "./app.css";
+import "./styles/app.css";
 import AppRoutes from "./routes/AppRoutes";
-import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import "react-toastify/dist/ReactToastify.css";
+import createCustomTheme from "./styles/theme";
+import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useThemeColor } from "./context/ThemeColorContext/ThemeColorContext";
+
+const queryClient = new QueryClient();
 
 const App = () => {
-  const buttonColor = useSelector(
-    (state: RootState) => state.color.buttonColor
-  );
+  const { themeColor } = useThemeColor();
 
-  const queryClient = new QueryClient();
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: buttonColor,
-      },
-    },
-    typography: {
-      fontFamily: "Heebo",
-    },
-  });
+  const theme = createCustomTheme(themeColor);
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <div className="appDiv">
           <AppRoutes />
+          <ToastContainer />
         </div>
       </ThemeProvider>
     </QueryClientProvider>

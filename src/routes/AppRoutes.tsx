@@ -1,18 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import Create from "../pages/create/Create";
-import Classes from "../pages/classes/Classes";
 import Navbar from "../components/Navbar/Navbar";
-import Students from "../pages/students/Students";
+import { APP_ROUTES } from "../constants/routes.const";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Classes />} />
-        <Route path="/students" element={<Students />} />
-        <Route path="/create" element={<Create />} />
+        {APP_ROUTES.map(({ route, element }) => (
+          <Route key={route} path={route} element={element} />
+        ))}
       </Routes>
     </BrowserRouter>
   );

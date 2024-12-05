@@ -8,4 +8,7 @@ export const useStyles = makeStyles(() => ({
       textAlign: "center",
     },
   },
+  drawerContent: {
+    width: 130,
+  },
 }));
