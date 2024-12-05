@@ -26,5 +26,5 @@ export const addStudentToClassService = async (
 export const createStudentService = async (
   studentBody: ICreateStudentDto
 ): Promise<void> => {
-  await axios.post<IStudent>(`${API_URL}/students/addStudent`, studentBody);
+  await axios.post<IStudent>(`${API_URL}/students`, studentBody);
 };

@@ -29,7 +29,7 @@ export const createClassroomService = async (
   classroomBody: ICreateClassroomDto
 ): Promise<void> => {
   await axios.post<IClassroom>(
-    `${API_URL}/classrooms/addClassroom`,
+    `${API_URL}/classrooms`,
     classroomBody
   );
 };
