@@ -31,13 +31,14 @@ const ClassesListPopup: React.FC<ISimpleDialogProps> = ({
 
   const classes = useStyles();
 
-  const handleAddStudentToClassClick = async (
+  const handleAddStudentToClassClick = async (//move to students table and pass as props. optional
     classId: string
   ): Promise<void> => {
     await addStudentToClass(classId, studentId);
     onClose();
   };
 
+  //usememo
   const availableClasses: IClassroom[] = classesList.filter(
     (classroom) => classroom.students.length < classroom.maxOccupancy
   );
@@ -54,7 +55,8 @@ const ClassesListPopup: React.FC<ISimpleDialogProps> = ({
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={name} />
-            <IconButton onClick={async () => handleAddStudentToClassClick(id)}>
+            {/* added await */}
+            <IconButton onClick={async () => await handleAddStudentToClassClick(id)}>
               <AddIcon color="primary" />
             </IconButton>
           </ListItem>

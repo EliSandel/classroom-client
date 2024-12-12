@@ -12,6 +12,7 @@ import { useStyles } from "./CreateClassForm.style";
 import useClassroomsHook from "../../../../hooks/classrooms.hook";
 import { ICreateClassroomDto } from "../../../../services/classrooms/dto/create-classroom.dto";
 
+//move to interface dir
 interface IFormData {
   id: string;
   name: string;
@@ -71,6 +72,8 @@ const CreateClassForm: React.FC = () => {
       return updatedErrors;
     });
   };
+
+  //move all the information of each field to const. including its error checking and form input.
 
   const handleSubmit = async (event: React.FormEvent): Promise<void> => {
     event.preventDefault();

@@ -2,6 +2,8 @@ import axios from "axios";
 import { IClassroom } from "../../interfaces/classroom.interface";
 import { ICreateClassroomDto } from "./dto/create-classroom.dto";
 
+//axios instance
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchClassroomsService = async (): Promise<IClassroom[]> => {

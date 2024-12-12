@@ -14,6 +14,9 @@ import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
 import useFetchStudents from "../../../../hooks/fetch-students.hook";
 import useFetchClassrooms from "../../../../hooks/fetch-classrooms.hook";
 
+//index files 
+//destructure imoports
+
 const StudentsTable: React.FC = () => {
   const classes = useStyles();
 
@@ -47,9 +50,11 @@ const StudentsTable: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* remove destructuring. and map and create tablecell */}
             {studentsState?.map(
               ({ id, firstName, lastName, age, profession, classroomId }) => (
-                <TableRow key={id} className={classes.tableRow}>
+                <TableRow key={id} className={classes.tableRow}> 
+  
                   <TableCell>{id}</TableCell>
                   <TableCell>{firstName}</TableCell>
                   <TableCell>{lastName}</TableCell>
@@ -59,7 +64,7 @@ const StudentsTable: React.FC = () => {
                     <Button
                       variant="outlined"
                       onClick={() => handleAssignToClassClick(id)}
-                      disabled={classroomId !== null}
+                      disabled={!!classroomId}
                     >
                       Assign To Class
                     </Button>

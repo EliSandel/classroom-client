@@ -30,6 +30,7 @@ const ClassCard: React.FC<IClassCardProps> = ({
 
   const { deleteClass } = useClassroomsHook();
 
+  //all 3 functions uneccessary. move to arrow
   const handleStudentsListClick = () => {
     setIsDialogOpen(true);
   };

@@ -29,6 +29,7 @@ const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
 
   const classes = useStyles();
 
+  //remove click from function name
   const handleRemoveStudentFromClassClick = async (
     classroomId: string | null,
     studentId: string

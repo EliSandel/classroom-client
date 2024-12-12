@@ -99,8 +99,8 @@ const useClassroomsHook = () => {
         [];
 
       dispatch(setClassrooms(updatedClassrooms));
-      await deleteClassService(classroomId);
       toast.success("classroom successfully deleted.");
+      await deleteClassService(classroomId);
     } catch (error) {
       console.log(error);
       rollbackState(null, previousClassroomsState);

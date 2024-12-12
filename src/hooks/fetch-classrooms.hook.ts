@@ -30,7 +30,7 @@ const useFetchClassrooms = () => {
           dispatch(setClassrooms(data));
         }
       } catch (error) {
-        console.error("Failed to fetch classrooms:", error);
+        console.error("Failed to fetch classrooms:", error); //remove error
         toast.error("Failed to load classrooms. Please try again later.");
       }
     };

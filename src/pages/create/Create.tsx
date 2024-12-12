@@ -1,6 +1,6 @@
+import { useStyles } from "./Create.style";
 import CreateClassForm from "./components/CreateClassForm/CreateClassForm";
 import CreateStudentForm from "./components/CreateStudentForm/CreateStudentForm";
-import { useStyles } from "./Create.style";
 
 const Create: React.FC = () => {
   const classes = useStyles();
