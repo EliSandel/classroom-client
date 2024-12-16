@@ -1,17 +1,18 @@
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import {
-  addStudentToClassService,
   createStudentService,
   deleteStudentService,
 } from "../services/students/students.service";
-import { toast } from "react-toastify";
 import { useAppSelector } from "../store/store";
 import { setStudents } from "../redux/students.slice";
-import { useDispatch } from "react-redux";
 import { getErrorMessage } from "../utilities/error.util";
 import { setClassrooms } from "../redux/classrooms.slice";
 import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { ICreateStudentDto } from "../services/students/dto/create-student.dto";
+import { IAssignStudentDto } from "../services/classrooms/dto/assign-student.dto";
+import { addStudentToClassService } from "../services/classrooms/classroom.service";
 
 const useStudentsHook = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const useStudentsHook = () => {
   };
 
   const addStudentToClass = async (
-    classId: string,
+    classroomId: string,
     studentId: string
   ): Promise<void> => {
     const previousStudentsState: IStudent[] = studentsState ?? [];
@@ -51,12 +52,12 @@ const useStudentsHook = () => {
 
       const updatedStudentToAdd: IStudent = {
         ...studentToAdd,
-        classroomId: classId,
+        classroomId: classroomId,
       };
 
       const updatedClassrooms =
         classroomsState?.map((classroom) => {
-          if (classroom.id === classId) {
+          if (classroom.id === classroomId) {
             return {
               ...classroom,
               students: [...classroom.students, updatedStudentToAdd],
@@ -78,7 +79,12 @@ const useStudentsHook = () => {
       dispatch(setStudents(updatedStudents));
       dispatch(setClassrooms(updatedClassrooms));
 
-      await addStudentToClassService(classId, studentId);
+      const assignStudentBody: IAssignStudentDto = {
+        classroomId,
+        studentId,
+      };
+
+      await addStudentToClassService(assignStudentBody);
       toast.success("Student successfully added to Class.");
     } catch (error) {
       console.log(error);

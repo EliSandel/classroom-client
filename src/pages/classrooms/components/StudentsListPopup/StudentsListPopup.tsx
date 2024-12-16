@@ -29,8 +29,7 @@ const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
 
   const classes = useStyles();
 
-  //remove click from function name
-  const handleRemoveStudentFromClassClick = async (
+  const handleRemoveStudentFromClass = async (
     classroomId: string | null,
     studentId: string
   ): Promise<void> => {
@@ -55,7 +54,7 @@ const StudentsListPopup: React.FC<IStudentsListPopupProps> = ({
             <ListItemText primary={firstName + " " + lastName} />
             <IconButton
               onClick={async () =>
-                await handleRemoveStudentFromClassClick(classroomId, id)
+                await handleRemoveStudentFromClass(classroomId, id)
               }
             >
               <DeleteIcon color="primary" />

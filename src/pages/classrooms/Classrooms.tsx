@@ -1,15 +1,16 @@
 import { useStyles } from "./Classrooms.style";
+import { useAppSelector } from "../../store/store";
 import ClassCard from "./components/ClassroomCard/ClassroomCard";
-import useFetchClassrooms from "../../hooks/fetch-classrooms.hook";
 
 const Classes: React.FC = () => {
   const classes = useStyles();
-
-  const classrooms = useFetchClassrooms();
+  const classroomsState = useAppSelector(
+    (state) => state.classrooms.classrooms
+  );
 
   return (
     <div className={classes.classesPage}>
-      {classrooms?.map(({ id, name, maxOccupancy, students }) => {
+      {classroomsState?.map(({ id, name, maxOccupancy, students }) => {
         return (
           <ClassCard
             key={id}

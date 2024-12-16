@@ -31,7 +31,7 @@ const ClassesListPopup: React.FC<ISimpleDialogProps> = ({
 
   const classes = useStyles();
 
-  const handleAddStudentToClassClick = async (//move to students table and pass as props. optional
+  const handleAddStudentToClassClick = async (
     classId: string
   ): Promise<void> => {
     await addStudentToClass(classId, studentId);

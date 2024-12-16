@@ -13,6 +13,7 @@ import { IStudent } from "../interfaces/student.interface";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { validationForDeleteClass } from "../utilities/classroom.util";
 import { ICreateClassroomDto } from "../services/classrooms/dto/create-classroom.dto";
+import { IUnasignStudentDto } from "../services/classrooms/dto/unassign-students.dto";
 
 const useClassroomsHook = () => {
   const dispatch = useDispatch();
@@ -69,7 +70,12 @@ const useClassroomsHook = () => {
       dispatch(setStudents(updatedStudents));
       dispatch(setClassrooms(updatedClassrooms));
 
-      await removeStudentFromClassroomService(classroomId, studentId);
+      const unassignStudentBody: IUnasignStudentDto = {
+        classroomId,
+        studentId,
+      }
+
+      await removeStudentFromClassroomService(unassignStudentBody);
       toast.success("Student successfully removed from class.");
     } catch (error) {
       console.log(error);

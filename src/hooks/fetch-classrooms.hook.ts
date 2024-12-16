@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useAppSelector } from "../store/store";
-import { useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
+import { useQueryClient } from "react-query";
+import { useAppSelector } from "../store/store";
 import { setClassrooms } from "../redux/classrooms.slice";
 import { IClassroom } from "../interfaces/classroom.interface";
 import { fetchClassroomsService } from "../services/classrooms/classroom.service";
@@ -29,8 +29,8 @@ const useFetchClassrooms = () => {
         if (data) {
           dispatch(setClassrooms(data));
         }
-      } catch (error) {
-        console.error("Failed to fetch classrooms:", error); //remove error
+      } catch {
+        console.error("Failed to fetch classrooms:");
         toast.error("Failed to load classrooms. Please try again later.");
       }
     };

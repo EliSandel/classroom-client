@@ -1,5 +1,7 @@
 import axios from "axios";
+import { IAssignStudentDto } from "./dto/assign-student.dto";
 import { ICreateClassroomDto } from "./dto/create-classroom.dto";
+import { IUnasignStudentDto } from "./dto/unassign-students.dto";
 import { IClassroom } from "../../interfaces/classroom.interface";
 
 //axios instance
@@ -13,12 +15,18 @@ export const fetchClassroomsService = async (): Promise<IClassroom[]> => {
 };
 
 export const removeStudentFromClassroomService = async (
-  classroomId: string,
-  studentId: string
+  unassignStudentBody: IUnasignStudentDto
 ): Promise<void> => {
   await axios.patch(
-    `${API_URL}/classrooms/${classroomId}/removeStudent/${studentId}`
+    `${API_URL}/classrooms/unassign-student`,
+    unassignStudentBody
   );
+};
+
+export const addStudentToClassService = async (
+  assignStudentBody: IAssignStudentDto
+): Promise<void> => {
+  await axios.patch(`${API_URL}/classrooms/assign-student`, assignStudentBody);
 };
 
 export const deleteClassService = async (
@@ -30,8 +38,5 @@ export const deleteClassService = async (
 export const createClassroomService = async (
   classroomBody: ICreateClassroomDto
 ): Promise<void> => {
-  await axios.post<IClassroom>(
-    `${API_URL}/classrooms`,
-    classroomBody
-  );
+  await axios.post<IClassroom>(`${API_URL}/classrooms`, classroomBody);
 };

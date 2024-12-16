@@ -16,13 +16,7 @@ export const deleteStudentService = async (
   await axios.delete(`${API_URL}/students/${studentId}`);
 };
 
-//move to class service
-export const addStudentToClassService = async (
-  classId: string,
-  studentId: string
-): Promise<void> => {
-  await axios.patch(`${API_URL}/classrooms/${classId}/addStudent/${studentId}`);
-};
+
 
 export const createStudentService = async (
   studentBody: ICreateStudentDto

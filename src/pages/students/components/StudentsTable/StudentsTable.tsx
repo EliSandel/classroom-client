@@ -7,15 +7,15 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import { useStyles } from "./StudentsTable.style";
+import { useAppSelector } from "../../../../store/store";
 import TableContainer from "@mui/material/TableContainer";
 import { STUDENT_TABLE_HEADERS } from "./StudentsTable.data";
 import useStudentsHook from "../../../../hooks/students.hook";
 import ClassesListPopup from "../ClassesListPopup/ClassesListPopup";
-import useFetchStudents from "../../../../hooks/fetch-students.hook";
-import useFetchClassrooms from "../../../../hooks/fetch-classrooms.hook";
+
 
 //index files 
-//destructure imoports
+//destructure imports
 
 const StudentsTable: React.FC = () => {
   const classes = useStyles();
@@ -23,8 +23,10 @@ const StudentsTable: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [selectedStudentId, setSelectedStudentId] = useState<string>("");
 
-  const studentsState = useFetchStudents();
-  const classesState = useFetchClassrooms();
+  const studentsState = useAppSelector((state) => state.students.students);
+  const classroomsState = useAppSelector(
+    (state) => state.classrooms.classrooms
+  );
 
   const { deleteStudent } = useStudentsHook();
 
@@ -83,11 +85,11 @@ const StudentsTable: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {classesState && (
+      {classroomsState && (
         <ClassesListPopup
           open={isDialogOpen}
           onClose={handleClose}
-          classesList={classesState}
+          classesList={classroomsState}
           studentId={selectedStudentId}
         />
       )}
