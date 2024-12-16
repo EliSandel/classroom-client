@@ -21,7 +21,7 @@ export const addStudentToClassService = async (
   classId: string,
   studentId: string
 ): Promise<void> => {
-  await axios.put(`${API_URL}/classrooms/${classId}/addStudent/${studentId}`);
+  await axios.patch(`${API_URL}/classrooms/${classId}/addStudent/${studentId}`);
 };
 
 export const createStudentService = async (

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { IClassroom } from "../../interfaces/classroom.interface";
 import { ICreateClassroomDto } from "./dto/create-classroom.dto";
+import { IClassroom } from "../../interfaces/classroom.interface";
 
 //axios instance
 
@@ -16,7 +16,7 @@ export const removeStudentFromClassroomService = async (
   classroomId: string,
   studentId: string
 ): Promise<void> => {
-  await axios.put(
+  await axios.patch(
     `${API_URL}/classrooms/${classroomId}/removeStudent/${studentId}`
   );
 };
